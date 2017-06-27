@@ -16,22 +16,28 @@ namespace ts.server {
         directoryExists: () => false,
         getDirectories: () => [],
         createDirectory: noop,
-        getExecutingFilePath(): string { return void 0; },
-        getCurrentDirectory(): string { return void 0; },
-        getEnvironmentVariable(): string { return ""; },
-        readDirectory() { return []; },
+        getExecutingFilePath: () => undefined,
+        getCurrentDirectory: () => undefined,
+        getEnvironmentVariable: () => "",
+        readDirectory: () => [],
         exit: noop,
-        setTimeout() { return 0; },
+        setTimeout: () => 0,
         clearTimeout: noop,
         setImmediate: () => 0,
         clearImmediate: noop,
         createHash: Harness.LanguageService.mockHash,
+        //TODO: this is supposed to be optional!
+        watchDirectory: () => {
+            return {
+                close() {},
+            }
+        },
     };
 
     const mockLogger: Logger = {
         close: noop,
-        hasLevel(): boolean { return false; },
-        loggingEnabled(): boolean { return false; },
+        hasLevel: () => false,
+        loggingEnabled: () => false,
         perftrc: noop,
         info: noop,
         startGroup: noop,
@@ -614,4 +620,95 @@ namespace ts.server {
             session.consumeQueue();
         });
     });
+
+    describe("TEST", () => {
+        it("works", () => {
+            const sess = new DumbSession();
+
+            const events = [
+                {
+                    "seq": 0,
+                    "type": "request",
+                    "command": "configure",
+                    "arguments": {
+                        "hostInfo": "vscode"
+                    }
+                },
+                {
+                    "seq": 1,
+                    "type": "request",
+                    "command": "compilerOptionsForInferredProjects",
+                    "arguments": {
+                        "options": {
+                            "module": "CommonJS",
+                            "target": "ES6",
+                            "allowSyntheticDefaultImports": true,
+                            "allowNonTsExtensions": true,
+                            "allowJs": true,
+                            "jsx": "Preserve",
+                            "checkJs": false
+                        }
+                    }
+                },
+                {
+                    "seq": 2,
+                    "type": "request",
+                    "command": "open",
+                    "arguments": {
+                        "file": "/home/andy/sample/ts/src/a.ts",
+                        "fileContent": "const a = new Array<number>;\n",
+                        "scriptKindName": "TS",
+                        "projectRootPath": "/home/andy/sample/ts"
+                    }
+                },
+                {
+                    "seq": 3,
+                    "type": "request",
+                    "command": "getSupportedCodeFixes",
+                    "arguments": null
+                },
+                {
+                    "seq": 4,
+                    "type": "request",
+                    "command": "getApplicableRefactors",
+                    "arguments": {
+                        "file": "/home/andy/sample/ts/src/a.ts",
+                        "startLine": 1,
+                        "startOffset": 29,
+                        "endLine": 1,
+                        "endOffset": 29
+                    }
+                }
+            ];
+
+            for (const e of events) {
+                sess.onMessage(JSON.stringify(e));
+                console.log(lastWrittenToHost);
+            }
+        });
+    });
+
+    class DumbSession extends ts.server.Session {
+        constructor() {
+            const typingsInstaller: ts.server.ITypingsInstaller = {
+                enqueueInstallTypingsRequest() {},
+                attach() {},
+                onProjectClosed() {},
+                globalTypingsCacheLocation: "",
+            };
+            const options: ts.server.SessionOptions = {
+                host: mockHost,
+                cancellationToken: nullCancellationToken,
+                useSingleInferredProject: true,
+                typingsInstaller,
+                byteLength: Utils.byteLength,
+                hrtime(): never { throw new Error(); },
+                logger: mockLogger,
+                canUseEvents: false,
+                //eventHandler: notImplemented,
+                //throttleWaitMilliseconds: 0,
+            };
+            super(options);
+        }
+    }
 }

@@ -33,21 +33,17 @@ namespace ts {
             refactors.set(refactor.name, refactor);
         }
 
-        export function getApplicableRefactors(context: RefactorContext): ApplicableRefactorInfo[] | undefined {
-            let results: ApplicableRefactorInfo[];
-            const refactorList: Refactor[] = [];
-            refactors.forEach(refactor => {
-                refactorList.push(refactor);
-            });
-            for (const refactor of refactorList) {
+        export function getApplicableRefactors(context: RefactorContext): ApplicableRefactorInfo[] {
+            const results: ApplicableRefactorInfo[] = [];
+            ts.forEachEntry(refactors, refactor => {
                 if (context.cancellationToken && context.cancellationToken.isCancellationRequested()) {
-                    return results;
+                    return true; // Exit loop early
                 }
                 const infos = refactor.getAvailableActions(context);
                 if (infos && infos.length) {
-                    (results || (results = [])).push(...infos);
+                    results.push(...infos);
                 }
-            }
+            });
             return results;
         }
 
