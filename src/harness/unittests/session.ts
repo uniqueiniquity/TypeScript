@@ -26,7 +26,7 @@ namespace ts.server {
         setImmediate: () => 0,
         clearImmediate: noop,
         createHash: Harness.LanguageService.mockHash,
-        //TODO: this is supposed to be optional!
+        //TODO: https://github.com/Microsoft/TypeScript/issues/16776
         watchDirectory: () => {
             return {
                 close() {},
@@ -651,32 +651,27 @@ namespace ts.server {
                     }
                 },
                 {
-                    "seq": 2,
+                    "seq": 31,
                     "type": "request",
                     "command": "open",
                     "arguments": {
-                        "file": "/home/andy/sample/ts/src/a.ts",
-                        "fileContent": "const a = new Array<number>;\n",
-                        "scriptKindName": "TS",
-                        "projectRootPath": "/home/andy/sample/ts"
+                        "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                        "fileContent": `function f() {
+                return 0;
+            }
+            `,
+                        "scriptKindName": "TSX",
+                        "projectRootPath": "/Users/asvetl/work/applications/frontend"
                     }
                 },
                 {
-                    "seq": 3,
+                    "seq": 56,
                     "type": "request",
-                    "command": "getSupportedCodeFixes",
-                    "arguments": null
-                },
-                {
-                    "seq": 4,
-                    "type": "request",
-                    "command": "getApplicableRefactors",
+                    "command": "references",
                     "arguments": {
-                        "file": "/home/andy/sample/ts/src/a.ts",
-                        "startLine": 1,
-                        "startOffset": 29,
-                        "endLine": 1,
-                        "endOffset": 29
+                        "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                        "line": 1,
+                        "offset": 6
                     }
                 }
             ];

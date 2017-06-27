@@ -1,21 +1,56 @@
 import { readFileSync } from "fs";
 
-import ts = require("../../lib/tsserverlibrary");
+import ts = require("../../built/local/tsserverlibrary");
 
 import parseLog from "./parseLog";
 
-const log = readFileSync("./log.txt", "utf-8");
+const log = readFileSync("./bigLog.txt", "utf-8");
 
 class DumbSession extends ts.server.Session {
     constructor() {
+        const noop = () => {};
+        const notImplemented = (): never => { throw new Error(); }
         const host: ts.server.ServerHost = {
+            args: [],
+            newLine: "\n",
+            useCaseSensitiveFileNames: true,
+            write(s): void {
+                console.log(s);
+                if (s.includes('"success":false')) {
+                    //console.log(s);
+                    throw new Error("!");
+                }
+            },
+            readFile: notImplemented,
+            writeFile: noop,
+            resolvePath: notImplemented,
+            fileExists: () => false,
+            directoryExists: () => false,
+            getDirectories: () => [],
+            createDirectory: noop,
+            getExecutingFilePath: () => "",
+            getCurrentDirectory: () => "",
+            //getEnvironmentVariable: () => "",
+            readDirectory: () => [],
+            exit: noop,
+            setTimeout: () => 0,
+            clearTimeout: noop,
+            setImmediate: () => 0,
+            clearImmediate: noop,
+            createHash: s => `hash_${s}`,
+            //TODO: https://github.com/Microsoft/TypeScript/issues/16776
+            watchDirectory: () => {
+                return { close() {} };
+            },
+        };
+        /*const host: ts.server.ServerHost = {
             ...ts.sys, //TODO: replace readFile with a shim
             setTimeout(): never { throw new Error(); },
             clearTimeout(): never { throw new Error(); },
             setImmediate(): never { throw new Error(); },
             clearImmediate(): never { throw new Error(); },
             //gc, trace, require
-        };
+        };*/
         const cancellationToken: ts.server.ServerCancellationToken = {
             isCancellationRequested: () => false,
             setRequest() {},
@@ -54,49 +89,48 @@ class DumbSession extends ts.server.Session {
     }
 }
 
-const sess = new DumbSession();
-
 const events = parseLog(log);
-const requests = events.filter(e => e.type === "request").map(r => JSON.parse(r.text));
-console.log(JSON.stringify(requests, undefined, 4));
+const requestsImported = events.filter(e => e.type === "request").map(r => JSON.parse(r.text));
 
-/*const events = [
-    {
-        type: "request",
-        text: JSON.stringify({
-            "seq": 2,
-            "type":" request",
-            "command": "open",
-            "arguments": {
-                "file":"/home/andy/sample/ts/src/a.ts",
-                "fileContent": "const a = new Array<number>;\n",
-                "scriptKindName":"TS",
-                "projectRootPath":"/home/andy/sample/ts"
-            }
-        }),
-    }
-];*/
+//Filter out irrelevant events.
+//const requestsImported = JSON.parse(readFileSync("./requests.json", "utf-8"));
 
-
-for (const event of events) {
-    switch (event.type) {
-        case "request":
-        //case "event":
-            console.log("SENDING:::", event.text);
-            sess.onMessage(event.text);
-            console.log("SENT");
-            break;
-
-        case "event":
-            break;
-
-        case "response":
-            break;
-
+const requests = requestsImported.filter((r: any) => {
+    switch (r.command) {
+        case "signatureHelp":
+        case "geterr":
+        case "navtree":
+        case "getSupportedCodeFixes":
+        case "getCodeFixes":
+        case "formatonkey":
+        case "completions":
+        case "completionEntryDetails":
+        case "quickinfo":
+        case "occurrences":
+        case "definition":
+            return true;
+        case "configure":
+        case "change":
+        case "open":
+        case "close":
+        case "references":
+        case "compilerOptionsForInferredProjects":
+            //if (r.arguments.file && r.arguments.file !== "/Users/asvetl/work/applications/frontend/node_modules/@types/cookie/index.d.ts")
+            //    return false;
+            return true;
         default:
-            throw new Error();
+            throw new Error(r.command);
     }
+});
+
+//console.log(JSON.stringify(requests, undefined, 4));
+//process.exit(0);
+
+const sess = new DumbSession();
+for (const rq of requests) {
+    //console.log(rq.seq);
+    console.log("SEND: ", JSON.stringify(rq));
+    sess.onMessage(JSON.stringify(rq));
 }
 
-console.log("DONE");
-process.exit(0);
+process.exit(0); //Else server will leave it open

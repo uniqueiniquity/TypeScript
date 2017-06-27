@@ -10,18 +10,25 @@ export default function parseLog(log: string): LogEvent[] {
         if (scn.tryEat("Info ")) {
             scn.skipNumber();
             scn.skipSpaces();
-            if (scn.tryEat("request: ")) {
-                events.push({ type: "request", text: scn.takeRestOfLine() });
-            }
-            else if (scn.tryEat("response: ")) {
-                events.push({ type: "response", text: scn.takeRestOfLine() });
-            }
-            else if (scn.tryEat("event: ")) {
-                events.push({ type: "event", text: scn.takeRestOfLine() });
-            }
-            else {
-                scn.skipRestOfLine();
-            }
+            foo();
+        }
+        else {
+            //Sometimes there is `request:` *not* preceded by "Info: ".
+            //e.g. line 29698
+            //TODO: find out why!
+            scn.skipRestOfLine();//foo();
+        }
+    }
+
+    function foo() {
+        if (scn.tryEat("request: ")) {
+            events.push({ type: "request", text: scn.takeRestOfLine() });
+        }
+        else if (scn.tryEat("response: ")) {
+            events.push({ type: "response", text: scn.takeRestOfLine() });
+        }
+        else if (scn.tryEat("event: ")) {
+            events.push({ type: "event", text: scn.takeRestOfLine() });
         }
         else {
             scn.skipRestOfLine();

@@ -606,7 +606,7 @@ namespace ts.server {
 
             const definitions = project.getLanguageService().getDefinitionAtPosition(file, position);
             if (!definitions) {
-                return undefined;
+                return []; //response required!
             }
 
             if (simplifiedResult) {
@@ -674,7 +674,7 @@ namespace ts.server {
             const occurrences = project.getLanguageService().getOccurrencesAtPosition(file, position);
 
             if (!occurrences) {
-                return undefined;
+                return []; //must be defined!
             }
 
             return occurrences.map(occurrence => {
@@ -917,7 +917,7 @@ namespace ts.server {
             if (simplifiedResult) {
                 const nameInfo = defaultProject.getLanguageService().getQuickInfoAtPosition(file, position);
                 if (!nameInfo) {
-                    return undefined;
+                    return []; //This *must* return a defined result!
                 }
 
                 const displayString = ts.displayPartsToString(nameInfo.displayParts);
@@ -1183,7 +1183,7 @@ namespace ts.server {
 
             const completions = project.getLanguageService().getCompletionsAtPosition(file, position);
             if (!completions) {
-                return undefined;
+                return []; //Must be defined!
             }
             if (simplifiedResult) {
                 return completions.entries.reduce((result: protocol.CompletionEntry[], entry: ts.CompletionEntry) => {
@@ -1672,6 +1672,10 @@ namespace ts.server {
             return { responseRequired: false };
         }
 
+        private maybeNotRequired(response: any) {
+            return { response, responseRequired: false };
+        }
+
         private requiredResponse(response: any) {
             return { response, responseRequired: true };
         }
@@ -1816,10 +1820,10 @@ namespace ts.server {
                 return this.requiredResponse(this.emitFile(request.arguments));
             },
             [CommandNames.SignatureHelp]: (request: protocol.SignatureHelpRequest) => {
-                return this.requiredResponse(this.getSignatureHelpItems(request.arguments, /*simplifiedResult*/ true));
+                return this.maybeNotRequired(this.getSignatureHelpItems(request.arguments, /*simplifiedResult*/ true));
             },
             [CommandNames.SignatureHelpFull]: (request: protocol.SignatureHelpRequest) => {
-                return this.requiredResponse(this.getSignatureHelpItems(request.arguments, /*simplifiedResult*/ false));
+                return this.maybeNotRequired(this.getSignatureHelpItems(request.arguments, /*simplifiedResult*/ false));
             },
             [CommandNames.CompilerOptionsDiagnosticsFull]: (request: protocol.CompilerOptionsDiagnosticsRequest) => {
                 return this.requiredResponse(this.getCompilerOptionsDiagnostics(request.arguments));

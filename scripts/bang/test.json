@@ -1,0 +1,2173 @@
+{
+    "args": [
+        {
+            "seq": 0,
+            "type": "request",
+            "command": "configure",
+            "arguments": {
+                "hostInfo": "vscode"
+            }
+        },
+        {
+            "seq": 1,
+            "type": "request",
+            "command": "compilerOptionsForInferredProjects",
+            "arguments": {
+                "options": {
+                    "module": "CommonJS",
+                    "target": "ES6",
+                    "allowSyntheticDefaultImports": true,
+                    "allowNonTsExtensions": true,
+                    "allowJs": true,
+                    "jsx": "Preserve",
+                    "checkJs": false
+                }
+            }
+        },
+        {
+            "seq": 2,
+            "type": "request",
+            "command": "open",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Analytic.ts",
+                "fileContent": "import * as GA from \"react-ga\";\n\ndeclare module \"react-ga\" {\n    export function ga(...args: any[]): any;\n}\n\n/**\n * Initialize\n * \n * @export\n * @param id \n * @param type \n * @param version \n */\nexport function initialize(id: string, type: \"web\" | \"app\", version: string): void {\n    GA.initialize(id, {\n        gaOptions: {\n            cookieDomain: \".ramblechat.com\"\n        }\n    });\n    GA.set({\n        appName: \"Ramble-Portal\",\n        appId: \"com.ramblechat.portal\",\n        appVersion: version,\n        dataSource: type,\n        // We don't want to track referrer in portal, only for signup\n        referrer: window.location.origin\n    });\n}\n\n/**\n * Tracks page view\n * \n * @export\n * @param path \n * @param title \n */\nexport function trackPageView(path: string, title: string): void {\n    GA.set({\n        page: path,\n        title: title\n    });\n    GA.pageview(path);\n}\n\nexport function trackSignup(referrer?: string): void {\n    // Need to use raw method from GA since we're overriding referrer here\n    GA.ga(\"send\", \"pageview\", \"/signup\", {\n        page: \"/signup\",\n        title: \"Signup\",\n        referrer: referrer || document.referrer\n    });\n}\n\n/**\n * Track event\n * \n * @export\n * @param args \n */\nexport function trackEvent(args: GA.EventArgs): void {\n    GA.event(args);\n}\n\nexport const Categories = {\n    User: \"User\"\n};\n",
+                "scriptKindName": "TS",
+                "projectRootPath": "/Users/asvetl/work/applications/frontend"
+            }
+        },
+        {
+            "seq": 3,
+            "type": "request",
+            "command": "open",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "fileContent": "// Type definitions for react-ga 2.1\n// Project: https://github.com/react-ga/react-ga\n// Definitions by: Tim Aldridge <https://github.com/telshin>\n// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped\n\nexport interface EventArgs {\n    category: string;\n    action: string;\n    label?: string;\n    value?: number;\n    nonInteraction?: boolean;\n}\n\nexport interface GaOptions {\n    name?: string;\n    clientId?: string;\n    sampleRate?: number;\n    siteSpeedSampleRate?: number;\n    alwaysSendReferrer?: boolean;\n    allowAnchor?: boolean;\n    cookieName?: string;\n    cookieDomain?: string;\n    cookieExpires?: number;\n    legacyCookieDomain?: string;\n    legacyHistoryImport?: boolean;\n    allowLinker?: boolean;\n    userId?: string;\n}\n\nexport interface InitializeOptions {\n    debug?: boolean;\n    titleCase?: boolean;\n    gaOptions?: GaOptions;\n}\n\nexport interface FieldsObject {\n    [i: string]: any;\n}\n\nexport interface TimingArgs {\n    category: string;\n    variable: string;\n    value: number;\n    label?: string;\n}\n\nexport interface Plugin {\n    require(name: string, options: any): void;\n    execute(pluginName: string, action: string, actionTypeOrPayload: string|any, payload?: any): void;\n}\n\nexport interface OutboundLinkArgs {\n    label: string;\n}\n\nexport function initialize(trackingCode: string, options?: InitializeOptions): void;\nexport function ga(): any;\nexport function set(fieldsObject: FieldsObject): void;\nexport function send(fieldsObject: FieldsObject): void;\nexport function pageview(path: string): void;\nexport function modalview(name: string): void;\nexport function timing(args: TimingArgs): void;\nexport function event(args: EventArgs): void;\nexport function exception(fieldsObject: FieldsObject): void;\nexport const plugin: Plugin;\nexport function outboundLink(args: OutboundLinkArgs, hitCallback: () => void): void;\n",
+                "scriptKindName": "TS",
+                "projectRootPath": "/Users/asvetl/work/applications/frontend"
+            }
+        },
+        {
+            "seq": 4,
+            "type": "request",
+            "command": "getSupportedCodeFixes",
+            "arguments": null
+        },
+        {
+            "seq": 5,
+            "type": "request",
+            "command": "geterr",
+            "arguments": {
+                "delay": 0,
+                "files": [
+                    "/Users/asvetl/work/applications/frontend/src/app/utils/Analytic.ts",
+                    "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts"
+                ]
+            }
+        },
+        {
+            "seq": 6,
+            "type": "request",
+            "command": "navtree",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Analytic.ts"
+            }
+        },
+        {
+            "seq": 7,
+            "type": "request",
+            "command": "navtree",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts"
+            }
+        },
+        {
+            "seq": 8,
+            "type": "request",
+            "command": "navtree",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Analytic.ts"
+            }
+        },
+        {
+            "seq": 9,
+            "type": "request",
+            "command": "navtree",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts"
+            }
+        },
+        {
+            "seq": 10,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Analytic.ts",
+                "line": 4,
+                "offset": 21
+            }
+        },
+        {
+            "seq": 11,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Analytic.ts",
+                "line": 15,
+                "offset": 17
+            }
+        },
+        {
+            "seq": 12,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Analytic.ts",
+                "line": 38,
+                "offset": 17
+            }
+        },
+        {
+            "seq": 13,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 21,
+                "offset": 5
+            }
+        },
+        {
+            "seq": 14,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 22,
+                "offset": 5
+            }
+        },
+        {
+            "seq": 15,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 23,
+                "offset": 5
+            }
+        },
+        {
+            "seq": 16,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 24,
+                "offset": 5
+            }
+        },
+        {
+            "seq": 17,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 25,
+                "offset": 5
+            }
+        },
+        {
+            "seq": 18,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 26,
+                "offset": 5
+            }
+        },
+        {
+            "seq": 19,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 27,
+                "offset": 5
+            }
+        },
+        {
+            "seq": 20,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 30,
+                "offset": 18
+            }
+        },
+        {
+            "seq": 21,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 31,
+                "offset": 5
+            }
+        },
+        {
+            "seq": 22,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 32,
+                "offset": 5
+            }
+        },
+        {
+            "seq": 23,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 33,
+                "offset": 5
+            }
+        },
+        {
+            "seq": 24,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 36,
+                "offset": 18
+            }
+        },
+        {
+            "seq": 25,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 40,
+                "offset": 18
+            }
+        },
+        {
+            "seq": 26,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 41,
+                "offset": 5
+            }
+        },
+        {
+            "seq": 27,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 42,
+                "offset": 5
+            }
+        },
+        {
+            "seq": 28,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 43,
+                "offset": 5
+            }
+        },
+        {
+            "seq": 29,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 44,
+                "offset": 5
+            }
+        },
+        {
+            "seq": 30,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 47,
+                "offset": 18
+            }
+        },
+        {
+            "seq": 31,
+            "type": "request",
+            "command": "open",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                "fileContent": "import { autobind } from \"core-decorators\";\nimport * as React from \"react\";\nimport { connect } from \"react-redux\";\nimport { RouteComponentProps } from \"react-router-dom\";\nimport { RootState } from \"../../redux/modules/index\";\nimport * as Analytic from \"../../utils/Analytic\";\nimport { SignupFormContainer } from \"../forms/SignupForm\";\n\n/**\n * Component properties\n */\nexport interface SignupProps extends RouteComponentProps<void> {\n    /**\n     * Invite code\n     */\n    inviteCode?: string;\n}\n\n/**\n * Signup form\n */\nexport class Signup extends React.PureComponent<SignupProps, void> {\n    public componentDidMount(): void {\n        Analytic.trackSignup();\n    }\n    /**\n     * Render\n     */\n    public render(): JSX.Element {\n        const { inviteCode } = this.props;\n        return (\n            <SignupFormContainer\n                inviteCode={inviteCode}\n                onSuccessSignup={this.onSignupSuccess}\n                onSignupFailed={this.onSignupFailed}\n            />\n        );\n    }\n    \n    /**\n     * Signup was successful\n     * \n     * @protected\n     */\n    @autobind\n    protected onSignupSuccess(): void {\n        Analytic.trackEvent({\n            category: Analytic.Categories.User,\n            action: \"Success Signup\",\n        });\n        this.props.history.push(\"/\");\n    }\n    \n    /**\n     * Signup was failed\n     * \n     * @protected\n     */\n    @autobind\n    protected onSignupFailed(): void {\n        Analytic.trackEvent({\n            category: Analytic.Categories.User,\n            action: \"Failed Signup\",\n        });\n    }\n}\n\n/**\n * State mapper\n * \n * @param state\n * @param ownProps\n * @returns \n */\n/* istanbul ignore next */\nfunction mapStateToProps(state: RootState, ownProps: RouteComponentProps<void>): SignupProps {\n    return {\n        ...ownProps,\n        inviteCode: ownProps.location.query.invite\n    };\n}\n\nexport const SignupContainer = connect(mapStateToProps)(Signup);\n",
+                "scriptKindName": "TSX",
+                "projectRootPath": "/Users/asvetl/work/applications/frontend"
+            }
+        },
+        {
+            "seq": 32,
+            "type": "request",
+            "command": "navtree",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx"
+            }
+        },
+        {
+            "seq": 33,
+            "type": "request",
+            "command": "navtree",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx"
+            }
+        },
+        {
+            "seq": 34,
+            "type": "request",
+            "command": "geterr",
+            "arguments": {
+                "delay": 0,
+                "files": [
+                    "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                    "/Users/asvetl/work/applications/frontend/src/app/utils/Analytic.ts",
+                    "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts"
+                ]
+            }
+        },
+        {
+            "seq": 35,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                "line": 12,
+                "offset": 18
+            }
+        },
+        {
+            "seq": 36,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                "line": 16,
+                "offset": 5
+            }
+        },
+        {
+            "seq": 37,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                "line": 22,
+                "offset": 14
+            }
+        },
+        {
+            "seq": 38,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                "line": 23,
+                "offset": 12
+            }
+        },
+        {
+            "seq": 39,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                "line": 29,
+                "offset": 12
+            }
+        },
+        {
+            "seq": 40,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                "line": 23,
+                "offset": 39,
+                "endLine": 23,
+                "endOffset": 39,
+                "insertString": "\n        "
+            }
+        },
+        {
+            "seq": 41,
+            "type": "request",
+            "command": "navtree",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx"
+            }
+        },
+        {
+            "seq": 42,
+            "type": "request",
+            "command": "navtree",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx"
+            }
+        },
+        {
+            "seq": 43,
+            "type": "request",
+            "command": "geterr",
+            "arguments": {
+                "delay": 0,
+                "files": [
+                    "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                    "/Users/asvetl/work/applications/frontend/src/app/utils/Analytic.ts",
+                    "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts"
+                ]
+            }
+        },
+        {
+            "seq": 44,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                "line": 24,
+                "offset": 1,
+                "endLine": 24,
+                "endOffset": 9,
+                "insertString": ""
+            }
+        },
+        {
+            "seq": 45,
+            "type": "request",
+            "command": "navtree",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx"
+            }
+        },
+        {
+            "seq": 46,
+            "type": "request",
+            "command": "navtree",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx"
+            }
+        },
+        {
+            "seq": 47,
+            "type": "request",
+            "command": "geterr",
+            "arguments": {
+                "delay": 0,
+                "files": [
+                    "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                    "/Users/asvetl/work/applications/frontend/src/app/utils/Analytic.ts",
+                    "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts"
+                ]
+            }
+        },
+        {
+            "seq": 48,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                "line": 24,
+                "offset": 1,
+                "endLine": 25,
+                "endOffset": 1,
+                "insertString": ""
+            }
+        },
+        {
+            "seq": 49,
+            "type": "request",
+            "command": "navtree",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx"
+            }
+        },
+        {
+            "seq": 50,
+            "type": "request",
+            "command": "navtree",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx"
+            }
+        },
+        {
+            "seq": 51,
+            "type": "request",
+            "command": "geterr",
+            "arguments": {
+                "delay": 0,
+                "files": [
+                    "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                    "/Users/asvetl/work/applications/frontend/src/app/utils/Analytic.ts",
+                    "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts"
+                ]
+            }
+        },
+        {
+            "seq": 52,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                "line": 12,
+                "offset": 18
+            }
+        },
+        {
+            "seq": 53,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                "line": 16,
+                "offset": 5
+            }
+        },
+        {
+            "seq": 54,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                "line": 22,
+                "offset": 14
+            }
+        },
+        {
+            "seq": 55,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                "line": 23,
+                "offset": 12
+            }
+        },
+        {
+            "seq": 56,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                "line": 30,
+                "offset": 12
+            }
+        },
+        {
+            "seq": 57,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                "line": 12,
+                "offset": 18
+            }
+        },
+        {
+            "seq": 58,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                "line": 16,
+                "offset": 5
+            }
+        },
+        {
+            "seq": 59,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                "line": 22,
+                "offset": 14
+            }
+        },
+        {
+            "seq": 60,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                "line": 23,
+                "offset": 12
+            }
+        },
+        {
+            "seq": 61,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                "line": 29,
+                "offset": 12
+            }
+        },
+        {
+            "seq": 62,
+            "type": "request",
+            "command": "navtree",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts"
+            }
+        },
+        {
+            "seq": 63,
+            "type": "request",
+            "command": "navtree",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx"
+            }
+        },
+        {
+            "seq": 64,
+            "type": "request",
+            "command": "navtree",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts"
+            }
+        },
+        {
+            "seq": 65,
+            "type": "request",
+            "command": "navtree",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx"
+            }
+        },
+        {
+            "seq": 66,
+            "type": "request",
+            "command": "geterr",
+            "arguments": {
+                "delay": 0,
+                "files": [
+                    "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                    "/Users/asvetl/work/applications/frontend/src/app/utils/Analytic.ts",
+                    "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts"
+                ]
+            }
+        },
+        {
+            "seq": 67,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 21,
+                "offset": 5
+            }
+        },
+        {
+            "seq": 68,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 22,
+                "offset": 5
+            }
+        },
+        {
+            "seq": 69,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 23,
+                "offset": 5
+            }
+        },
+        {
+            "seq": 70,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 24,
+                "offset": 5
+            }
+        },
+        {
+            "seq": 71,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 25,
+                "offset": 5
+            }
+        },
+        {
+            "seq": 72,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 26,
+                "offset": 5
+            }
+        },
+        {
+            "seq": 73,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 27,
+                "offset": 5
+            }
+        },
+        {
+            "seq": 74,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 30,
+                "offset": 18
+            }
+        },
+        {
+            "seq": 75,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 31,
+                "offset": 5
+            }
+        },
+        {
+            "seq": 76,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 32,
+                "offset": 5
+            }
+        },
+        {
+            "seq": 77,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 33,
+                "offset": 5
+            }
+        },
+        {
+            "seq": 78,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 36,
+                "offset": 18
+            }
+        },
+        {
+            "seq": 79,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 40,
+                "offset": 18
+            }
+        },
+        {
+            "seq": 80,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 41,
+                "offset": 5
+            }
+        },
+        {
+            "seq": 81,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 42,
+                "offset": 5
+            }
+        },
+        {
+            "seq": 82,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 43,
+                "offset": 5
+            }
+        },
+        {
+            "seq": 83,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 44,
+                "offset": 5
+            }
+        },
+        {
+            "seq": 84,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                "line": 47,
+                "offset": 18
+            }
+        },
+        {
+            "seq": 85,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                "line": 12,
+                "offset": 18
+            }
+        },
+        {
+            "seq": 86,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                "line": 16,
+                "offset": 5
+            }
+        },
+        {
+            "seq": 87,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                "line": 22,
+                "offset": 14
+            }
+        },
+        {
+            "seq": 88,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                "line": 23,
+                "offset": 12
+            }
+        },
+        {
+            "seq": 89,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                "line": 29,
+                "offset": 12
+            }
+        },
+        {
+            "seq": 90,
+            "type": "request",
+            "command": "open",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "fileContent": "",
+                "scriptKindName": "TS",
+                "projectRootPath": "/Users/asvetl/work/applications/frontend"
+            }
+        },
+        {
+            "seq": 91,
+            "type": "request",
+            "command": "navtree",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts"
+            }
+        },
+        {
+            "seq": 92,
+            "type": "request",
+            "command": "navtree",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts"
+            }
+        },
+        {
+            "seq": 93,
+            "type": "request",
+            "command": "geterr",
+            "arguments": {
+                "delay": 0,
+                "files": [
+                    "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                    "/Users/asvetl/work/applications/frontend/src/app/utils/Analytic.ts",
+                    "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                    "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx"
+                ]
+            }
+        },
+        {
+            "seq": 94,
+            "type": "request",
+            "command": "open",
+            "arguments": {
+                "file": "/users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "fileContent": "",
+                "scriptKindName": "TS",
+                "projectRootPath": "/Users/asvetl/work/applications/frontend"
+            }
+        },
+        {
+            "seq": 95,
+            "type": "request",
+            "command": "geterr",
+            "arguments": {
+                "delay": 0,
+                "files": [
+                    "/users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                    "/Users/asvetl/work/applications/frontend/src/app/utils/Analytic.ts",
+                    "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                    "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                    "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts"
+                ]
+            }
+        },
+        {
+            "seq": 96,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 1,
+                "offset": 1,
+                "endLine": 1,
+                "endOffset": 1,
+                "insertString": "\n"
+            }
+        },
+        {
+            "seq": 97,
+            "type": "request",
+            "command": "configure",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "formatOptions": {
+                    "tabSize": 4,
+                    "indentSize": 4,
+                    "convertTabsToSpaces": true,
+                    "newLineCharacter": "\n",
+                    "insertSpaceAfterCommaDelimiter": true,
+                    "insertSpaceAfterSemicolonInForStatements": true,
+                    "insertSpaceBeforeAndAfterBinaryOperators": true,
+                    "insertSpaceAfterKeywordsInControlFlowStatements": true,
+                    "insertSpaceAfterFunctionKeywordForAnonymousFunctions": true,
+                    "insertSpaceBeforeFunctionParenthesis": false,
+                    "insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": false,
+                    "insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": false,
+                    "insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
+                    "insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces": false,
+                    "insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces": false,
+                    "placeOpenBraceOnNewLineForFunctions": false,
+                    "placeOpenBraceOnNewLineForControlBlocks": false
+                }
+            }
+        },
+        {
+            "seq": 98,
+            "type": "request",
+            "command": "formatonkey",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 1,
+                "key": "\n"
+            }
+        },
+        {
+            "seq": 99,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 1,
+                "endLine": 2,
+                "endOffset": 1,
+                "insertString": "e"
+            }
+        },
+        {
+            "seq": 100,
+            "type": "request",
+            "command": "completions",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 2
+            }
+        },
+        {
+            "seq": 101,
+            "type": "request",
+            "command": "completionEntryDetails",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 2,
+                "entryNames": [
+                    "else"
+                ]
+            }
+        },
+        {
+            "seq": 102,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 2,
+                "endLine": 2,
+                "endOffset": 2,
+                "insertString": "x"
+            }
+        },
+        {
+            "seq": 103,
+            "type": "request",
+            "command": "completionEntryDetails",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 2,
+                "entryNames": [
+                    "expect"
+                ]
+            }
+        },
+        {
+            "seq": 104,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 3,
+                "endLine": 2,
+                "endOffset": 3,
+                "insertString": "p"
+            }
+        },
+        {
+            "seq": 105,
+            "type": "request",
+            "command": "completionEntryDetails",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 2,
+                "entryNames": [
+                    "expect"
+                ]
+            }
+        },
+        {
+            "seq": 106,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 4,
+                "endLine": 2,
+                "endOffset": 4,
+                "insertString": "o"
+            }
+        },
+        {
+            "seq": 107,
+            "type": "request",
+            "command": "completionEntryDetails",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 2,
+                "entryNames": [
+                    "export"
+                ]
+            }
+        },
+        {
+            "seq": 108,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 1,
+                "endLine": 2,
+                "endOffset": 5,
+                "insertString": "export"
+            }
+        },
+        {
+            "seq": 109,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 7,
+                "endLine": 2,
+                "endOffset": 7,
+                "insertString": " "
+            }
+        },
+        {
+            "seq": 110,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 8,
+                "endLine": 2,
+                "endOffset": 8,
+                "insertString": "f"
+            }
+        },
+        {
+            "seq": 111,
+            "type": "request",
+            "command": "completions",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 9
+            }
+        },
+        {
+            "seq": 112,
+            "type": "request",
+            "command": "completionEntryDetails",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 9,
+                "entryNames": [
+                    "fail"
+                ]
+            }
+        },
+        {
+            "seq": 113,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 9,
+                "endLine": 2,
+                "endOffset": 9,
+                "insertString": "u"
+            }
+        },
+        {
+            "seq": 114,
+            "type": "request",
+            "command": "completionEntryDetails",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 9,
+                "entryNames": [
+                    "function"
+                ]
+            }
+        },
+        {
+            "seq": 115,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 10,
+                "endLine": 2,
+                "endOffset": 10,
+                "insertString": "n"
+            }
+        },
+        {
+            "seq": 116,
+            "type": "request",
+            "command": "completionEntryDetails",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 9,
+                "entryNames": [
+                    "function"
+                ]
+            }
+        },
+        {
+            "seq": 117,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 11,
+                "endLine": 2,
+                "endOffset": 11,
+                "insertString": "c"
+            }
+        },
+        {
+            "seq": 118,
+            "type": "request",
+            "command": "completionEntryDetails",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 9,
+                "entryNames": [
+                    "function"
+                ]
+            }
+        },
+        {
+            "seq": 119,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 12,
+                "endLine": 2,
+                "endOffset": 12,
+                "insertString": "t"
+            }
+        },
+        {
+            "seq": 120,
+            "type": "request",
+            "command": "completionEntryDetails",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 9,
+                "entryNames": [
+                    "function"
+                ]
+            }
+        },
+        {
+            "seq": 121,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 13,
+                "endLine": 2,
+                "endOffset": 13,
+                "insertString": "i"
+            }
+        },
+        {
+            "seq": 122,
+            "type": "request",
+            "command": "completionEntryDetails",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 9,
+                "entryNames": [
+                    "function"
+                ]
+            }
+        },
+        {
+            "seq": 123,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 14,
+                "endLine": 2,
+                "endOffset": 14,
+                "insertString": "o"
+            }
+        },
+        {
+            "seq": 124,
+            "type": "request",
+            "command": "completionEntryDetails",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 9,
+                "entryNames": [
+                    "function"
+                ]
+            }
+        },
+        {
+            "seq": 125,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 15,
+                "endLine": 2,
+                "endOffset": 15,
+                "insertString": "n"
+            }
+        },
+        {
+            "seq": 126,
+            "type": "request",
+            "command": "completionEntryDetails",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 9,
+                "entryNames": [
+                    "function"
+                ]
+            }
+        },
+        {
+            "seq": 127,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 16,
+                "endLine": 2,
+                "endOffset": 16,
+                "insertString": " "
+            }
+        },
+        {
+            "seq": 128,
+            "type": "request",
+            "command": "navtree",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts"
+            }
+        },
+        {
+            "seq": 129,
+            "type": "request",
+            "command": "navtree",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts"
+            }
+        },
+        {
+            "seq": 130,
+            "type": "request",
+            "command": "geterr",
+            "arguments": {
+                "delay": 0,
+                "files": [
+                    "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                    "/Users/asvetl/work/applications/frontend/src/app/utils/Analytic.ts",
+                    "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                    "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                    "/users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts"
+                ]
+            }
+        },
+        {
+            "seq": 131,
+            "type": "request",
+            "command": "getCodeFixes",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "startLine": 2,
+                "endLine": 2,
+                "startOffset": 17,
+                "endOffset": 17,
+                "errorCodes": [
+                    1003
+                ]
+            }
+        },
+        {
+            "seq": 132,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 1
+            }
+        },
+        {
+            "seq": 133,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 17,
+                "endLine": 2,
+                "endOffset": 17,
+                "insertString": "g"
+            }
+        },
+        {
+            "seq": 134,
+            "type": "request",
+            "command": "completions",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 18
+            }
+        },
+        {
+            "seq": 135,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 18,
+                "endLine": 2,
+                "endOffset": 18,
+                "insertString": "e"
+            }
+        },
+        {
+            "seq": 136,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 19,
+                "endLine": 2,
+                "endOffset": 19,
+                "insertString": "t"
+            }
+        },
+        {
+            "seq": 137,
+            "type": "request",
+            "command": "navtree",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts"
+            }
+        },
+        {
+            "seq": 138,
+            "type": "request",
+            "command": "getCodeFixes",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "startLine": 2,
+                "endLine": 2,
+                "startOffset": 17,
+                "endOffset": 20,
+                "errorCodes": [
+                    1003
+                ]
+            }
+        },
+        {
+            "seq": 139,
+            "type": "request",
+            "command": "navtree",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts"
+            }
+        },
+        {
+            "seq": 140,
+            "type": "request",
+            "command": "geterr",
+            "arguments": {
+                "delay": 0,
+                "files": [
+                    "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                    "/Users/asvetl/work/applications/frontend/src/app/utils/Analytic.ts",
+                    "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                    "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                    "/users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts"
+                ]
+            }
+        },
+        {
+            "seq": 141,
+            "type": "request",
+            "command": "getCodeFixes",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "startLine": 2,
+                "endLine": 2,
+                "startOffset": 17,
+                "endOffset": 20,
+                "errorCodes": [
+                    1005,
+                    2391,
+                    7010
+                ]
+            }
+        },
+        {
+            "seq": 142,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 17
+            }
+        },
+        {
+            "seq": 143,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 20,
+                "endLine": 2,
+                "endOffset": 20,
+                "insertString": "G"
+            }
+        },
+        {
+            "seq": 144,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 21,
+                "endLine": 2,
+                "endOffset": 21,
+                "insertString": "e"
+            }
+        },
+        {
+            "seq": 145,
+            "type": "request",
+            "command": "navtree",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts"
+            }
+        },
+        {
+            "seq": 146,
+            "type": "request",
+            "command": "getCodeFixes",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "startLine": 2,
+                "endLine": 2,
+                "startOffset": 17,
+                "endOffset": 22,
+                "errorCodes": [
+                    1005,
+                    2391,
+                    7010
+                ]
+            }
+        },
+        {
+            "seq": 147,
+            "type": "request",
+            "command": "navtree",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts"
+            }
+        },
+        {
+            "seq": 148,
+            "type": "request",
+            "command": "geterr",
+            "arguments": {
+                "delay": 0,
+                "files": [
+                    "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                    "/Users/asvetl/work/applications/frontend/src/app/utils/Analytic.ts",
+                    "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                    "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                    "/users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts"
+                ]
+            }
+        },
+        {
+            "seq": 149,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 22,
+                "endLine": 2,
+                "endOffset": 22,
+                "insertString": "o"
+            }
+        },
+        {
+            "seq": 150,
+            "type": "request",
+            "command": "getCodeFixes",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "startLine": 2,
+                "endLine": 2,
+                "startOffset": 17,
+                "endOffset": 23,
+                "errorCodes": [
+                    1005,
+                    2391,
+                    7010
+                ]
+            }
+        },
+        {
+            "seq": 151,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 23,
+                "endLine": 2,
+                "endOffset": 23,
+                "insertString": "o"
+            }
+        },
+        {
+            "seq": 152,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 24,
+                "endLine": 2,
+                "endOffset": 24,
+                "insertString": "k"
+            }
+        },
+        {
+            "seq": 153,
+            "type": "request",
+            "command": "completions",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 25
+            }
+        },
+        {
+            "seq": 154,
+            "type": "request",
+            "command": "getCodeFixes",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "startLine": 2,
+                "endLine": 2,
+                "startOffset": 17,
+                "endOffset": 25,
+                "errorCodes": [
+                    1005,
+                    2391,
+                    7010
+                ]
+            }
+        },
+        {
+            "seq": 155,
+            "type": "request",
+            "command": "navtree",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts"
+            }
+        },
+        {
+            "seq": 156,
+            "type": "request",
+            "command": "navtree",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts"
+            }
+        },
+        {
+            "seq": 157,
+            "type": "request",
+            "command": "geterr",
+            "arguments": {
+                "delay": 0,
+                "files": [
+                    "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                    "/Users/asvetl/work/applications/frontend/src/app/utils/Analytic.ts",
+                    "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                    "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                    "/users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts"
+                ]
+            }
+        },
+        {
+            "seq": 158,
+            "type": "request",
+            "command": "getCodeFixes",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "startLine": 2,
+                "endLine": 2,
+                "startOffset": 17,
+                "endOffset": 25,
+                "errorCodes": [
+                    1005,
+                    2391,
+                    7010
+                ]
+            }
+        },
+        {
+            "seq": 159,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 24,
+                "endLine": 2,
+                "endOffset": 25,
+                "insertString": ""
+            }
+        },
+        {
+            "seq": 160,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 23,
+                "endLine": 2,
+                "endOffset": 24,
+                "insertString": ""
+            }
+        },
+        {
+            "seq": 161,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 22,
+                "endLine": 2,
+                "endOffset": 23,
+                "insertString": ""
+            }
+        },
+        {
+            "seq": 162,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 21,
+                "endLine": 2,
+                "endOffset": 22,
+                "insertString": ""
+            }
+        },
+        {
+            "seq": 163,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 20,
+                "endLine": 2,
+                "endOffset": 21,
+                "insertString": ""
+            }
+        },
+        {
+            "seq": 164,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 20,
+                "endLine": 2,
+                "endOffset": 20,
+                "insertString": "C"
+            }
+        },
+        {
+            "seq": 165,
+            "type": "request",
+            "command": "completions",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 21
+            }
+        },
+        {
+            "seq": 166,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 21,
+                "endLine": 2,
+                "endOffset": 21,
+                "insertString": "o"
+            }
+        },
+        {
+            "seq": 167,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 22,
+                "endLine": 2,
+                "endOffset": 22,
+                "insertString": "o"
+            }
+        },
+        {
+            "seq": 168,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 23,
+                "endLine": 2,
+                "endOffset": 23,
+                "insertString": "k"
+            }
+        },
+        {
+            "seq": 169,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 24,
+                "endLine": 2,
+                "endOffset": 24,
+                "insertString": "i"
+            }
+        },
+        {
+            "seq": 170,
+            "type": "request",
+            "command": "completions",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 25
+            }
+        },
+        {
+            "seq": 171,
+            "type": "request",
+            "command": "navtree",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts"
+            }
+        },
+        {
+            "seq": 172,
+            "type": "request",
+            "command": "navtree",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts"
+            }
+        },
+        {
+            "seq": 173,
+            "type": "request",
+            "command": "geterr",
+            "arguments": {
+                "delay": 0,
+                "files": [
+                    "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                    "/Users/asvetl/work/applications/frontend/src/app/utils/Analytic.ts",
+                    "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                    "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                    "/users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts"
+                ]
+            }
+        },
+        {
+            "seq": 174,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 17
+            }
+        },
+        {
+            "seq": 175,
+            "type": "request",
+            "command": "getCodeFixes",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "startLine": 2,
+                "endLine": 2,
+                "startOffset": 17,
+                "endOffset": 25,
+                "errorCodes": [
+                    1005,
+                    2391,
+                    7010
+                ]
+            }
+        },
+        {
+            "seq": 176,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 25,
+                "endLine": 2,
+                "endOffset": 25,
+                "insertString": "e"
+            }
+        },
+        {
+            "seq": 177,
+            "type": "request",
+            "command": "completions",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 26
+            }
+        },
+        {
+            "seq": 178,
+            "type": "request",
+            "command": "navtree",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts"
+            }
+        },
+        {
+            "seq": 179,
+            "type": "request",
+            "command": "getCodeFixes",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "startLine": 2,
+                "endLine": 2,
+                "startOffset": 17,
+                "endOffset": 26,
+                "errorCodes": [
+                    1005,
+                    2391,
+                    7010
+                ]
+            }
+        },
+        {
+            "seq": 180,
+            "type": "request",
+            "command": "navtree",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts"
+            }
+        },
+        {
+            "seq": 181,
+            "type": "request",
+            "command": "geterr",
+            "arguments": {
+                "delay": 0,
+                "files": [
+                    "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                    "/Users/asvetl/work/applications/frontend/src/app/utils/Analytic.ts",
+                    "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                    "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                    "/users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts"
+                ]
+            }
+        },
+        {
+            "seq": 182,
+            "type": "request",
+            "command": "references",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 17
+            }
+        },
+        {
+            "seq": 183,
+            "type": "request",
+            "command": "getCodeFixes",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "startLine": 2,
+                "endLine": 2,
+                "startOffset": 17,
+                "endOffset": 26,
+                "errorCodes": [
+                    1005,
+                    2391,
+                    7010
+                ]
+            }
+        },
+        {
+            "seq": 184,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 26,
+                "endLine": 2,
+                "endOffset": 26,
+                "insertString": "s"
+            }
+        },
+        {
+            "seq": 185,
+            "type": "request",
+            "command": "completions",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 27
+            }
+        },
+        {
+            "seq": 186,
+            "type": "request",
+            "command": "navtree",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts"
+            }
+        },
+        {
+            "seq": 187,
+            "type": "request",
+            "command": "getCodeFixes",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "startLine": 2,
+                "endLine": 2,
+                "startOffset": 17,
+                "endOffset": 27,
+                "errorCodes": [
+                    1005,
+                    2391,
+                    7010
+                ]
+            }
+        },
+        {
+            "seq": 188,
+            "type": "request",
+            "command": "navtree",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts"
+            }
+        },
+        {
+            "seq": 189,
+            "type": "request",
+            "command": "geterr",
+            "arguments": {
+                "delay": 0,
+                "files": [
+                    "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                    "/Users/asvetl/work/applications/frontend/src/app/utils/Analytic.ts",
+                    "/Users/asvetl/work/applications/frontend/node_modules/@types/react-ga/index.d.ts",
+                    "/Users/asvetl/work/applications/frontend/src/app/containers/auth/Signup.tsx",
+                    "/users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts"
+                ]
+            }
+        },
+        {
+            "seq": 190,
+            "type": "request",
+            "command": "change",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 27,
+                "endLine": 2,
+                "endOffset": 27,
+                "insertString": "()"
+            }
+        },
+        {
+            "seq": 191,
+            "type": "request",
+            "command": "signatureHelp",
+            "arguments": {
+                "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+                "line": 2,
+                "offset": 28
+            }
+        }
+    ]
+}
