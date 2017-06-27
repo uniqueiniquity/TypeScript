@@ -34,17 +34,8 @@ namespace ts {
         }
 
         export function getApplicableRefactors(context: RefactorContext): ApplicableRefactorInfo[] {
-            const results: ApplicableRefactorInfo[] = [];
-            ts.forEachEntry(refactors, refactor => {
-                if (context.cancellationToken && context.cancellationToken.isCancellationRequested()) {
-                    return true; // Exit loop early
-                }
-                const infos = refactor.getAvailableActions(context);
-                if (infos && infos.length) {
-                    results.push(...infos);
-                }
-            });
-            return results;
+            return flatMapIter(refactors.values(), refactor =>
+                context.cancellationToken && context.cancellationToken.isCancellationRequested() ? [] : refactor.getAvailableActions(context));
         }
 
         export function getEditsForRefactor(context: RefactorContext, refactorName: string, actionName: string): RefactorEditInfo | undefined {
