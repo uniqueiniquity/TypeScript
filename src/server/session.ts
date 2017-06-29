@@ -1294,6 +1294,8 @@ namespace ts.server {
         private change(args: protocol.ChangeRequestArgs) {
             const { file, project } = this.getFileAndProject(args, /*errorOnMissingProject*/ false);
             if (project) {
+                //shouldn't this all be a method on scriptInfo?
+                //Note: both lineOffsetToPosition and editContent call into textStorage...
                 const scriptInfo = project.getScriptInfoForNormalizedPath(file);
                 const start = scriptInfo.lineOffsetToPosition(args.line, args.offset);
                 const end = scriptInfo.lineOffsetToPosition(args.endLine, args.endOffset);

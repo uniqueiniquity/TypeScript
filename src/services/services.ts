@@ -954,7 +954,7 @@ namespace ts {
     export function updateLanguageServiceSourceFile(sourceFile: SourceFile, scriptSnapshot: IScriptSnapshot, version: string, textChangeRange: TextChangeRange, aggressiveChecks?: boolean): SourceFile {
         // If we were given a text change range, and our version or open-ness changed, then
         // incrementally parse this file.
-        if (textChangeRange) {
+        if (textChangeRange) { //the rare triple-if.
             if (version !== sourceFile.version) {
                 // Once incremental parsing is ready, then just call into this function.
                 if (!disableIncrementalParsing) {

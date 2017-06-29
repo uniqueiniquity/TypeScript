@@ -295,7 +295,7 @@ namespace ts {
         return textToToken.get(s);
     }
 
-    /* @internal */
+    //was internal
     export function computeLineStarts(text: string): number[] {
         const result: number[] = new Array();
         let pos = 0;
@@ -329,7 +329,7 @@ namespace ts {
         return computePositionOfLineAndCharacter(getLineStarts(sourceFile), line, character);
     }
 
-    /* @internal */
+    //was internal
     export function computePositionOfLineAndCharacter(lineStarts: number[], line: number, character: number): number {
         Debug.assert(line >= 0 && line < lineStarts.length);
         return lineStarts[line] + character;
@@ -340,10 +340,10 @@ namespace ts {
         return sourceFile.lineMap || (sourceFile.lineMap = computeLineStarts(sourceFile.text));
     }
 
-    /* @internal */
     /**
      * We assume the first line starts at position 0 and 'position' is non-negative.
      */
+    //was internal
     export function computeLineAndCharacterOfPosition(lineStarts: number[], position: number) {
         let lineNumber = binarySearch(lineStarts, position);
         if (lineNumber < 0) {

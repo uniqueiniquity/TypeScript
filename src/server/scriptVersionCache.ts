@@ -264,6 +264,7 @@ namespace ts.server {
         }
     }
 
+    //This is the main export of this file. Others are only exported for sake of unit tests
     export class ScriptVersionCache {
         changes: TextChange[] = [];
         versions: LineIndexSnapshot[] = new Array<LineIndexSnapshot>(ScriptVersionCache.maxVersions);
@@ -288,11 +289,12 @@ namespace ts.server {
         }
 
         // REVIEW: can optimize by coalescing simple edits
+        //this still needs review...
         edit(pos: number, deleteLen: number, insertedText?: string) {
-            this.changes[this.changes.length] = new TextChange(pos, deleteLen, insertedText);
-            if ((this.changes.length > ScriptVersionCache.changeNumberThreshold) ||
-                (deleteLen > ScriptVersionCache.changeLengthThreshold) ||
-                (insertedText && (insertedText.length > ScriptVersionCache.changeLengthThreshold))) {
+            this.changes[this.changes.length] = new TextChange(pos, deleteLen, insertedText); //Isn't this just push?
+            if (this.changes.length > ScriptVersionCache.changeNumberThreshold ||
+                deleteLen > ScriptVersionCache.changeLengthThreshold ||
+                insertedText && insertedText.length > ScriptVersionCache.changeLengthThreshold) {
                 this.getSnapshot();
             }
         }
@@ -337,7 +339,7 @@ namespace ts.server {
             this.minVersion = this.currentVersion;
         }
 
-        getSnapshot() {
+        getSnapshot(): IScriptSnapshot & { readonly version: number, readonly index: LineIndex } {
             let snap = this.versions[this.currentVersionToIndex()];
             if (this.changes.length > 0) {
                 let snapIndex = snap.index;
@@ -359,7 +361,7 @@ namespace ts.server {
             return snap;
         }
 
-        getTextChangesBetweenVersions(oldVersion: number, newVersion: number) {
+        getTextChangesBetweenVersions(oldVersion: number, newVersion: number): TextChangeRange {
             if (oldVersion < newVersion) {
                 if (oldVersion >= this.minVersion) {
                     const textChangeRanges: ts.TextChangeRange[] = [];
@@ -380,7 +382,7 @@ namespace ts.server {
             }
         }
 
-        static fromString(host: ServerHost, script: string) {
+        static fromString(host: ServerHost, script: string): ScriptVersionCache {
             const svc = new ScriptVersionCache();
             const snap = new LineIndexSnapshot(0, svc);
             svc.versions[svc.currentVersion] = snap;
@@ -392,7 +394,7 @@ namespace ts.server {
         }
     }
 
-    export class LineIndexSnapshot implements ts.IScriptSnapshot {
+    export class LineIndexSnapshot implements IScriptSnapshot {
         index: LineIndex;
         changesSincePreviousVersion: TextChange[] = [];
 
@@ -518,7 +520,7 @@ namespace ts.server {
             return !walkFns.done;
         }
 
-        edit(pos: number, deleteLength: number, newText?: string) {
+        edit(pos: number, deleteLength: number, newText?: string) { //This one actually does it.
             function editFlat(source: string, s: number, dl: number, nt = "") {
                 return source.substring(0, s) + nt + source.substring(s + dl, source.length);
             }

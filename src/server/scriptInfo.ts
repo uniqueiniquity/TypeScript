@@ -1,9 +1,7 @@
 /// <reference path="scriptVersionCache.ts"/>
 
 namespace ts.server {
-
-    /* @internal */
-    export class TextStorage {
+    export class TextStorage { //was internal
         private svc: ScriptVersionCache | undefined;
         private svcVersion = 0;
 
@@ -11,6 +9,7 @@ namespace ts.server {
         private lineMap: number[];
         private textVersion = 0;
 
+        //TODO: surely this can't use all the methods on host.
         constructor(private readonly host: ServerHost, private readonly fileName: NormalizedPath) {
         }
 
