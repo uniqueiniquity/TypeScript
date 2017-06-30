@@ -8,7 +8,7 @@ namespace ts {
 
     function lineColToPosition(lineIndex: server.LineIndex, line: number, col: number) {
         const lineInfo = lineIndex.lineNumberToInfo(line);
-        return (lineInfo.offset + col - 1);
+        return lineInfo.offset + col - 1;
     }
 
     function validateEdit(lineIndex: server.LineIndex, sourceText: string, position: number, deleteLength: number, insertString: string): void {

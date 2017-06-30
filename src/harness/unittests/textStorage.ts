@@ -2,7 +2,7 @@
 /// <reference path="../../server/scriptVersionCache.ts"/>
 /// <reference path="./tsserverProjectSystem.ts" />
 
-namespace ts.textStorage {
+namespace ts.textStorage { //make a unit test
     describe("Text storage", () => {
         const f = {
             path: "/a/app.ts",

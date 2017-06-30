@@ -96,8 +96,8 @@ namespace ts.server {
             const index = this.svc.getSnapshot().index;
 
             const lineInfo = index.lineNumberToInfo(line);
-            // TODO: assert this offset is actually on the line
-            return (lineInfo.offset + offset - 1);
+            //TODO: assert this offset is actually on the line
+            return lineInfo.offset + offset - 1;
         }
 
         /**

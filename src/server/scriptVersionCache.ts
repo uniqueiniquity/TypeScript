@@ -13,8 +13,8 @@ namespace ts.server {
     }
 
     export interface ILineInfo {
-        line: number;
-        offset: number;
+        line: number; //?
+        offset: number; //?
         text?: string;
         leaf?: LineLeaf;
     }
@@ -627,7 +627,7 @@ namespace ts.server {
             else {
                 lines.length--;
             }
-            return { lines: lines, lineMap: lineStarts };
+            return { lines, lineMap: lineStarts };
         }
     }
 

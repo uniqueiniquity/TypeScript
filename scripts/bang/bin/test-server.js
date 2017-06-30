@@ -170,7 +170,7 @@ function testChanges(changer) {
     }
 }
 function testFake() {
-    var c2 = new utils_1.C2();
+    var c2 = new utils_1.C4();
     testChanges(c2);
 }
 function testSession() {
@@ -218,6 +218,8 @@ function testSession() {
     process.exit(0); //Else server will leave it open
     */
 }
+ts.server.ScriptVersionCache.changeNumberThreshold = Number.MAX_SAFE_INTEGER;
+ts.server.ScriptVersionCache.changeLengthThreshold = Number.MAX_SAFE_INTEGER;
 //testSession();
 testFake();
 /*

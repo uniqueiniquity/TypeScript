@@ -14,32 +14,93 @@ var host = {
     newLine: "\n",
     writeFile: notImplemented
 };
-var C2 = (function () {
-    function C2() {
-        this.si = new ts.server.ScriptInfo(host, "a.ts", 3 /* TS */);
+var C3 = (function () {
+    function C3() {
+        this.txt = new ts.server.TextStorage(host, "a.ts");
     }
-    C2.prototype.change = function (change) {
-        var si = this.si;
+    C3.prototype.change = function (change) {
+        var txt = this.txt;
         var line = change.line, offset = change.offset, endLine = change.endLine, endOffset = change.endOffset, insertString = change.insertString;
-        var start = si.lineOffsetToPosition(line, offset);
-        var end = si.lineOffsetToPosition(endLine, endOffset);
-        si.editContent(start, end, insertString);
+        var start = txt.lineOffsetToPosition(line, offset);
+        var end = txt.lineOffsetToPosition(endLine, endOffset);
+        txt.edit(start, end, insertString);
     };
-    C2.prototype.getText = function () {
-        var si = this.si;
-        var snp = si.getSnapshot();
-        var change = snp.getChangeRange(this.prevSnapshot);
+    C3.prototype.getText = function () {
+        var txt = this.txt;
+        var snap = txt.getSnapshot();
+        var change = snap.getChangeRange(this.prevSnapshot);
         if (change) {
-            snp.getText(change.span.start, change.span.start + change.span.length);
+            snap.getText(change.span.start, change.span.start + change.span.length);
         }
         else {
-            snp.getText(0, 0);
+            snap.getText(0, 0);
         }
-        this.prevSnapshot = snp;
+        this.prevSnapshot = snap;
     };
-    return C2;
+    return C3;
 }());
-exports.C2 = C2;
+exports.C3 = C3;
+var C4 = (function () {
+    function C4() {
+        this.svc = ts.server.ScriptVersionCache.fromString(host, "");
+        this.correctText = "";
+    }
+    C4.prototype.change = function (change) {
+        var svc = this.svc;
+        var line = change.line, offset = change.offset, endLine = change.endLine, endOffset = change.endOffset, insertString = change.insertString;
+        var index = svc.getSnapshot().index;
+        var lineInfo = index.lineNumberToInfo(line);
+        //TODO: assert this offset is actually on the line
+        var start = index.lineNumberToInfo(line).offset + offset - 1;
+        var end = index.lineNumberToInfo(endLine).offset + endOffset - 1;
+        var correctStart = lineAndOffsetToPos(this.correctText, line - 1, offset - 1);
+        var correctEnd = lineAndOffsetToPos(this.correctText, endLine - 1, endOffset - 1);
+        if (start !== correctStart)
+            throw new Error();
+        if (end !== correctEnd)
+            throw new Error();
+        svc.edit(start, end - start, insertString);
+        this.correctText = correctChange(this.correctText, correctStart, correctEnd, insertString);
+    };
+    C4.prototype.getText = function () {
+        var svc = this.svc;
+        var snap = svc.getSnapshot();
+        var change = snap.getChangeRange(this.prevSnapshot);
+        var start;
+        var end;
+        if (change) {
+            start = change.span.start;
+            end = start + change.span.length;
+        }
+        else {
+            start = end = 0;
+        }
+        var text = snap.getText(start, end);
+        if (text !== this.correctText) {
+            console.log(JSON.stringify(text));
+            console.log(JSON.stringify(this.correctText));
+            throw new Error();
+        }
+        this.prevSnapshot = snap;
+    };
+    return C4;
+}());
+exports.C4 = C4;
+function correctChange(text, start, end, insertString) {
+    return text.slice(0, start) + insertString + text.slice(end);
+}
+function lineAndOffsetToPos(text, line, offset) {
+    var lines = text.split("\n");
+    var pos = 0;
+    for (var i = 0; i < line; i++) {
+        pos += lines[i].length + 1; //+1 for the "\n"
+    }
+    var res = pos + offset;
+    if (res !== lineAndCharacterToPosition(text, line, offset)) {
+        throw new Error("!");
+    }
+    return res;
+}
 //const s = new ts.server.ScriptVersionCache();
 //NOTE: working under the assumption that it's OK to get a new scriptinfo every time.
 var ChangerOld = (function () {

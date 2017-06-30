@@ -13,40 +13,104 @@ const host: ts.server.ScriptInfoHost = {
 	writeFile: notImplemented,
 };
 
-
-export class C2 {
-	private si = new ts.server.ScriptInfo(host, "a.ts" as any, ts.ScriptKind.TS);
+export class C3 {
+	private txt = new ts.server.TextStorage(host, "a.ts" as ts.server.NormalizedPath);
 	private prevSnapshot: ts.IScriptSnapshot;
 
-	constructor() {
-	}
-
 	change(change: Change) {
-		const { si } = this;
+		const { txt } = this;
 		let { line, offset, endLine, endOffset, insertString } = change;
-
-		const start = si.lineOffsetToPosition(line, offset);
-		const end = si.lineOffsetToPosition(endLine, endOffset);
-		si.editContent(start, end, insertString);
+		const start = txt.lineOffsetToPosition(line, offset);
+		const end = txt.lineOffsetToPosition(endLine, endOffset);
+		txt.edit(start, end, insertString);
 	}
 
 	getText() {
-		const { si } = this;
-		const snp = si.getSnapshot();
-		const change = snp.getChangeRange(this.prevSnapshot);
+		const { txt } = this;
+		const snap = txt.getSnapshot();
+		const change = snap.getChangeRange(this.prevSnapshot);
 
 		if (change) {
-			snp.getText(change.span.start, change.span.start + change.span.length);
+			snap.getText(change.span.start, change.span.start + change.span.length);
 		} else {
-			snp.getText(0, 0);
+			snap.getText(0, 0);
 		}
 
-		this.prevSnapshot = snp;
+		this.prevSnapshot = snap;
 	}
 }
 
+export class C4 {
+	private svc = ts.server.ScriptVersionCache.fromString(host, "");
+	private prevSnapshot: ts.IScriptSnapshot;
+	private correctText = "";
 
+	change(change: Change) {
+		const { svc } = this;
+		let { line, offset, endLine, endOffset, insertString } = change;
+		const index = svc.getSnapshot().index;
+		const lineInfo = index.lineNumberToInfo(line);
 
+		//TODO: assert this offset is actually on the line
+		const start = index.lineNumberToInfo(line).offset + offset - 1;
+		const end = index.lineNumberToInfo(endLine).offset + endOffset - 1;
+
+		const correctStart = lineAndOffsetToPos(this.correctText, line - 1, offset - 1);
+		const correctEnd = lineAndOffsetToPos(this.correctText, endLine - 1, endOffset - 1);
+
+		if (start !== correctStart) throw new Error();
+		if (end !== correctEnd) throw new Error();
+
+		svc.edit(start, end - start, insertString);
+
+		this.correctText = correctChange(this.correctText, correctStart, correctEnd, insertString);
+	}
+
+	getText() {
+		const { svc } = this;
+		const snap = svc.getSnapshot();
+		const change = snap.getChangeRange(this.prevSnapshot);
+
+		let start: number;
+		let end: number;
+		if (change) {
+			start = change.span.start;
+			end = start + change.span.length;
+		} else {
+			start = end = 0;
+		}
+
+		const text = snap.getText(start, end);
+		if (text !== this.correctText.slice(start, end)) {
+			console.log(JSON.stringify(text));
+			console.log(JSON.stringify(this.correctText));
+			throw new Error();
+		}
+
+		this.prevSnapshot = snap;
+	}
+}
+
+function correctChange(text: string, start: number, end: number, insertString: string) {
+	return text.slice(0, start) + insertString + text.slice(end);
+}
+
+function lineAndOffsetToPos(text: string, line: number, offset: number) {
+	const lines = text.split("\n");
+	let pos = 0;
+
+	for (let i = 0; i < line; i++) {
+		pos += lines[i].length + 1; //+1 for the "\n"
+	}
+
+	const res = pos + offset;
+
+	if (res !== lineAndCharacterToPosition(text, line, offset)) {
+		throw new Error("!");
+	}
+
+	return res;
+}
 
 
 //const s = new ts.server.ScriptVersionCache();
