@@ -2173,7 +2173,6 @@ namespace ts.server.protocol {
         /**
          * Optional string to insert at location (file, line, offset).
          */
-        //Why optional? If you're not inserting anything, what's the point?
         insertString?: string;
     }
 

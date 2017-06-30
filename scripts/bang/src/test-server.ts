@@ -1,11 +1,11 @@
 import { readFileSync, writeFileSync } from "fs";
 
-import ts = require("../../built/local/tsserverlibrary");
+import ts = require("../../../built/local/tsserverlibrary");
 
-import { Change, Changer } from "./utils";
+import { Change, ChangerOld, C2 } from "./utils";
 import parseLog from "./parseLog";
 
-const logLocation = "C:/Users/anhans/Downloads/tsserver.log"; //"/home/andy/Downloads/tsserver.log";
+const logLocation = "/home/andy/Downloads/tsserver.log"; //"C:/Users/anhans/Downloads/tsserver.log"; //
 
 class DumbSession extends ts.server.Session {
 	constructor() {
@@ -40,6 +40,9 @@ class DumbSession extends ts.server.Session {
 			clearImmediate: noop,
 			createHash: s => `hash_${s}`,
 			//TODO: https://github.com/Microsoft/TypeScript/issues/16776
+			watchFile: () => {
+				return { close() {} };
+			},
 			watchDirectory: () => {
 				return { close() {} };
 			},
@@ -139,21 +142,23 @@ const requests = JSON.parse(readFileSync("./requests.json", "utf-8"));
 //writeFileSync("./requests.json", JSON.stringify(requests, undefined, 2));
 //process.exit(0);
 
-function testChanges() {
-	const bufferedChanges: Change[] = [];
-	const changer = new Changer();
+interface Changer {
+	change(change: Change): void;
+	getText(): void;
+}
+
+
+function testChanges(changer: Changer) {
 	for (const rq of requests) {
 		switch (rq.command) {
 			case "open":
 				break; //ignore
 			case "change":
-				bufferedChanges.push(rq.arguments);
+				const { line, offset, endLine, endOffset, insertString } = rq.arguments;
+				changer.change({ line, offset, endLine, endOffset, insertString });
 				break;
 			case "completions":
-				for (const change of bufferedChanges) {
-					changer.change(change);
-				}
-				changer.getText(345, 378);
+				changer.getText();
 				break;
 			default:
 				throw new Error(rq.command);
@@ -161,10 +166,41 @@ function testChanges() {
 	}
 }
 
-
+function testFake() {
+	const c2 = new C2();
+	testChanges(c2);
+}
 
 function testSession() {
 	const sess = new DumbSession();
+
+	sess.onMessage(JSON.stringify({
+		"command": "open",
+		"arguments": {
+			file: "/a.ts",
+			fileContent: "",
+			scriptKindName: "TS",
+			projectRootPath: "/Users/asvetl/work/applications/frontend"
+		}
+	}));
+
+	const sessionChanger: Changer = {
+		change(change) {
+			const args = { ...change, file: "/a.ts" };
+			sess.onMessage(JSON.stringify({ command: "change", arguments: args }));
+		},
+		getText() {
+			const args = {
+			  file: "/a.ts",
+			  line: 1,
+			  offset: 1
+			};
+			sess.onMessage(JSON.stringify({ command: "completions", arguments: args }));
+		}
+	}
+	testChanges(sessionChanger);
+
+	/*
 	try {
 		for (const rq of requests) {
 			//console.log("SEND: ", JSON.stringify(rq));
@@ -178,27 +214,25 @@ function testSession() {
 
 		const j = JSON.parse(e.message.split('\n')[2]);
 		console.log(j.message);
-
 	}
 
 	process.exit(0); //Else server will leave it open
+	*/
 }
 
-
-
 //testSession();
-testChanges();
+testFake();
 
 /*
 TypeError: Cannot read property 'charCount' of undefined
-    at LineNode.walk (/home/andy/TypeScript/built/local/scriptVersionCache.ts:702:39)
-    at LineIndex.walk (/home/andy/TypeScript/built/local/scriptVersionCache.ts:484:23)
-    at LineIndex.getText (/home/andy/TypeScript/built/local/scriptVersionCache.ts:490:22)
-    at LineIndexSnapshot.getText (/home/andy/TypeScript/built/local/scriptVersionCache.ts:404:31)
-    at Object.updateLanguageServiceSourceFile (/home/andy/TypeScript/built/services/services.ts:980:60)
-    at acquireOrUpdateDocument (/home/andy/TypeScript/built/services/documentRegistry.ts:193:40)
-    at Object.updateDocumentWithKey (/home/andy/TypeScript/built/services/documentRegistry.ts:160:20)
-    at Object.getOrCreateSourceFileByPath [as getSourceFileByPath] (/home/andy/TypeScript/built/services/services.ts:1265:49)
-    at tryReuseStructureFromOldProgram (/home/andy/TypeScript/built/compiler/program.ts:771:28)
+	at LineNode.walk (/home/andy/TypeScript/built/local/scriptVersionCache.ts:702:39)
+	at LineIndex.walk (/home/andy/TypeScript/built/local/scriptVersionCache.ts:484:23)
+	at LineIndex.getText (/home/andy/TypeScript/built/local/scriptVersionCache.ts:490:22)
+	at LineIndexSnapshot.getText (/home/andy/TypeScript/built/local/scriptVersionCache.ts:404:31)
+	at Object.updateLanguageServiceSourceFile (/home/andy/TypeScript/built/services/services.ts:980:60)
+	at acquireOrUpdateDocument (/home/andy/TypeScript/built/services/documentRegistry.ts:193:40)
+	at Object.updateDocumentWithKey (/home/andy/TypeScript/built/services/documentRegistry.ts:160:20)
+	at Object.getOrCreateSourceFileByPath [as getSourceFileByPath] (/home/andy/TypeScript/built/services/services.ts:1265:49)
+	at tryReuseStructureFromOldProgram (/home/andy/TypeScript/built/compiler/program.ts:771:28)
 	at Object.createProgram (/home/andy/TypeScript/built/compiler/program.ts:480:36)
 */

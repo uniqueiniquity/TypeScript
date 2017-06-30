@@ -2,6 +2,9 @@
     "compilerOptions": {
         "lib": ["es2017"],
         "strict": true,
-        "types": ["node"]
+        "types": ["node"],
+
+        "outDir": "bin",
+        "sourceMap": true
     }
 }

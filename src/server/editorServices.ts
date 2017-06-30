@@ -397,6 +397,7 @@ namespace ts.server {
         private readonly seenProjects = createMap<true>();
 
         constructor(opts: ProjectServiceOptions) {
+            Debug.assert(!!opts.host); //remove
             this.host = opts.host;
             this.logger = opts.logger;
             this.cancellationToken = opts.cancellationToken;

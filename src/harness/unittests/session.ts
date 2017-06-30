@@ -16,8 +16,8 @@ namespace ts.server {
         directoryExists: () => false,
         getDirectories: () => [],
         createDirectory: noop,
-        getExecutingFilePath: () => undefined,
-        getCurrentDirectory: () => undefined,
+        getExecutingFilePath: () => "",
+        getCurrentDirectory: () => "",
         getEnvironmentVariable: () => "",
         readDirectory: () => [],
         exit: noop,
@@ -27,10 +27,15 @@ namespace ts.server {
         clearImmediate: noop,
         createHash: Harness.LanguageService.mockHash,
         //TODO: https://github.com/Microsoft/TypeScript/issues/16776
+        watchFile: () => {
+          return {
+            close() {},
+          };
+        },
         watchDirectory: () => {
             return {
                 close() {},
-            }
+            };
         },
     };
 

@@ -7,6 +7,15 @@ namespace ts {
     export const version = `${versionMajorMinor}.0`;
 }
 
+//was internal
+namespace ts {
+    export const enum Comparison {
+        LessThan    = -1,
+        EqualTo     = 0,
+        GreaterThan = 1
+    }
+}
+
 /* @internal */
 namespace ts {
     /**
@@ -195,12 +204,6 @@ namespace ts {
             ? normalizePath(fileName)
             : getNormalizedAbsolutePath(fileName, basePath);
         return <Path>getCanonicalFileName(nonCanonicalizedPath);
-    }
-
-    export const enum Comparison {
-        LessThan    = -1,
-        EqualTo     = 0,
-        GreaterThan = 1
     }
 
     export function length(array: any[]) {

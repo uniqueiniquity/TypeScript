@@ -71,7 +71,7 @@ namespace ts.server {
         }
     }
 
-    export function getDefaultFormatCodeSettings(host: ServerHost): FormatCodeSettings {
+    export function getDefaultFormatCodeSettings(host: { newLine: string }): FormatCodeSettings {
         return {
             indentSize: 4,
             tabSize: 4,

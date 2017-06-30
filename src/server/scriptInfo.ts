@@ -154,6 +154,13 @@ namespace ts.server {
         }
     }
 
+    //!
+    export interface ScriptInfoHost extends FileReader {
+        getCurrentDirectory(): string;
+        useCaseSensitiveFileNames?: boolean;
+        newLine: string;
+        writeFile(fileName: string, text: string): void;
+    }
 
     export class ScriptInfo {
         /**
@@ -169,7 +176,7 @@ namespace ts.server {
         private isOpen: boolean;
 
         constructor(
-            private readonly host: ServerHost,
+            private readonly host: ScriptInfoHost,
             readonly fileName: NormalizedPath,
             readonly scriptKind: ScriptKind,
             public hasMixedContent = false) {

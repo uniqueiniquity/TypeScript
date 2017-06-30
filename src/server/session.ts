@@ -995,7 +995,7 @@ namespace ts.server {
             return args.position !== undefined ? args.position : scriptInfo.lineOffsetToPosition(args.line, args.offset);
         }
 
-        private getFileAndProject(args: protocol.FileRequestArgs, errorOnMissingProject = true) {
+        private getFileAndProject(args: protocol.FileRequestArgs, errorOnMissingProject = true): { file: NormalizedPath, project: Project } {
             return this.getFileAndProjectWorker(args.file, args.projectFileName, /*refreshInferredProjects*/ true, errorOnMissingProject);
         }
 
