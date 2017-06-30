@@ -156,19 +156,19 @@ export class C5 extends C4 {
 	get SVC() { return CheapoScriptVersionCache as any; }
 }
 
+//Mimics TextChange class
 export class C6 {
 	private prevSnapshot: ts.server.LineIndexSnapshot; // This will be somewhere in 'versions', but isn't the latest entry -- this only changes on `getText`
 	private correctText = "";
 	private versions: ts.server.LineIndexSnapshot[] = [];
 	private currentVersion = 0;
 	private changes: ts.server.TextChange[] = [];
-	private host: {
-		getTextChangesBetweenVersions(oldVersion: number, newVersion: number): ts.TextChangeRange;
-	};
+	private host: { getTextChangesBetweenVersions(oldVersion: number, newVersion: number): ts.TextChangeRange };
 
 	private getSnapshot() {
 		let snap = this.versions[this.currentVersion];
 		if (this.changes.length > 0) {
+			if (this.changes.length !== 1) throw new Error(JSON.stringify(this.changes));
 			let snapIndex = snap.index;
 			for (const change of this.changes) {
 				snapIndex = snapIndex.edit(change.pos, change.deleteLen, change.insertedText);
@@ -185,6 +185,7 @@ export class C6 {
 	}
 
 	getTextChangesBetweenVersions(oldVersion: number, newVersion: number) {
+		console.log({ oldVersion, newVersion });
 		if (oldVersion >= newVersion) throw new Error("???");
 		const textChangeRanges: ts.TextChangeRange[] = [];
 		for (let i = oldVersion + 1; i <= newVersion; i++) {

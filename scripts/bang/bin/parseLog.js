@@ -1,8 +1,8 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 function parseLog(log) {
-    var events = [];
-    var scn = new Scanner(log);
+    const events = [];
+    const scn = new Scanner(log);
     while (!scn.done()) {
         if (scn.tryEat("Info ")) {
             scn.skipNumber();
@@ -32,47 +32,46 @@ function parseLog(log) {
     }
     return events;
 }
-exports["default"] = parseLog;
-var Scanner = (function () {
-    function Scanner(s) {
+exports.default = parseLog;
+class Scanner {
+    constructor(s) {
         this.s = s;
         this.index = 0;
     }
-    Scanner.prototype.done = function () {
+    done() {
         return this.index === this.s.length;
-    };
-    Scanner.prototype.tryEat = function (expected) {
+    }
+    tryEat(expected) {
         if (this.s.startsWith(expected, this.index)) {
             this.index += expected.length;
             return true;
         }
         return false;
-    };
-    Scanner.prototype.cur = function () {
+    }
+    cur() {
         if (this.index == this.s.length)
             throw new Error();
         return this.s[this.index];
-    };
-    Scanner.prototype.skipNumber = function () {
+    }
+    skipNumber() {
         while (/\d/.test(this.cur())) {
             this.index++;
         }
-    };
-    Scanner.prototype.skipSpaces = function () {
+    }
+    skipSpaces() {
         while (this.cur() === " ") {
             this.index++;
         }
-    };
-    Scanner.prototype.takeRestOfLine = function () {
-        var start = this.index;
+    }
+    takeRestOfLine() {
+        const start = this.index;
         this.skipRestOfLine();
         return this.s.slice(start, this.index - 1);
-    };
-    Scanner.prototype.skipRestOfLine = function () {
+    }
+    skipRestOfLine() {
         while (this.cur() !== "\n")
             this.index++;
         this.index++;
-    };
-    return Scanner;
-}());
+    }
+}
 //# sourceMappingURL=parseLog.js.map

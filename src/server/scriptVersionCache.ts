@@ -6,8 +6,8 @@ namespace ts.server {
     const lineCollectionCapacity = 4;
 
     export interface LineCollection {
-        charCount(): number;
-        lineCount(): number;
+        charCount(): number; //number of chars, right?
+        lineCount(): number; //number of '\n' + 1, right?
         isLeaf(): boolean;
         walk(rangeStart: number, rangeLength: number, walkFns: ILineIndexWalker): void;
     }
@@ -38,14 +38,10 @@ namespace ts.server {
             parent: LineNode, nodeType: CharRangeSection): LineCollection;
     }
 
-    class BaseLineIndexWalker implements ILineIndexWalker {
+    class EditWalker implements ILineIndexWalker {
         goSubtree = true;
         done = false;
-        leaf(_rangeStart: number, _rangeLength: number, _ll: LineLeaf) {
-        }
-    }
 
-    class EditWalker extends BaseLineIndexWalker {
         lineIndex = new LineIndex();
         // path to start of range
         startPath: LineCollection[];
@@ -60,7 +56,6 @@ namespace ts.server {
         suppressTrailingText = false;
 
         constructor() {
-            super();
             this.lineIndex.root = new LineNode();
             this.startPath = [this.lineIndex.root];
             this.stack = [this.lineIndex.root];
@@ -412,7 +407,8 @@ namespace ts.server {
         }
 
         // this requires linear space so don't hold on to these
-        getLineStartPositions(): number[] {
+        //dead cooode
+        /*getLineStartPositions(): number[] {
             const starts: number[] = [-1];
             let count = 1;
             let pos = 0;
@@ -423,15 +419,14 @@ namespace ts.server {
                 return true;
             }, 0);
             return starts;
-        }
+        }*/
 
-        getLineMapper() {
-            return (line: number) => {
-                return this.index.lineNumberToInfo(line).offset;
-            };
-        }
+        //dead code, apparently
+        //getLineMapper() {
+        //    return (line: number) => this.index.lineNumberToInfo(line).offset;
+        //}
 
-        getTextChangeRangeSinceVersion(scriptVersion: number) {
+        private getTextChangeRangeSinceVersion(scriptVersion: number) {
             if (this.version <= scriptVersion) {
                 return ts.unchangedTextChangeRange;
             }
@@ -509,10 +504,10 @@ namespace ts.server {
             if (!rangeEnd) {
                 rangeEnd = this.root.charCount();
             }
-            const walkFns = {
+            const walkFns: ILineIndexWalker = {
                 goSubtree: true,
                 done: false,
-                leaf: function (this: ILineIndexWalker, relativeStart: number, relativeLength: number, ll: LineLeaf) {
+                leaf(relativeStart: number, relativeLength: number, ll: LineLeaf) {
                     if (!f(ll, relativeStart, relativeLength)) {
                         this.done = true;
                     }
@@ -636,7 +631,7 @@ namespace ts.server {
     export class LineNode implements LineCollection {
         totalChars = 0;
         totalLines = 0;
-        children: LineCollection[] = [];
+        private children: LineCollection[] = [];
 
         isLeaf() {
             return false;

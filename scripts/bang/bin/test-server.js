@@ -1,39 +1,19 @@
 "use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
-exports.__esModule = true;
-var fs_1 = require("fs");
-var ts = require("../../../built/local/tsserverlibrary");
-var utils_1 = require("./utils");
-var parseLog_1 = require("./parseLog");
-var logLocation = "/home/andy/Downloads/tsserver.log"; //"C:/Users/anhans/Downloads/tsserver.log"; //
-var DumbSession = (function (_super) {
-    __extends(DumbSession, _super);
-    function DumbSession() {
-        var _this = this;
-        var noop = function () { };
-        var notImplemented = function () { throw new Error(); };
-        var host = {
+Object.defineProperty(exports, "__esModule", { value: true });
+const fs_1 = require("fs");
+const ts = require("../../../built/local/tsserverlibrary");
+const utils_1 = require("./utils");
+const parseLog_1 = require("./parseLog");
+const logLocation = "/home/andy/Downloads/tsserver.log"; //"C:/Users/anhans/Downloads/tsserver.log"; //
+class DumbSession extends ts.server.Session {
+    constructor() {
+        const noop = () => { };
+        const notImplemented = () => { throw new Error(); };
+        const host = {
             args: [],
             newLine: "\n",
             useCaseSensitiveFileNames: true,
-            write: function (s) {
+            write(s) {
                 console.log(s);
                 if (s.includes('"success":false')) {
                     //console.log(s);
@@ -43,27 +23,27 @@ var DumbSession = (function (_super) {
             readFile: notImplemented,
             writeFile: noop,
             resolvePath: notImplemented,
-            fileExists: function () { return false; },
-            directoryExists: function () { return false; },
-            getDirectories: function () { return []; },
+            fileExists: () => false,
+            directoryExists: () => false,
+            getDirectories: () => [],
             createDirectory: noop,
-            getExecutingFilePath: function () { return ""; },
-            getCurrentDirectory: function () { return ""; },
+            getExecutingFilePath: () => "",
+            getCurrentDirectory: () => "",
             //getEnvironmentVariable: () => "",
-            readDirectory: function () { return []; },
+            readDirectory: () => [],
             exit: noop,
-            setTimeout: function () { return 0; },
+            setTimeout: () => 0,
             clearTimeout: noop,
-            setImmediate: function () { return 0; },
+            setImmediate: () => 0,
             clearImmediate: noop,
-            createHash: function (s) { return "hash_" + s; },
+            createHash: s => `hash_${s}`,
             //TODO: https://github.com/Microsoft/TypeScript/issues/16776
-            watchFile: function () {
-                return { close: function () { } };
+            watchFile: () => {
+                return { close() { } };
             },
-            watchDirectory: function () {
-                return { close: function () { } };
-            }
+            watchDirectory: () => {
+                return { close() { } };
+            },
         };
         /*const host: ts.server.ServerHost = {
             ...ts.sys, //TODO: replace readFile with a shim
@@ -73,51 +53,49 @@ var DumbSession = (function (_super) {
             clearImmediate(): never { throw new Error(); },
             //gc, trace, require
         };*/
-        var cancellationToken = {
-            isCancellationRequested: function () { return false; },
-            setRequest: function () { },
-            resetRequest: function () { }
+        const cancellationToken = {
+            isCancellationRequested: () => false,
+            setRequest() { },
+            resetRequest() { },
         };
-        var typingsInstaller = {
-            enqueueInstallTypingsRequest: function () { },
-            attach: function () { },
-            onProjectClosed: function () { },
-            globalTypingsCacheLocation: ""
+        const typingsInstaller = {
+            enqueueInstallTypingsRequest() { },
+            attach() { },
+            onProjectClosed() { },
+            globalTypingsCacheLocation: "",
         };
-        var logger = {
-            close: function () { },
-            hasLevel: function () { return false; },
-            loggingEnabled: function () { return false; },
-            perftrc: function () { },
-            info: function () { },
-            startGroup: function () { },
-            endGroup: function () { },
-            msg: function () { },
-            getLogFileName: function () { throw new Error(); }
+        const logger = {
+            close() { },
+            hasLevel: () => false,
+            loggingEnabled: () => false,
+            perftrc() { },
+            info() { },
+            startGroup() { },
+            endGroup() { },
+            msg() { },
+            getLogFileName() { throw new Error(); },
         };
-        var options = {
-            host: host,
-            cancellationToken: cancellationToken,
+        const options = {
+            host,
+            cancellationToken,
             useSingleInferredProject: true,
-            typingsInstaller: typingsInstaller,
-            byteLength: function (s) { return Buffer.byteLength(s); },
-            hrtime: function () { throw new Error(); },
-            logger: logger,
-            canUseEvents: false
+            typingsInstaller,
+            byteLength: s => Buffer.byteLength(s),
+            hrtime() { throw new Error(); },
+            logger,
+            canUseEvents: false,
         };
-        _this = _super.call(this, options) || this;
-        return _this;
+        super(options);
     }
-    return DumbSession;
-}(ts.server.Session));
+}
 function getRequestsFromLog() {
-    var log = fs_1.readFileSync(logLocation, "utf-8");
-    var events = parseLog_1["default"](log);
-    var requests = events.filter(function (e) { return e.type === "request"; }).map(function (r) { return JSON.parse(r.text); });
+    const log = fs_1.readFileSync(logLocation, "utf-8");
+    const events = parseLog_1.default(log);
+    const requests = events.filter(e => e.type === "request").map(r => JSON.parse(r.text));
     //Doesn't look like these are important.
     //const x = events.filter(e => e.type === "event").map(e => JSON.parse(e.text));
-    return requests.filter(function (r) {
-        var text = JSON.stringify(r);
+    return requests.filter((r) => {
+        const text = JSON.stringify(r);
         if (!text.includes("Cookie.ts"))
             return false;
         //No error if I exclude these events...
@@ -150,16 +128,15 @@ function getRequestsFromLog() {
         }
     });
 }
-var requests = JSON.parse(fs_1.readFileSync("./requests.json", "utf-8"));
+const requests = JSON.parse(fs_1.readFileSync("./requests.json", "utf-8"));
 function testChanges(changer) {
-    for (var _i = 0, requests_1 = requests; _i < requests_1.length; _i++) {
-        var rq = requests_1[_i];
+    for (const rq of requests) {
         switch (rq.command) {
             case "open":
                 break; //ignore
             case "change":
-                var _a = rq.arguments, line = _a.line, offset = _a.offset, endLine = _a.endLine, endOffset = _a.endOffset, insertString = _a.insertString;
-                changer.change({ line: line, offset: offset, endLine: endLine, endOffset: endOffset, insertString: insertString });
+                const { line, offset, endLine, endOffset, insertString } = rq.arguments;
+                changer.change({ line, offset, endLine, endOffset, insertString });
                 break;
             case "completions":
                 changer.getText();
@@ -170,11 +147,11 @@ function testChanges(changer) {
     }
 }
 function testFake() {
-    var c2 = new utils_1.C5();
+    const c2 = new utils_1.C6();
     testChanges(c2);
 }
 function testSession() {
-    var sess = new DumbSession();
+    const sess = new DumbSession();
     sess.onMessage(JSON.stringify({
         "command": "open",
         "arguments": {
@@ -184,13 +161,13 @@ function testSession() {
             projectRootPath: "/Users/asvetl/work/applications/frontend"
         }
     }));
-    var sessionChanger = {
-        change: function (change) {
-            var args = __assign({}, change, { file: "/a.ts" });
+    const sessionChanger = {
+        change(change) {
+            const args = Object.assign({}, change, { file: "/a.ts" });
             sess.onMessage(JSON.stringify({ command: "change", arguments: args }));
         },
-        getText: function () {
-            var args = {
+        getText() {
+            const args = {
                 file: "/a.ts",
                 line: 1,
                 offset: 1
@@ -218,6 +195,7 @@ function testSession() {
     process.exit(0); //Else server will leave it open
     */
 }
+ts.server.ScriptVersionCache.maxVersions = 999999;
 ts.server.ScriptVersionCache.changeNumberThreshold = Number.MAX_SAFE_INTEGER;
 ts.server.ScriptVersionCache.changeLengthThreshold = Number.MAX_SAFE_INTEGER;
 //testSession();

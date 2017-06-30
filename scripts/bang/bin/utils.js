@@ -1,34 +1,34 @@
 "use strict";
-exports.__esModule = true;
-var ts = require("../../../built/local/tsserverlibrary");
-var notImplemented = function () { throw new Error(); };
-var fileBeenRead = false;
-var host = {
-    readFile: function (fileName) {
+Object.defineProperty(exports, "__esModule", { value: true });
+const ts = require("../../../built/local/tsserverlibrary");
+const notImplemented = () => { throw new Error(); };
+let fileBeenRead = false;
+const host = {
+    readFile(fileName) {
         if (fileBeenRead)
             throw new Error();
         fileBeenRead = true;
         return "";
     },
-    getCurrentDirectory: function () { return ""; },
+    getCurrentDirectory: () => "",
     newLine: "\n",
-    writeFile: notImplemented
+    writeFile: notImplemented,
 };
-var C3 = (function () {
-    function C3() {
+class C3 {
+    constructor() {
         this.txt = new ts.server.TextStorage(host, "a.ts");
     }
-    C3.prototype.change = function (change) {
-        var txt = this.txt;
-        var line = change.line, offset = change.offset, endLine = change.endLine, endOffset = change.endOffset, insertString = change.insertString;
-        var start = txt.lineOffsetToPosition(line, offset);
-        var end = txt.lineOffsetToPosition(endLine, endOffset);
+    change(change) {
+        const { txt } = this;
+        let { line, offset, endLine, endOffset, insertString } = change;
+        const start = txt.lineOffsetToPosition(line, offset);
+        const end = txt.lineOffsetToPosition(endLine, endOffset);
         txt.edit(start, end, insertString);
-    };
-    C3.prototype.getText = function () {
-        var txt = this.txt;
-        var snap = txt.getSnapshot();
-        var change = snap.getChangeRange(this.prevSnapshot);
+    }
+    getText() {
+        const { txt } = this;
+        const snap = txt.getSnapshot();
+        const change = snap.getChangeRange(this.prevSnapshot);
         if (change) {
             snap.getText(change.span.start, change.span.start + change.span.length);
         }
@@ -36,38 +36,36 @@ var C3 = (function () {
             snap.getText(0, 0);
         }
         this.prevSnapshot = snap;
-    };
-    return C3;
-}());
-exports.C3 = C3;
-var C4 = (function () {
-    function C4() {
-        this.svc = ts.server.ScriptVersionCache.fromString(host, "");
-        this.correctText = "";
     }
-    C4.prototype.change = function (change) {
-        var svc = this.svc;
-        var line = change.line, offset = change.offset, endLine = change.endLine, endOffset = change.endOffset, insertString = change.insertString;
-        var index = svc.getSnapshot().index;
-        var lineInfo = index.lineNumberToInfo(line);
+}
+exports.C3 = C3;
+class C4C5 {
+    constructor() {
+        this.correctText = "";
+        this.svc = this.SVC.fromString(host, "");
+    }
+    change(change) {
+        const { svc } = this;
+        let { line, offset, endLine, endOffset, insertString } = change;
+        const index = svc.getSnapshot().index;
         //TODO: assert this offset is actually on the line
-        var start = index.lineNumberToInfo(line).offset + offset - 1;
-        var end = index.lineNumberToInfo(endLine).offset + endOffset - 1;
-        var correctStart = lineAndOffsetToPos(this.correctText, line - 1, offset - 1);
-        var correctEnd = lineAndOffsetToPos(this.correctText, endLine - 1, endOffset - 1);
+        const start = index.lineNumberToInfo(line).offset + offset - 1;
+        const end = index.lineNumberToInfo(endLine).offset + endOffset - 1;
+        const correctStart = lineAndOffsetToPos(this.correctText, line - 1, offset - 1);
+        const correctEnd = lineAndOffsetToPos(this.correctText, endLine - 1, endOffset - 1);
         if (start !== correctStart)
             throw new Error();
         if (end !== correctEnd)
             throw new Error();
         svc.edit(start, end - start, insertString);
         this.correctText = correctChange(this.correctText, correctStart, correctEnd, insertString);
-    };
-    C4.prototype.getText = function () {
-        var svc = this.svc;
-        var snap = svc.getSnapshot();
-        var change = snap.getChangeRange(this.prevSnapshot);
-        var start;
-        var end;
+    }
+    getText() {
+        const { svc } = this;
+        const snap = svc.getSnapshot();
+        const change = snap.getChangeRange(this.prevSnapshot);
+        let start;
+        let end;
         if (change) {
             start = change.span.start;
             end = start + change.span.length;
@@ -75,66 +73,137 @@ var C4 = (function () {
         else {
             start = end = 0;
         }
-        var text = snap.getText(start, end);
+        const text = snap.getText(start, end);
         if (text !== this.correctText.slice(start, end)) {
             console.log(JSON.stringify(text));
             console.log(JSON.stringify(this.correctText));
             throw new Error();
         }
         this.prevSnapshot = snap;
-    };
-    return C4;
-}());
+    }
+}
+exports.C4C5 = C4C5;
+class C4 extends C4C5 {
+    get SVC() { return ts.server.ScriptVersionCache; }
+}
 exports.C4 = C4;
-var C5 = (function () {
-    function C5() {
+class CheapoScriptVersionCache {
+    constructor() {
+        this.changes = [];
+        this.versions = [];
+        this.currentVersion = 0;
+    }
+    edit(pos, deleteLen, insertedText) {
+        this.changes.push(new ts.server.TextChange(pos, deleteLen, insertedText));
+    }
+    getSnapshot() {
+        let snap = this.versions[this.currentVersion];
+        if (this.changes.length > 0) {
+            let snapIndex = snap.index;
+            for (const change of this.changes) {
+                snapIndex = snapIndex.edit(change.pos, change.deleteLen, change.insertedText);
+            }
+            snap = new ts.server.LineIndexSnapshot(this.currentVersion + 1, this);
+            snap.index = snapIndex;
+            snap.changesSincePreviousVersion = this.changes;
+            this.currentVersion = snap.version;
+            this.versions[this.currentVersion] = snap;
+            this.changes = [];
+        }
+        return snap;
+    }
+    getTextChangesBetweenVersions(oldVersion, newVersion) {
+        if (oldVersion >= newVersion)
+            throw new Error();
+        const textChangeRanges = [];
+        for (let i = oldVersion + 1; i <= newVersion; i++) {
+            const snap = this.versions[i];
+            for (const textChange of snap.changesSincePreviousVersion) {
+                textChangeRanges[textChangeRanges.length] = textChange.getTextChangeRange(); //isn't this just push?
+            }
+        }
+        return ts.collapseTextChangeRangesAcrossMultipleVersions(textChangeRanges);
+    }
+    static fromString(host, script) {
+        const svc = new CheapoScriptVersionCache();
+        const snap = new ts.server.LineIndexSnapshot(0, svc);
+        svc.versions[svc.currentVersion] = snap;
+        svc.host = host;
+        snap.index = new ts.server.LineIndex();
+        const lm = ts.server.LineIndex.linesFromText(script);
+        snap.index.load(lm.lines);
+        return svc;
+    }
+}
+exports.CheapoScriptVersionCache = CheapoScriptVersionCache;
+class C5 extends C4 {
+    get SVC() { return CheapoScriptVersionCache; }
+}
+exports.C5 = C5;
+//Mimics TextCHange class
+class C6 {
+    constructor() {
         this.correctText = "";
         this.versions = [];
-        var outer = this;
-        var host = {
-            getTextChangesBetweenVersions: function (oldVersion, newVersion) {
-                if (oldVersion >= newVersion)
-                    throw new Error("???");
-                var textChangeRanges = [];
-                for (var i = oldVersion + 1; i <= newVersion; i++) {
-                    var snap = outer.versions[i];
-                    for (var _i = 0, _a = snap.changesSincePreviousVersion; _i < _a.length; _i++) {
-                        var textChange = _a[_i];
-                        textChangeRanges[textChangeRanges.length] = textChange.getTextChangeRange();
-                    }
-                }
-                return ts.collapseTextChangeRangesAcrossMultipleVersions(textChangeRanges);
-            }
-        };
-        this.snap = new ts.server.LineIndexSnapshot(0, host);
-        this.snap.index = new ts.server.LineIndex(); //public mutable properties, always fun...
-        this.snap.index.load(ts.server.LineIndex.linesFromText("").lines);
-        this.versions.push(this.snap);
+        this.currentVersion = 0;
+        this.changes = [];
+        const outer = this;
+        const snap = new ts.server.LineIndexSnapshot(0, this);
+        this.versions[this.currentVersion] = snap;
+        snap.index = new ts.server.LineIndex(); //public mutable properties, always fun...
+        snap.index.load(ts.server.LineIndex.linesFromText("").lines);
     }
-    C5.prototype.change = function (change) {
-        var line = change.line, offset = change.offset, endLine = change.endLine, endOffset = change.endOffset, insertString = change.insertString;
-        var snap = this.snap;
-        var index = snap.index;
-        var start = index.lineNumberToInfo(line).offset + offset - 1;
-        var end = index.lineNumberToInfo(endLine).offset + endOffset - 1;
-        var correctStart = lineAndOffsetToPos(this.correctText, line - 1, offset - 1);
-        var correctEnd = lineAndOffsetToPos(this.correctText, endLine - 1, endOffset - 1);
+    getSnapshot() {
+        let snap = this.versions[this.currentVersion];
+        if (this.changes.length > 0) {
+            if (this.changes.length !== 1)
+                throw new Error(JSON.stringify(this.changes));
+            let snapIndex = snap.index;
+            for (const change of this.changes) {
+                snapIndex = snapIndex.edit(change.pos, change.deleteLen, change.insertedText);
+            }
+            snap = new ts.server.LineIndexSnapshot(this.currentVersion + 1, this);
+            snap.index = snapIndex;
+            snap.changesSincePreviousVersion = this.changes;
+            this.currentVersion = snap.version;
+            this.versions[this.currentVersion] = snap;
+            this.changes = [];
+        }
+        return snap;
+    }
+    getTextChangesBetweenVersions(oldVersion, newVersion) {
+        console.log({ oldVersion, newVersion });
+        if (oldVersion >= newVersion)
+            throw new Error("???");
+        const textChangeRanges = [];
+        for (let i = oldVersion + 1; i <= newVersion; i++) {
+            const snap = this.versions[i];
+            for (const textChange of snap.changesSincePreviousVersion) {
+                textChangeRanges[textChangeRanges.length] = textChange.getTextChangeRange();
+            }
+        }
+        return ts.collapseTextChangeRangesAcrossMultipleVersions(textChangeRanges);
+    }
+    change(change) {
+        let { line, offset, endLine, endOffset, insertString } = change;
+        let snap = this.getSnapshot();
+        let index = snap.index;
+        const start = index.lineNumberToInfo(line).offset + offset - 1;
+        const end = index.lineNumberToInfo(endLine).offset + endOffset - 1;
+        const correctStart = lineAndOffsetToPos(this.correctText, line - 1, offset - 1);
+        const correctEnd = lineAndOffsetToPos(this.correctText, endLine - 1, endOffset - 1);
         if (start !== correctStart)
             throw new Error();
         if (end !== correctEnd)
             throw new Error();
-        index = index.edit(start, end - start, insertString);
-        snap = new ts.server.LineIndexSnapshot(snap.version + 1, null);
-        snap.index = index;
-        this.snap = snap;
-        this.versions.push(this.snap);
+        this.changes.push(new ts.server.TextChange(start, end - start, insertString));
         this.correctText = correctChange(this.correctText, correctStart, correctEnd, insertString);
-    };
-    C5.prototype.getText = function () {
-        var snap = this.snap;
-        var change = snap.getChangeRange(this.prevSnapshot);
-        var start;
-        var end;
+    }
+    getText() {
+        const snap = this.getSnapshot();
+        const change = snap.getChangeRange(this.prevSnapshot);
+        let start;
+        let end;
         if (change) {
             start = change.span.start;
             end = start + change.span.length;
@@ -142,27 +211,26 @@ var C5 = (function () {
         else {
             start = end = 0;
         }
-        var text = snap.getText(start, end);
+        const text = snap.getText(start, end);
         if (text !== this.correctText.slice(start, end)) {
             console.log(JSON.stringify(text));
             console.log(JSON.stringify(this.correctText));
             throw new Error();
         }
         this.prevSnapshot = snap;
-    };
-    return C5;
-}());
-exports.C5 = C5;
+    }
+}
+exports.C6 = C6;
 function correctChange(text, start, end, insertString) {
     return text.slice(0, start) + insertString + text.slice(end);
 }
 function lineAndOffsetToPos(text, line, offset) {
-    var lines = text.split("\n");
-    var pos = 0;
-    for (var i = 0; i < line; i++) {
+    const lines = text.split("\n");
+    let pos = 0;
+    for (let i = 0; i < line; i++) {
         pos += lines[i].length + 1; //+1 for the "\n"
     }
-    var res = pos + offset;
+    const res = pos + offset;
     if (res !== lineAndCharacterToPosition(text, line, offset)) {
         throw new Error("!");
     }
@@ -170,52 +238,50 @@ function lineAndOffsetToPos(text, line, offset) {
 }
 //const s = new ts.server.ScriptVersionCache();
 //NOTE: working under the assumption that it's OK to get a new scriptinfo every time.
-var ChangerOld = (function () {
-    function ChangerOld() {
+class ChangerOld {
+    constructor() {
         this.text = "";
         this.txt = new ts.server.TextStorage(host, "");
         //this.li.load([]); // start w/ empty file
     }
-    ChangerOld.prototype.change = function (change) {
-        var line = change.line, offset = change.offset, endLine = change.endLine, endOffset = change.endOffset, insertString = change.insertString;
+    change(change) {
+        let { line, offset, endLine, endOffset, insertString } = change;
         line--;
         endLine--;
         offset--;
         endOffset--;
-        var text = this.text;
-        var pos = lineAndCharacterToPosition(text, line, offset);
-        var endPos = lineAndCharacterToPosition(text, endLine, endOffset);
+        const text = this.text;
+        const pos = lineAndCharacterToPosition(text, line, offset);
+        const endPos = lineAndCharacterToPosition(text, endLine, endOffset);
         this.text = text.slice(0, pos) + insertString + text.slice(endPos);
         this.txt.edit(pos, endPos, insertString);
-    };
-    ChangerOld.prototype.getText = function () {
-        var snp = this.txt.getSnapshot();
-        var change = snp.getChangeRange(this.prevSnapshot);
+    }
+    getText() {
+        const snp = this.txt.getSnapshot();
+        const change = snp.getChangeRange(this.prevSnapshot);
         console.log(this.prevSnapshot, change);
         if (change) {
             console.log("!");
-            var start = change.span.start;
-            var length = change.span.length;
+            const start = change.span.start;
+            const length = change.span.length;
             snp.getText(start, start + length);
         }
         else {
             snp.getText(0, 0);
         }
         this.prevSnapshot = snp;
-    };
-    return ChangerOld;
-}());
+    }
+}
 exports.ChangerOld = ChangerOld;
 //const txt = new ts.server.TextStorage(
 function lineAndCharacterToPosition(text, line, offset) {
-    var lineStarts = ts.computeLineStarts(text);
+    const lineStarts = ts.computeLineStarts(text);
     return ts.computePositionOfLineAndCharacter(lineStarts, line, offset);
 }
 function mapDefined(xs, f) {
-    var out = [];
-    for (var _i = 0, xs_1 = xs; _i < xs_1.length; _i++) {
-        var x = xs_1[_i];
-        var res = f(x);
+    const out = [];
+    for (const x of xs) {
+        const res = f(x);
         if (res !== undefined) {
             out.push(res);
         }
