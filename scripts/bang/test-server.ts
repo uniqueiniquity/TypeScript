@@ -5,7 +5,7 @@ import ts = require("../../built/local/tsserverlibrary");
 import { Change, Changer } from "./utils";
 import parseLog from "./parseLog";
 
-const logLocation = "/home/andy/Downloads/tsserver.log";
+const logLocation = "C:/Users/anhans/Downloads/tsserver.log"; //"/home/andy/Downloads/tsserver.log";
 
 class DumbSession extends ts.server.Session {
 	constructor() {
