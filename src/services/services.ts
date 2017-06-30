@@ -847,7 +847,7 @@ namespace ts {
                 entry = {
                     hostFileName: fileName,
                     version: this.host.getScriptVersion(fileName),
-                    scriptSnapshot: scriptSnapshot,
+                    scriptSnapshot,
                     scriptKind: getScriptKind(fileName, this.host)
                 };
             }

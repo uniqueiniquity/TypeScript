@@ -270,7 +270,7 @@ namespace ts.server {
         versions: LineIndexSnapshot[] = new Array<LineIndexSnapshot>(ScriptVersionCache.maxVersions);
         minVersion = 0;  // no versions earlier than min version will maintain change history
 
-        private host: ServerHost;
+        private host: FileReader;
         private currentVersion = 0;
 
         static changeNumberThreshold = 8;
@@ -382,7 +382,7 @@ namespace ts.server {
             }
         }
 
-        static fromString(host: ServerHost, script: string): ScriptVersionCache {
+        static fromString(host: FileReader, script: string): ScriptVersionCache {
             const svc = new ScriptVersionCache();
             const snap = new LineIndexSnapshot(0, svc);
             svc.versions[svc.currentVersion] = snap;

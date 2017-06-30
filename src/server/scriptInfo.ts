@@ -9,8 +9,7 @@ namespace ts.server {
         private lineMap: number[];
         private textVersion = 0;
 
-        //TODO: surely this can't use all the methods on host.
-        constructor(private readonly host: ServerHost, private readonly fileName: NormalizedPath) {
+        constructor(private readonly host: FileReader, private readonly fileName: NormalizedPath) {
         }
 
         public getVersion() {
@@ -180,9 +179,7 @@ namespace ts.server {
             if (hasMixedContent) {
                 this.textStorage.reload("");
             }
-            this.scriptKind = scriptKind
-                ? scriptKind
-                : getScriptKindFromFileName(fileName);
+            this.scriptKind = scriptKind || getScriptKindFromFileName(fileName);
         }
 
         public isScriptOpen() {
