@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync } from "fs";
 
 import ts = require("../../../built/local/tsserverlibrary");
 
-import { Change, ChangerOld, C3, C4 } from "./utils";
+import { Change, ChangerOld, C3, C4, C5, C6 } from "./utils";
 import parseLog from "./parseLog";
 
 const logLocation = "/home/andy/Downloads/tsserver.log"; //"C:/Users/anhans/Downloads/tsserver.log"; //
@@ -167,7 +167,7 @@ function testChanges(changer: Changer) {
 }
 
 function testFake() {
-	const c2 = new C4();
+	const c2 = new C6();
 	testChanges(c2);
 }
 
@@ -220,6 +220,7 @@ function testSession() {
 	*/
 }
 
+ts.server.ScriptVersionCache.maxVersions = 999999;
 ts.server.ScriptVersionCache.changeNumberThreshold = Number.MAX_SAFE_INTEGER;
 ts.server.ScriptVersionCache.changeLengthThreshold = Number.MAX_SAFE_INTEGER;
 

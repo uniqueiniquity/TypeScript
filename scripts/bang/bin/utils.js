@@ -76,7 +76,7 @@ var C4 = (function () {
             start = end = 0;
         }
         var text = snap.getText(start, end);
-        if (text !== this.correctText) {
+        if (text !== this.correctText.slice(start, end)) {
             console.log(JSON.stringify(text));
             console.log(JSON.stringify(this.correctText));
             throw new Error();
@@ -86,6 +86,73 @@ var C4 = (function () {
     return C4;
 }());
 exports.C4 = C4;
+var C5 = (function () {
+    function C5() {
+        this.correctText = "";
+        this.versions = [];
+        var outer = this;
+        var host = {
+            getTextChangesBetweenVersions: function (oldVersion, newVersion) {
+                if (oldVersion >= newVersion)
+                    throw new Error("???");
+                var textChangeRanges = [];
+                for (var i = oldVersion + 1; i <= newVersion; i++) {
+                    var snap = outer.versions[i];
+                    for (var _i = 0, _a = snap.changesSincePreviousVersion; _i < _a.length; _i++) {
+                        var textChange = _a[_i];
+                        textChangeRanges[textChangeRanges.length] = textChange.getTextChangeRange();
+                    }
+                }
+                return ts.collapseTextChangeRangesAcrossMultipleVersions(textChangeRanges);
+            }
+        };
+        this.snap = new ts.server.LineIndexSnapshot(0, host);
+        this.snap.index = new ts.server.LineIndex(); //public mutable properties, always fun...
+        this.snap.index.load(ts.server.LineIndex.linesFromText("").lines);
+        this.versions.push(this.snap);
+    }
+    C5.prototype.change = function (change) {
+        var line = change.line, offset = change.offset, endLine = change.endLine, endOffset = change.endOffset, insertString = change.insertString;
+        var snap = this.snap;
+        var index = snap.index;
+        var start = index.lineNumberToInfo(line).offset + offset - 1;
+        var end = index.lineNumberToInfo(endLine).offset + endOffset - 1;
+        var correctStart = lineAndOffsetToPos(this.correctText, line - 1, offset - 1);
+        var correctEnd = lineAndOffsetToPos(this.correctText, endLine - 1, endOffset - 1);
+        if (start !== correctStart)
+            throw new Error();
+        if (end !== correctEnd)
+            throw new Error();
+        index = index.edit(start, end - start, insertString);
+        snap = new ts.server.LineIndexSnapshot(snap.version + 1, null);
+        snap.index = index;
+        this.snap = snap;
+        this.versions.push(this.snap);
+        this.correctText = correctChange(this.correctText, correctStart, correctEnd, insertString);
+    };
+    C5.prototype.getText = function () {
+        var snap = this.snap;
+        var change = snap.getChangeRange(this.prevSnapshot);
+        var start;
+        var end;
+        if (change) {
+            start = change.span.start;
+            end = start + change.span.length;
+        }
+        else {
+            start = end = 0;
+        }
+        var text = snap.getText(start, end);
+        if (text !== this.correctText.slice(start, end)) {
+            console.log(JSON.stringify(text));
+            console.log(JSON.stringify(this.correctText));
+            throw new Error();
+        }
+        this.prevSnapshot = snap;
+    };
+    return C5;
+}());
+exports.C5 = C5;
 function correctChange(text, start, end, insertString) {
     return text.slice(0, start) + insertString + text.slice(end);
 }

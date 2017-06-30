@@ -279,7 +279,7 @@ namespace ts.server {
 
         private versionToIndex(version: number) {
             if (version < this.minVersion || version > this.currentVersion) {
-                return undefined;
+                Debug.fail();//return undefined;
             }
             return version % ScriptVersionCache.maxVersions;
         }
@@ -368,17 +368,19 @@ namespace ts.server {
                     for (let i = oldVersion + 1; i <= newVersion; i++) {
                         const snap = this.versions[this.versionToIndex(i)];
                         for (const textChange of snap.changesSincePreviousVersion) {
-                            textChangeRanges[textChangeRanges.length] = textChange.getTextChangeRange();
+                            textChangeRanges[textChangeRanges.length] = textChange.getTextChangeRange(); //isn't this just push?
                         }
                     }
                     return ts.collapseTextChangeRangesAcrossMultipleVersions(textChangeRanges);
                 }
                 else {
-                    return undefined;
+                    Debug.fail("?");
+                    //return undefined;
                 }
             }
             else {
-                return ts.unchangedTextChangeRange;
+                Debug.fail("?");
+                //return ts.unchangedTextChangeRange;
             }
         }
 
@@ -398,7 +400,7 @@ namespace ts.server {
         index: LineIndex;
         changesSincePreviousVersion: TextChange[] = [];
 
-        constructor(readonly version: number, readonly cache: ScriptVersionCache) {
+        constructor(readonly version: number, readonly cache: { getTextChangesBetweenVersions(oldVersion: number, newVersion: number): TextChangeRange; }) {
         }
 
         getText(rangeStart: number, rangeEnd: number) {

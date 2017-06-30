@@ -170,7 +170,7 @@ function testChanges(changer) {
     }
 }
 function testFake() {
-    var c2 = new utils_1.C4();
+    var c2 = new utils_1.C5();
     testChanges(c2);
 }
 function testSession() {
