@@ -325,6 +325,7 @@ namespace ts {
         return result;
     }
 
+    //uses zero-based line and column
     export function getPositionOfLineAndCharacter(sourceFile: SourceFile, line: number, character: number): number {
         return computePositionOfLineAndCharacter(getLineStarts(sourceFile), line, character);
     }

@@ -49,8 +49,8 @@ class C4C5 {
         let { line, offset, endLine, endOffset, insertString } = change;
         const index = svc.getSnapshot().index;
         //TODO: assert this offset is actually on the line
-        const start = index.lineNumberToInfo(line).offset + offset - 1;
-        const end = index.lineNumberToInfo(endLine).offset + endOffset - 1;
+        const start = index.lineNumberToInfo(line).absolutePosition + offset - 1;
+        const end = index.lineNumberToInfo(endLine).absolutePosition + endOffset - 1;
         const correctStart = lineAndOffsetToPos(this.correctText, line - 1, offset - 1);
         const correctEnd = lineAndOffsetToPos(this.correctText, endLine - 1, endOffset - 1);
         if (start !== correctStart)
@@ -185,11 +185,12 @@ class C6 {
         return ts.collapseTextChangeRangesAcrossMultipleVersions(textChangeRanges);
     }
     change(change) {
+        console.log(change);
         let { line, offset, endLine, endOffset, insertString } = change;
         let snap = this.getSnapshot();
         let index = snap.index;
-        const start = index.lineNumberToInfo(line).offset + offset - 1;
-        const end = index.lineNumberToInfo(endLine).offset + endOffset - 1;
+        const start = index.lineNumberToInfo(line).absolutePosition + offset - 1;
+        const end = index.lineNumberToInfo(endLine).absolutePosition + endOffset - 1;
         const correctStart = lineAndOffsetToPos(this.correctText, line - 1, offset - 1);
         const correctEnd = lineAndOffsetToPos(this.correctText, endLine - 1, endOffset - 1);
         if (start !== correctStart)
@@ -224,14 +225,14 @@ exports.C6 = C6;
 function correctChange(text, start, end, insertString) {
     return text.slice(0, start) + insertString + text.slice(end);
 }
-function lineAndOffsetToPos(text, line, offset) {
+function lineAndOffsetToPos(text, zeroBasedLine, zeroBasedColumn) {
     const lines = text.split("\n");
     let pos = 0;
-    for (let i = 0; i < line; i++) {
+    for (let i = 0; i < zeroBasedLine; i++) {
         pos += lines[i].length + 1; //+1 for the "\n"
     }
-    const res = pos + offset;
-    if (res !== lineAndCharacterToPosition(text, line, offset)) {
+    const res = pos + zeroBasedColumn;
+    if (res !== lineAndColumnToPosition(text, zeroBasedLine, zeroBasedColumn)) {
         throw new Error("!");
     }
     return res;
@@ -246,13 +247,14 @@ class ChangerOld {
     }
     change(change) {
         let { line, offset, endLine, endOffset, insertString } = change;
+        //make them zero-based
         line--;
         endLine--;
         offset--;
         endOffset--;
         const text = this.text;
-        const pos = lineAndCharacterToPosition(text, line, offset);
-        const endPos = lineAndCharacterToPosition(text, endLine, endOffset);
+        const pos = lineAndColumnToPosition(text, line, offset);
+        const endPos = lineAndColumnToPosition(text, endLine, endOffset);
         this.text = text.slice(0, pos) + insertString + text.slice(endPos);
         this.txt.edit(pos, endPos, insertString);
     }
@@ -274,9 +276,9 @@ class ChangerOld {
 }
 exports.ChangerOld = ChangerOld;
 //const txt = new ts.server.TextStorage(
-function lineAndCharacterToPosition(text, line, offset) {
+function lineAndColumnToPosition(text, zeroBasedLine, zeroBasedColumn) {
     const lineStarts = ts.computeLineStarts(text);
-    return ts.computePositionOfLineAndCharacter(lineStarts, line, offset);
+    return ts.computePositionOfLineAndCharacter(lineStarts, zeroBasedLine, zeroBasedColumn);
 }
 function mapDefined(xs, f) {
     const out = [];

@@ -59,7 +59,7 @@ namespace ts.server {
                 : ScriptSnapshot.fromString(this.getOrLoadText());
         }
 
-        public getLineInfo(line: number) {
+        public getLineInfo(line: number): AbsolutePositionAndLineText {
             return this.switchToScriptVersionCache().getSnapshot().index.lineNumberToInfo(line);
         }
         /**
@@ -75,14 +75,14 @@ namespace ts.server {
             const index = this.svc.getSnapshot().index;
             const lineInfo = index.lineNumberToInfo(line + 1);
             let len: number;
-            if (lineInfo.text !== undefined) {
-                len = lineInfo.text.length;
+            if (lineInfo.lineText !== undefined) {
+                len = lineInfo.lineText.length;
             }
             else {
                 const nextLineInfo = index.lineNumberToInfo(line + 2);
-                len = nextLineInfo.offset - lineInfo.offset;
+                len = nextLineInfo.absolutePosition - lineInfo.absolutePosition;
             }
-            return ts.createTextSpan(lineInfo.offset, len);
+            return ts.createTextSpan(lineInfo.absolutePosition, len);
         }
 
         /**
@@ -97,7 +97,7 @@ namespace ts.server {
 
             const lineInfo = index.lineNumberToInfo(line);
             //TODO: assert this offset is actually on the line
-            return lineInfo.offset + offset - 1;
+            return lineInfo.absolutePosition + offset - 1;
         }
 
         /**
@@ -111,8 +111,7 @@ namespace ts.server {
                 return { line: line + 1, offset: character + 1 };
             }
             const index = this.svc.getSnapshot().index;
-            const lineOffset = index.charOffsetToLineNumberAndPos(position);
-            return { line: lineOffset.line, offset: lineOffset.offset + 1 };
+            return index.charOffsetToLineNumberAndPos(position); //changed charOffsetToLineNumberAndPos to handle offset+1 itself
         }
 
         private getFileText(tempFileName?: string) {
@@ -338,7 +337,7 @@ namespace ts.server {
             }
         }
 
-        getLineInfo(line: number) {
+        getLineInfo(line: number): AbsolutePositionAndLineText {
             return this.textStorage.getLineInfo(line);
         }
 

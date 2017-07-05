@@ -20,13 +20,22 @@ namespace ts.server {
 
     //this is
     export interface ILineInfo {
-        line: number; // absolute line number, 0-based.
+        // absolute line number, 0-based.
+        line: number;
+
         //Absolute position in the string. How do I know? `offset: this.root.charCount()`
         //OLD:
         //  Offset relative to start of line. How do I know? scriptInfo.ts `positionToLineOffset` uses `computeLineAndCharacterOfPosition`.
         //  Actually, that's in ILineInfo2 now.
-        offset: number;
-        text?: string; //used only internally
+        absolutePosition: number;
+
+        text?: string;
+    }
+
+    export interface AbsolutePositionAndLineText {
+        absolutePosition: number;
+        //Text of the line that `absolutePosition` is on.
+        lineText: string | undefined;
     }
 
     //Must export b/c ILineIndexWalker is exported
@@ -52,7 +61,7 @@ namespace ts.server {
     }
 
     class EditWalker implements ILineIndexWalker {
-        goSubtree = true; //?
+        goSubtree = true;
         done = false;
 
         lineIndex = new LineIndex();
@@ -440,30 +449,35 @@ namespace ts.server {
     export class LineIndex {
         root: LineNode;
         // set this to true to check each edit for accuracy
-        checkEdits = false;
+        checkEdits = true;//false;
 
-        //?
-        charOffsetToLineNumberAndPos(charOffset: number): ILineInfo {
-            return this.root.charOffsetToLineNumberAndPos(1, charOffset);
+        charOffsetToLineNumberAndPos(position: number): ILineInfo2 { //rename: positionToLineAndColumn
+            const { zeroBasedLine, zeroBasedColumn } = this.root.charOffsetToLineNumberAndPos(0, position);
+            return { line: zeroBasedLine + 1, offset: zeroBasedColumn + 1 };
+        }
+
+        positionToColumnAndLineText(position: number): { zeroBasedColumn: number, lineText?: string } {
+            return this.root.charOffsetToLineNumberAndPos(0, position);
         }
 
         //! PRobably shouldn't include `line` in the output here...
         //Output offset is a *total* offset.
-        lineNumberToInfo(lineNumber: number): ILineInfo {
+        //rename
+        //input line number is 1-based
+        lineNumberToInfo(lineNumber: number): AbsolutePositionAndLineText {
             const lineCount = this.root.lineCount();
             if (lineNumber <= lineCount) {
-                const { offset, leaf } = this.root.lineNumberToInfo(lineNumber, 0);
+                const { position, leaf } = this.root.lineNumberToInfo(lineNumber, /*positionAcc*/ 0);
                 return {
-                    line: lineNumber,
-                    offset,
-                    text: leaf && leaf.text,
+                    absolutePosition: position, //it's the root, so position is absolute
+                    lineText: leaf && leaf.text,
                 };
             }
             else {
                 Debug.assert(lineNumber === lineCount + 1); //This fails in unit tests in versionCache.ts "TS code change 19 1 1 0" and "TS code change 18 1 1 0"
                 return {
-                    line: lineNumber,
-                    offset: this.root.charCount()
+                    absolutePosition: this.root.charCount(),
+                    lineText: undefined,
                 };
             }
         }
@@ -492,7 +506,7 @@ namespace ts.server {
                     goSubtree: true,
                     done: false,
                     leaf: (relativeStart: number, relativeLength: number, ll: LineLeaf) => {
-                        accum = accum.concat(ll.text.substring(relativeStart, relativeStart + relativeLength));
+                        accum += ll.text.substring(relativeStart, relativeStart + relativeLength);
                     }
                 });
             }
@@ -520,9 +534,9 @@ namespace ts.server {
             return !walkFns.done;
         }
 
-        edit(pos: number, deleteLength: number, newText?: string) { //This one actually does it.
-            function editFlat(source: string, s: number, dl: number, nt = "") {
-                return source.substring(0, s) + nt + source.substring(s + dl, source.length);
+        edit(pos: number, deleteLength: number, newText?: string): LineIndex { //This one actually does it.
+            function editFlat(source: string, start: number, deleteLen: number, insertString: string) {
+                return source.substring(0, start) + insertString + source.substring(start + deleteLen, source.length);
             }
             if (this.root.charCount() === 0) {
                 // TODO: assert deleteLength === 0
@@ -552,18 +566,12 @@ namespace ts.server {
                 }
                 else if (deleteLength > 0) {
                     // check whether last characters deleted are line break
-                    const e = pos + deleteLength;
-                    const lineInfo = this.charOffsetToLineNumberAndPos(e);
-                    if ((lineInfo && (lineInfo.offset === 0))) {
+                    const { zeroBasedColumn, lineText } = this.positionToColumnAndLineText(pos + deleteLength);
+                    if (zeroBasedColumn === 0) {
                         // move range end just past line that will merge with previous line
-                        deleteLength += lineInfo.text.length;
+                        deleteLength += lineText.length;
                         // store text by appending to end of insertedText
-                        if (newText) {
-                            newText = newText + lineInfo.text;
-                        }
-                        else {
-                            newText = lineInfo.text;
-                        }
+                        newText = newText !== undefined ? newText + lineText : newText;
                     }
                 }
                 if (pos < this.root.charCount()) {
@@ -590,9 +598,11 @@ namespace ts.server {
                     if (nodeIndex >= nodes.length)
                         break;
 
-                    interiorNode.add(nodes[nodeIndex]);
-                    charCount += nodes[nodeIndex].charCount();
-                    lineCount += nodes[nodeIndex].lineCount();
+                    const node = nodes[nodeIndex];
+                    interiorNode.add(node);
+                    //Todo: why doesn't `add` update totalchars?
+                    charCount += node.charCount();
+                    lineCount += node.lineCount();
                     nodeIndex++;
                 }
                 interiorNode.totalChars = charCount;
@@ -727,37 +737,38 @@ namespace ts.server {
             }
         }
 
-        //input lineNumber is ???
-        //input charOffset is ???
-        //output line is ???
-        //output offset is ???
-        charOffsetToLineNumberAndPos(lineNumber: number, charOffset: number): ILineInfo {
-            const childInfo = this.childFromCharOffset(lineNumber, charOffset);
+        //input lineNumber is the running total of the line number for the given offset.
+        //input charOffset is relative to the start of this node.
+        //output line is the absolute line number.
+        //Note that in lineNumberToInfo we *start* knowing the line and must determine the total offset; here we start knowing the total offset and must determine the line number.
+        charOffsetToLineNumberAndPos(lineNumberAcc: number, position: number): { zeroBasedLine: number, zeroBasedColumn: number, lineText?: string } {
+            const childInfo = this.childFromCharOffset(lineNumberAcc, position); //inline
             if (!childInfo.child) {
                 Debug.assert(this.children.length === 0); //neater: just check for this first.
                 Debug.fail(); //LineNode should always have children, right?
                 return {
-                    line: lineNumber,
-                    offset: charOffset,
+                    zeroBasedLine: lineNumberAcc,
+                    zeroBasedColumn: position,
                 };
             }
             else if (childInfo.childIndex < this.children.length) {
                 if (childInfo.child.isLeaf()) {
                     return {
-                        line: childInfo.lineNumber,
-                        offset: childInfo.charOffset,
-                        text: childInfo.child.text
+                        zeroBasedLine: childInfo.lineNumberAcc,
+                        zeroBasedColumn: childInfo.relPosition,
+                        lineText: childInfo.child.text,
                     };
                 }
                 else {
                     const lineNode = <LineNode>(childInfo.child);
-                    return lineNode.charOffsetToLineNumberAndPos(childInfo.lineNumber, childInfo.charOffset);
+                    return lineNode.charOffsetToLineNumberAndPos(childInfo.lineNumberAcc, childInfo.relPosition);
                 }
             }
             else {
                 //childInfo.child set to the last child, ignore it.
-                const { leaf } = this.lineNumberToInfo(this.lineCount(), 0); //only used for the leaf, make neater. Also will crash if leaf missing
-                return { line: this.lineCount(), offset: leaf.charCount() };
+                //get last LineLeaf and return position at the end of it
+                const { leaf } = this.lineNumberToInfo(this.lineCount(), /*positionAcc*/ 0); //only used for the leaf, make neater. Also will crash if leaf missing
+                return { zeroBasedLine: this.lineCount(), zeroBasedColumn: leaf.charCount() };
             }
         }
 
@@ -765,23 +776,21 @@ namespace ts.server {
         //Input charOffset is a *running total* of the absolute position.
         //Output lineNumber is... overwritten, wtf
         //Ouptut offset is the final *total* charOffset
-        lineNumberToInfo(lineNumber: number, charOffset: number): { offset: number, leaf?: LineLeaf } {
-            const childInfo = this.childFromLineNumber(lineNumber, charOffset); //maybe inline this function.
+        lineNumberToInfo(lineNumber: number, positionAcc: number): { position: number, leaf?: LineLeaf } {
+            const childInfo = this.childFromLineNumber(lineNumber, positionAcc); //maybe inline this function.
             if (!childInfo.child) {
                 Debug.fail(); //Should always have at least 1 child, right?
-                return {
-                    offset: charOffset
-                };
+                return { position: positionAcc };
             }
             else if (childInfo.child.isLeaf()) {
                 return {
-                    offset: childInfo.charOffset,
+                    position: childInfo.positionAcc,
                     leaf: childInfo.child,
                 };
             }
             else {
                 const lineNode = <LineNode>(childInfo.child);
-                return lineNode.lineNumberToInfo(childInfo.relativeLineNumber, childInfo.charOffset);
+                return lineNode.lineNumberToInfo(childInfo.relativeLineNumber, childInfo.positionAcc);
             }
         }
 
@@ -809,7 +818,7 @@ namespace ts.server {
         Then we will skip past `C` and translate that to line 0, char 10.
         Right???
         */
-        private childFromLineNumber(lineNumber: number, charOffset: number) {
+        private childFromLineNumber(lineNumber: number, positionAcc: number) {
             let child: LineCollection;
             let relativeLineNumber = lineNumber;
             let i: number;
@@ -821,37 +830,38 @@ namespace ts.server {
                 }
                 else {
                     relativeLineNumber -= childLineCount;
-                    charOffset += child.charCount();
+                    positionAcc += child.charCount();
                 }
             }
             return {
                 child,
                 relativeLineNumber,
-                charOffset,
+                positionAcc,
             };
         }
 
-        //input charOffset is offset into *this* node. output charOffset is offset into *child*.
-        //input lineNumber is ???. Output lineNumber is ???
-        private childFromCharOffset(lineNumber: number, charOffset: number) {
+        //input relPosition is offset into *this* node. output relPosition is offset into *child*.
+        //input lineNumberAcc is number of lines passed so far. output is new number of lines passed.
+        //Note: this loop decreases charOffset until it's less than child.charCount(). So, it ends up as a position inside `child`.
+        private childFromCharOffset(lineNumberAcc: number, relPosition: number) {
             let child: LineCollection;
             let i: number;
             let len: number;
             for (i = 0, len = this.children.length; i < len; i++) {
                 child = this.children[i];
-                if (child.charCount() > charOffset) {
+                if (child.charCount() > relPosition) {
                     break;
                 }
                 else {
-                    charOffset -= child.charCount();
-                    lineNumber += child.lineCount();
+                    relPosition -= child.charCount();
+                    lineNumberAcc += child.lineCount();
                 }
             }
             return {
                 child,
                 childIndex: i,
-                charOffset,
-                lineNumber,
+                relPosition,
+                lineNumberAcc,
             };
         }
 

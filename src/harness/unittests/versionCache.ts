@@ -8,7 +8,7 @@ namespace ts { //tests in here!
 
     function lineColToPosition(lineIndex: server.LineIndex, line: number, col: number) {
         const lineInfo = lineIndex.lineNumberToInfo(line);
-        return lineInfo.offset + col - 1;
+        return lineInfo.absolutePosition + col - 1;
     }
 
     function validateEdit(lineIndex: server.LineIndex, sourceText: string, position: number, deleteLength: number, insertString: string): void {
@@ -308,10 +308,9 @@ and grew 1cm per day`;
         it("Start pos from line", () => {
             for (let i = 0; i < iterationCount; i++) {
                 for (let j = 0; j < lines.length; j++) {
-                    const lineInfo = lineIndex.lineNumberToInfo(j + 1);
-                    const lineIndexOffset = lineInfo.offset;
+                    const { absolutePosition } = lineIndex.lineNumberToInfo(j + 1);
                     const lineMapOffset = lineMap[j];
-                    assert.equal(lineIndexOffset, lineMapOffset);
+                    assert.equal(absolutePosition, lineMapOffset);
                 }
             }
         });

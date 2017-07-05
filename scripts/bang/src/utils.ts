@@ -57,8 +57,8 @@ export abstract class C4C5 {
 		const index = svc.getSnapshot().index;
 
 		//TODO: assert this offset is actually on the line
-		const start = index.lineNumberToInfo(line).offset + offset - 1;
-		const end = index.lineNumberToInfo(endLine).offset + endOffset - 1;
+		const start = index.lineNumberToInfo(line).absolutePosition + offset - 1;
+		const end = index.lineNumberToInfo(endLine).absolutePosition + endOffset - 1;
 
 		const correctStart = lineAndOffsetToPos(this.correctText, line - 1, offset - 1);
 		const correctEnd = lineAndOffsetToPos(this.correctText, endLine - 1, endOffset - 1);
@@ -206,13 +206,14 @@ export class C6 {
 	}
 
 	change(change: Change) {
+		console.log(change);
 		let { line, offset, endLine, endOffset, insertString } = change;
 		let snap = this.getSnapshot();
 
 		let index = snap.index;
 
-		const start = index.lineNumberToInfo(line).offset + offset - 1;
-		const end = index.lineNumberToInfo(endLine).offset + endOffset - 1;
+		const start = index.lineNumberToInfo(line).absolutePosition + offset - 1;
+		const end = index.lineNumberToInfo(endLine).absolutePosition + endOffset - 1;
 
 		const correctStart = lineAndOffsetToPos(this.correctText, line - 1, offset - 1);
 		const correctEnd = lineAndOffsetToPos(this.correctText, endLine - 1, endOffset - 1);
@@ -254,17 +255,17 @@ function correctChange(text: string, start: number, end: number, insertString: s
 	return text.slice(0, start) + insertString + text.slice(end);
 }
 
-function lineAndOffsetToPos(text: string, line: number, offset: number) {
+function lineAndOffsetToPos(text: string, zeroBasedLine: number, zeroBasedColumn: number) {
 	const lines = text.split("\n");
 	let pos = 0;
 
-	for (let i = 0; i < line; i++) {
+	for (let i = 0; i < zeroBasedLine; i++) {
 		pos += lines[i].length + 1; //+1 for the "\n"
 	}
 
-	const res = pos + offset;
+	const res = pos + zeroBasedColumn;
 
-	if (res !== lineAndCharacterToPosition(text, line, offset)) {
+	if (res !== lineAndColumnToPosition(text, zeroBasedLine, zeroBasedColumn)) {
 		throw new Error("!");
 	}
 
@@ -286,14 +287,15 @@ export class ChangerOld {
 
 	change(change: Change) {
 		let { line, offset, endLine, endOffset, insertString } = change;
+		//make them zero-based
 		line--;
 		endLine--;
 		offset--;
 		endOffset--;
 
 		const text = this.text;
-		const pos = lineAndCharacterToPosition(text, line, offset);
-		const endPos = lineAndCharacterToPosition(text, endLine, endOffset);
+		const pos = lineAndColumnToPosition(text, line, offset);
+		const endPos = lineAndColumnToPosition(text, endLine, endOffset);
 		this.text = text.slice(0, pos) + insertString + text.slice(endPos);
 
 		this.txt.edit(pos, endPos, insertString);
@@ -324,9 +326,9 @@ export interface Change {
 }
 
 //const txt = new ts.server.TextStorage(
-function lineAndCharacterToPosition(text: string, line: number, offset: number): number {
+function lineAndColumnToPosition(text: string, zeroBasedLine: number, zeroBasedColumn: number): number {
 	const lineStarts = ts.computeLineStarts(text);
-	return ts.computePositionOfLineAndCharacter(lineStarts, line, offset);
+	return ts.computePositionOfLineAndCharacter(lineStarts, zeroBasedLine, zeroBasedColumn);
 }
 
 function mapDefined<T, U>(xs: T[], f: (t: T) => U | undefined): U[] {

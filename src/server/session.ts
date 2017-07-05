@@ -1132,13 +1132,13 @@ namespace ts.server {
             // add edits necessary to properly indent the current line.
             if ((args.key === "\n") && ((!edits) || (edits.length === 0) || allEditsBeforePos(edits, position))) {
                 const lineInfo = scriptInfo.getLineInfo(args.line);
-                if (lineInfo && lineInfo.text !== undefined) {
-                    const lineText = lineInfo.text;
+                if (lineInfo && lineInfo.lineText !== undefined) {
+                    const lineText = lineInfo.lineText;
                     if (lineText.search("\\S") < 0) {
                         const preferredIndent = project.getLanguageService(/*ensureSynchronized*/ false).getIndentationAtPosition(file, position, formatOptions);
                         let hasIndent = 0;
-                        let i: number, len: number;
-                        for (i = 0, len = lineText.length; i < len; i++) {
+                        let i: number;
+                        for (i = 0; i < lineText.length; i++) {
                             if (lineText.charAt(i) === " ") {
                                 hasIndent++;
                             }
@@ -1151,9 +1151,9 @@ namespace ts.server {
                         }
                         // i points to the first non whitespace character
                         if (preferredIndent !== hasIndent) {
-                            const firstNoWhiteSpacePosition = lineInfo.offset + i;
+                            const firstNoWhiteSpacePosition = lineInfo.absolutePosition + i;
                             edits.push({
-                                span: ts.createTextSpanFromBounds(lineInfo.offset, firstNoWhiteSpacePosition),
+                                span: ts.createTextSpanFromBounds(lineInfo.absolutePosition, firstNoWhiteSpacePosition),
                                 newText: formatting.getIndentationString(preferredIndent, formatOptions)
                             });
                         }
