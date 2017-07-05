@@ -135,6 +135,7 @@ function testChanges(changer) {
             case "open":
                 break; //ignore
             case "change":
+                console.log(rq.arguments);
                 const { line, offset, endLine, endOffset, insertString } = rq.arguments;
                 changer.change({ line, offset, endLine, endOffset, insertString });
                 break;
@@ -149,6 +150,12 @@ function testChanges(changer) {
 function testFake() {
     const c2 = new utils_1.C6();
     testChanges(c2);
+}
+function test2() {
+    const c = new utils_1.C6();
+    c.change({ line: 1, offset: 1, endLine: 1, endOffset: 1, insertString: "\n" });
+    c.change({ line: 2, offset: 1, endLine: 2, endOffset: 1, insertString: "e" });
+    c.change({ line: 2, offset: 2, endLine: 2, endOffset: 2, insertString: "x" });
 }
 function testSession() {
     const sess = new DumbSession();
@@ -195,11 +202,12 @@ function testSession() {
     process.exit(0); //Else server will leave it open
     */
 }
-ts.server.ScriptVersionCache.maxVersions = 999999;
-ts.server.ScriptVersionCache.changeNumberThreshold = Number.MAX_SAFE_INTEGER;
-ts.server.ScriptVersionCache.changeLengthThreshold = Number.MAX_SAFE_INTEGER;
+//ts.server.ScriptVersionCache.maxVersions = 999999;
+//ts.server.ScriptVersionCache.changeNumberThreshold = Number.MAX_SAFE_INTEGER;
+//ts.server.ScriptVersionCache.changeLengthThreshold = Number.MAX_SAFE_INTEGER;
 //testSession();
-testFake();
+//testFake();
+test2();
 /*
 TypeError: Cannot read property 'charCount' of undefined
     at LineNode.walk (/home/andy/TypeScript/built/local/scriptVersionCache.ts:702:39)

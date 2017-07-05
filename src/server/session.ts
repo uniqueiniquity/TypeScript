@@ -49,7 +49,7 @@ namespace ts.server {
 
     interface FileStart {
         file: string;
-        start: ILineInfo;
+        start: ILineInfo2;
     }
 
     function compareNumber(a: number, b: number) {
@@ -84,7 +84,7 @@ namespace ts.server {
         };
     }
 
-    function convertToILineInfo(lineAndCharacter: LineAndCharacter): ILineInfo {
+    function convertToILineInfo(lineAndCharacter: LineAndCharacter): ILineInfo2 {
         return { line: lineAndCharacter.line + 1, offset: lineAndCharacter.character + 1 };
     }
 
@@ -1132,8 +1132,8 @@ namespace ts.server {
             // add edits necessary to properly indent the current line.
             if ((args.key === "\n") && ((!edits) || (edits.length === 0) || allEditsBeforePos(edits, position))) {
                 const lineInfo = scriptInfo.getLineInfo(args.line);
-                if (lineInfo && (lineInfo.leaf) && (lineInfo.leaf.text)) {
-                    const lineText = lineInfo.leaf.text;
+                if (lineInfo && lineInfo.text !== undefined) {
+                    const lineText = lineInfo.text;
                     if (lineText.search("\\S") < 0) {
                         const preferredIndent = project.getLanguageService(/*ensureSynchronized*/ false).getIndentationAtPosition(file, position, formatOptions);
                         let hasIndent = 0;
@@ -1516,7 +1516,7 @@ namespace ts.server {
 
             if (simplifiedResult) {
                 const file = result.renameFilename;
-                let location: ILineInfo | undefined  = undefined;
+                let location: ILineInfo2 | undefined  = undefined;
                 if (file !== undefined && result.renameLocation !== undefined) {
                     const renameScriptInfo = project.getScriptInfoForNormalizedPath(toNormalizedPath(file));
                     location = renameScriptInfo.positionToLineOffset(result.renameLocation);

@@ -1,7 +1,7 @@
 /// <reference path="..\harness.ts" />
 /// <reference path="..\..\server\editorServices.ts" />
 
-namespace ts {
+namespace ts { //tests in here!
     function editFlat(position: number, deletedLength: number, newText: string, source: string) {
         return source.substring(0, position) + newText + source.substring(position + deletedLength, source.length);
     }

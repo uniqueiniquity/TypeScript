@@ -75,8 +75,8 @@ namespace ts.server {
             const index = this.svc.getSnapshot().index;
             const lineInfo = index.lineNumberToInfo(line + 1);
             let len: number;
-            if (lineInfo.leaf) {
-                len = lineInfo.leaf.text.length;
+            if (lineInfo.text !== undefined) {
+                len = lineInfo.text.length;
             }
             else {
                 const nextLineInfo = index.lineNumberToInfo(line + 2);
@@ -104,7 +104,8 @@ namespace ts.server {
          * @param line 1-based index
          * @param offset 1-based index
          */
-        positionToLineOffset(position: number): ILineInfo {
+        //Above documentation must be referring to the outputs, not the inputs.
+        positionToLineOffset(position: number): ILineInfo2 {
             if (!this.svc) {
                 const { line, character } = computeLineAndCharacterOfPosition(this.getLineMap(), position);
                 return { line: line + 1, offset: character + 1 };
@@ -371,7 +372,7 @@ namespace ts.server {
          * @param line 1-based index
          * @param offset 1-based index
          */
-        positionToLineOffset(position: number): ILineInfo {
+        positionToLineOffset(position: number): ILineInfo2 {
             return this.textStorage.positionToLineOffset(position);
         }
 

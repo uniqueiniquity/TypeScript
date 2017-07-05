@@ -140,7 +140,7 @@ class C5 extends C4 {
     get SVC() { return CheapoScriptVersionCache; }
 }
 exports.C5 = C5;
-//Mimics TextCHange class
+//Mimics ScriptVersionCache class
 class C6 {
     constructor() {
         this.correctText = "";

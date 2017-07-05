@@ -156,7 +156,7 @@ export class C5 extends C4 {
 	get SVC() { return CheapoScriptVersionCache as any; }
 }
 
-//Mimics TextChange class
+//Mimics ScriptVersionCache class
 export class C6 {
 	private prevSnapshot: ts.server.LineIndexSnapshot; // This will be somewhere in 'versions', but isn't the latest entry -- this only changes on `getText`
 	private correctText = "";
@@ -184,7 +184,7 @@ export class C6 {
 		return snap;
 	}
 
-	getTextChangesBetweenVersions(oldVersion: number, newVersion: number) {
+	getTextChangesBetweenVersions(oldVersion: number, newVersion: number): ts.TextChangeRange {
 		console.log({ oldVersion, newVersion });
 		if (oldVersion >= newVersion) throw new Error("???");
 		const textChangeRanges: ts.TextChangeRange[] = [];

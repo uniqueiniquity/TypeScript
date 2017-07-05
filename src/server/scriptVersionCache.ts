@@ -2,35 +2,48 @@
 /// <reference path="..\services\services.ts" />
 /// <reference path="session.ts" />
 
+//Note: only real exports are ScriptVersionCache and ILineInfo. Others exported only for unit tests.
 namespace ts.server {
     const lineCollectionCapacity = 4;
 
+    //LineNode | LineLeaf
+    //must export b/c LineLeaf is exported
     export interface LineCollection {
         charCount(): number; //number of chars, right?
         lineCount(): number; //number of '\n' + 1, right?
-        isLeaf(): boolean;
+        isLeaf(): this is LineLeaf;
         walk(rangeStart: number, rangeLength: number, walkFns: ILineIndexWalker): void;
     }
 
+    //These are 1-based line and column.
+    export type ILineInfo2 = protocol.Location; //TODO: just use protocol.Location then.
+
+    //this is
     export interface ILineInfo {
-        line: number; //?
-        offset: number; //?
-        text?: string;
-        leaf?: LineLeaf;
+        line: number; // absolute line number, 0-based.
+        //Absolute position in the string. How do I know? `offset: this.root.charCount()`
+        //OLD:
+        //  Offset relative to start of line. How do I know? scriptInfo.ts `positionToLineOffset` uses `computeLineAndCharacterOfPosition`.
+        //  Actually, that's in ILineInfo2 now.
+        offset: number;
+        text?: string; //used only internally
     }
 
-    export enum CharRangeSection {
-        PreStart,
-        Start,
-        Entire,
-        Mid,
-        End,
-        PostEnd
+    //Must export b/c ILineIndexWalker is exported
+    export const enum CharRangeSection {
+        PreStart, //?
+        Start, //?
+        Entire, //?
+        Mid, //?
+        End, //?
+        PostEnd //?
     }
 
+    //either EditWalker, or an object literal in LineIndex.every
+    //Must export b/c LineCollection is exported
     export interface ILineIndexWalker {
-        goSubtree: boolean;
-        done: boolean;
+        goSubtree: boolean; //?
+        done: boolean; //?
         leaf(relativeStart: number, relativeLength: number, lineCollection: LineLeaf): void;
         pre?(relativeStart: number, relativeLength: number, lineCollection: LineCollection,
             parent: LineNode, nodeType: CharRangeSection): LineCollection;
@@ -39,7 +52,7 @@ namespace ts.server {
     }
 
     class EditWalker implements ILineIndexWalker {
-        goSubtree = true;
+        goSubtree = true; //?
         done = false;
 
         lineIndex = new LineIndex();
@@ -249,6 +262,7 @@ namespace ts.server {
     }
 
     // text change information
+    //Must export b/c LineIndexSnapshot is exported
     export class TextChange {
         constructor(public pos: number, public deleteLen: number, public insertedText?: string) {
         }
@@ -261,16 +275,16 @@ namespace ts.server {
 
     //This is the main export of this file. Others are only exported for sake of unit tests
     export class ScriptVersionCache {
-        changes: TextChange[] = [];
-        versions: LineIndexSnapshot[] = new Array<LineIndexSnapshot>(ScriptVersionCache.maxVersions);
-        minVersion = 0;  // no versions earlier than min version will maintain change history
+        private changes: TextChange[] = [];
+        private versions: LineIndexSnapshot[] = new Array<LineIndexSnapshot>(ScriptVersionCache.maxVersions);
+        private minVersion = 0;  // no versions earlier than min version will maintain change history
 
         private host: FileReader;
         private currentVersion = 0;
 
-        static changeNumberThreshold = 8;
-        static changeLengthThreshold = 256;
-        static maxVersions = 8;
+        private static changeNumberThreshold = 8;
+        private static changeLengthThreshold = 256;
+        private static maxVersions = 8;
 
         private versionToIndex(version: number) {
             if (version < this.minVersion || version > this.currentVersion) {
@@ -391,8 +405,9 @@ namespace ts.server {
         }
     }
 
+    //TODO: don't export
     export class LineIndexSnapshot implements IScriptSnapshot {
-        index: LineIndex;
+        index: LineIndex; //mutable!
         changesSincePreviousVersion: TextChange[] = [];
 
         constructor(readonly version: number, readonly cache: { getTextChangesBetweenVersions(oldVersion: number, newVersion: number): TextChangeRange; }) {
@@ -405,26 +420,6 @@ namespace ts.server {
         getLength() {
             return this.index.root.charCount();
         }
-
-        // this requires linear space so don't hold on to these
-        //dead cooode
-        /*getLineStartPositions(): number[] {
-            const starts: number[] = [-1];
-            let count = 1;
-            let pos = 0;
-            this.index.every(ll => {
-                starts[count] = pos;
-                count++;
-                pos += ll.text.length;
-                return true;
-            }, 0);
-            return starts;
-        }*/
-
-        //dead code, apparently
-        //getLineMapper() {
-        //    return (line: number) => this.index.lineNumberToInfo(line).offset;
-        //}
 
         private getTextChangeRangeSinceVersion(scriptVersion: number) {
             if (this.version <= scriptVersion) {
@@ -441,23 +436,31 @@ namespace ts.server {
         }
     }
 
+    //This is exported! should probably be under an interface
     export class LineIndex {
         root: LineNode;
         // set this to true to check each edit for accuracy
         checkEdits = false;
 
-        charOffsetToLineNumberAndPos(charOffset: number) {
+        //?
+        charOffsetToLineNumberAndPos(charOffset: number): ILineInfo {
             return this.root.charOffsetToLineNumberAndPos(1, charOffset);
         }
 
+        //! PRobably shouldn't include `line` in the output here...
+        //Output offset is a *total* offset.
         lineNumberToInfo(lineNumber: number): ILineInfo {
             const lineCount = this.root.lineCount();
             if (lineNumber <= lineCount) {
-                const lineInfo = this.root.lineNumberToInfo(lineNumber, 0);
-                lineInfo.line = lineNumber;
-                return lineInfo;
+                const { offset, leaf } = this.root.lineNumberToInfo(lineNumber, 0);
+                return {
+                    line: lineNumber,
+                    offset,
+                    text: leaf && leaf.text,
+                };
             }
             else {
+                Debug.assert(lineNumber === lineCount + 1); //This fails in unit tests in versionCache.ts "TS code change 19 1 1 0" and "TS code change 18 1 1 0"
                 return {
                     line: lineNumber,
                     offset: this.root.charCount()
@@ -465,7 +468,7 @@ namespace ts.server {
             }
         }
 
-        load(lines: string[]) {
+        load(lines: string[]): void {
             if (lines.length > 0) {
                 const leaves: LineLeaf[] = [];
                 for (let i = 0; i < lines.length; i++) {
@@ -575,27 +578,25 @@ namespace ts.server {
             }
         }
 
-        static buildTreeFromBottom(nodes: LineCollection[]): LineNode {
-            const nodeCount = Math.ceil(nodes.length / lineCollectionCapacity);
-            const interiorNodes: LineNode[] = [];
+        private static buildTreeFromBottom(nodes: LineCollection[]): LineNode {
+            const interiorNodeCount = Math.ceil(nodes.length / lineCollectionCapacity);
+            const interiorNodes: LineNode[] = new Array(interiorNodeCount);
             let nodeIndex = 0;
-            for (let i = 0; i < nodeCount; i++) {
-                interiorNodes[i] = new LineNode();
+            for (let i = 0; i < interiorNodeCount; i++) {
+                const interiorNode = interiorNodes[i] = new LineNode();
                 let charCount = 0;
                 let lineCount = 0;
                 for (let j = 0; j < lineCollectionCapacity; j++) {
-                    if (nodeIndex < nodes.length) {
-                        interiorNodes[i].add(nodes[nodeIndex]);
-                        charCount += nodes[nodeIndex].charCount();
-                        lineCount += nodes[nodeIndex].lineCount();
-                    }
-                    else {
+                    if (nodeIndex >= nodes.length)
                         break;
-                    }
+
+                    interiorNode.add(nodes[nodeIndex]);
+                    charCount += nodes[nodeIndex].charCount();
+                    lineCount += nodes[nodeIndex].lineCount();
                     nodeIndex++;
                 }
-                interiorNodes[i].totalChars = charCount;
-                interiorNodes[i].totalLines = lineCount;
+                interiorNode.totalChars = charCount;
+                interiorNode.totalLines = lineCount;
             }
             if (interiorNodes.length === 1) {
                 return interiorNodes[0];
@@ -605,21 +606,22 @@ namespace ts.server {
             }
         }
 
-        static linesFromText(text: string) {
+        static linesFromText(text: string) { //! dafuq is this?
             const lineStarts = ts.computeLineStarts(text);
 
             if (lineStarts.length === 0) {
-                return { lines: <string[]>[], lineMap: lineStarts };
+                throw new Error("Pretty sure this is impossible. Always at least 1 line.");
+                //return { lines: <string[]>[], lineMap: lineStarts };
             }
             const lines = <string[]>new Array(lineStarts.length);
-            const lc = lineStarts.length - 1;
-            for (let lmi = 0; lmi < lc; lmi++) {
-                lines[lmi] = text.substring(lineStarts[lmi], lineStarts[lmi + 1]);
+            const lastLineIndex = lineStarts.length - 1;
+            for (let i = 0; i < lastLineIndex; i++) {
+                lines[i] = text.substring(lineStarts[i], lineStarts[i + 1]);
             }
 
-            const endText = text.substring(lineStarts[lc]);
+            const endText = text.substring(lineStarts[lastLineIndex]);
             if (endText.length > 0) {
-                lines[lc] = endText;
+                lines[lastLineIndex] = endText;
             }
             else {
                 lines.length--;
@@ -628,6 +630,7 @@ namespace ts.server {
         }
     }
 
+    //Must export b/c ILineIndexWalker is exported
     export class LineNode implements LineCollection {
         totalChars = 0;
         totalLines = 0;
@@ -724,9 +727,15 @@ namespace ts.server {
             }
         }
 
+        //input lineNumber is ???
+        //input charOffset is ???
+        //output line is ???
+        //output offset is ???
         charOffsetToLineNumberAndPos(lineNumber: number, charOffset: number): ILineInfo {
             const childInfo = this.childFromCharOffset(lineNumber, charOffset);
             if (!childInfo.child) {
+                Debug.assert(this.children.length === 0); //neater: just check for this first.
+                Debug.fail(); //LineNode should always have children, right?
                 return {
                     line: lineNumber,
                     offset: charOffset,
@@ -737,8 +746,7 @@ namespace ts.server {
                     return {
                         line: childInfo.lineNumber,
                         offset: childInfo.charOffset,
-                        text: (<LineLeaf>(childInfo.child)).text,
-                        leaf: (<LineLeaf>(childInfo.child))
+                        text: childInfo.child.text
                     };
                 }
                 else {
@@ -747,25 +755,28 @@ namespace ts.server {
                 }
             }
             else {
-                const lineInfo = this.lineNumberToInfo(this.lineCount(), 0);
-                return { line: this.lineCount(), offset: lineInfo.leaf.charCount() };
+                //childInfo.child set to the last child, ignore it.
+                const { leaf } = this.lineNumberToInfo(this.lineCount(), 0); //only used for the leaf, make neater. Also will crash if leaf missing
+                return { line: this.lineCount(), offset: leaf.charCount() };
             }
         }
 
-        lineNumberToInfo(lineNumber: number, charOffset: number): ILineInfo {
-            const childInfo = this.childFromLineNumber(lineNumber, charOffset);
+        //Input lineNumber is relative to start of this node.
+        //Input charOffset is a *running total* of the absolute position.
+        //Output lineNumber is... overwritten, wtf
+        //Ouptut offset is the final *total* charOffset
+        lineNumberToInfo(lineNumber: number, charOffset: number): { offset: number, leaf?: LineLeaf } {
+            const childInfo = this.childFromLineNumber(lineNumber, charOffset); //maybe inline this function.
             if (!childInfo.child) {
+                Debug.fail(); //Should always have at least 1 child, right?
                 return {
-                    line: lineNumber,
                     offset: charOffset
                 };
             }
             else if (childInfo.child.isLeaf()) {
                 return {
-                    line: lineNumber,
                     offset: childInfo.charOffset,
-                    text: (<LineLeaf>(childInfo.child)).text,
-                    leaf: (<LineLeaf>(childInfo.child))
+                    leaf: childInfo.child,
                 };
             }
             else {
@@ -774,12 +785,35 @@ namespace ts.server {
             }
         }
 
-        childFromLineNumber(lineNumber: number, charOffset: number) {
+        /*
+        Input lineNumber is a line offset *relative* to the start line of this node.
+        Output relativeLineNumber is relative to the *child*, while input is relative to *this*.
+        Input charOffset is the *running* total position. This will be absolute once lineNumber reaches 0.
+        So given:
+
+            abc A
+                    X
+            def B
+                        Z
+            ghi C
+                    Y
+            jkl D
+
+            mno E
+
+            pqr F
+
+
+        Say we are looking for line 3, char 1. ('k')
+        We will skip past `X` and translate that to line 1, char 7.
+        Then we will skip past `C` and translate that to line 0, char 10.
+        Right???
+        */
+        private childFromLineNumber(lineNumber: number, charOffset: number) {
             let child: LineCollection;
             let relativeLineNumber = lineNumber;
             let i: number;
-            let len: number;
-            for (i = 0, len = this.children.length; i < len; i++) {
+            for (i = 0; i < this.children.length; i++) {
                 child = this.children[i];
                 const childLineCount = child.lineCount();
                 if (childLineCount >= relativeLineNumber) {
@@ -791,14 +825,15 @@ namespace ts.server {
                 }
             }
             return {
-                child: child,
-                childIndex: i,
-                relativeLineNumber: relativeLineNumber,
-                charOffset: charOffset
+                child,
+                relativeLineNumber,
+                charOffset,
             };
         }
 
-        childFromCharOffset(lineNumber: number, charOffset: number) {
+        //input charOffset is offset into *this* node. output charOffset is offset into *child*.
+        //input lineNumber is ???. Output lineNumber is ???
+        private childFromCharOffset(lineNumber: number, charOffset: number) {
             let child: LineCollection;
             let i: number;
             let len: number;
@@ -813,10 +848,10 @@ namespace ts.server {
                 }
             }
             return {
-                child: child,
+                child,
                 childIndex: i,
-                charOffset: charOffset,
-                lineNumber: lineNumber
+                charOffset,
+                lineNumber,
             };
         }
 
@@ -911,8 +946,10 @@ namespace ts.server {
 
         // assume there is room for the item; return true if more room
         add(collection: LineCollection) {
-            this.children[this.children.length] = collection;
-            return (this.children.length < lineCollectionCapacity);
+            this.children[this.children.length] = collection; //Isn't this just 'push'?
+            Debug.assert(this.children.length <= lineCollectionCapacity);
+            //return value never used!
+            //return (this.children.length < lineCollectionCapacity);
         }
 
         charCount() {
@@ -924,6 +961,7 @@ namespace ts.server {
         }
     }
 
+    //This is exported! Probably shouldn't be
     export class LineLeaf implements LineCollection {
         constructor(public text: string) {
         }
