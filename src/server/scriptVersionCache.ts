@@ -55,27 +55,27 @@ namespace ts.server {
         done: boolean; //?
         leaf(relativeStart: number, relativeLength: number, lineCollection: LineLeaf): void;
         pre?(relativeStart: number, relativeLength: number, lineCollection: LineCollection,
-            parent: LineNode, nodeType: CharRangeSection): LineCollection;
+            parent: LineNode, nodeType: CharRangeSection): void; //return value never used!
         post?(relativeStart: number, relativeLength: number, lineCollection: LineCollection,
-            parent: LineNode, nodeType: CharRangeSection): LineCollection;
+            parent: LineNode, nodeType: CharRangeSection): void; //return value never used!
     }
 
     class EditWalker implements ILineIndexWalker {
         goSubtree = true;
         done = false;
 
-        lineIndex = new LineIndex();
+        lineIndex = new LineIndex(); //This will be the output?
         // path to start of range
-        startPath: LineCollection[];
-        endBranch: LineCollection[] = [];
-        branchNode: LineNode;
+        private startPath: LineCollection[]; //THis must be the path down from the root?
+        private endBranch: LineCollection[] = []; //What is this?
+        private branchNode: LineNode;
         // path to current node
-        stack: LineNode[];
-        state = CharRangeSection.Entire;
-        lineCollectionAtBranch: LineCollection;
-        initialText = "";
-        trailingText = "";
-        suppressTrailingText = false;
+        private stack: LineNode[];
+        private state = CharRangeSection.Entire; //This is only ever Start, End, or Entire
+        private lineCollectionAtBranch: LineCollection | undefined;
+        private initialText = "";
+        private trailingText = "";
+        //suppressTrailingText = false; //Don't need an instance variable, just made it a parameter to insertLines
 
         constructor() {
             this.lineIndex.root = new LineNode();
@@ -83,8 +83,8 @@ namespace ts.server {
             this.stack = [this.lineIndex.root];
         }
 
-        insertLines(insertedText: string) {
-            if (this.suppressTrailingText) {
+        insertLines(insertedText: string, suppressTrailingText: boolean) {
+            if (suppressTrailingText) {
                 this.trailingText = "";
             }
             if (insertedText) {
@@ -93,12 +93,13 @@ namespace ts.server {
             else {
                 insertedText = this.initialText + this.trailingText;
             }
-            const lm = LineIndex.linesFromText(insertedText);
-            const lines = lm.lines;
+            const { lines } = LineIndex.linesFromText(insertedText);
             if (lines.length > 1) {
-                if (lines[lines.length - 1] === "") {
-                    lines.length--;
-                }
+                //linesFromText should ensure the below never happens.
+                Debug.assert(lines[lines.length - 1] !== "");
+                //if (lines[lines.length - 1] === "") {
+                //    lines.pop();
+                //}
             }
             let branchParent: LineNode;
             let lastZeroCount: LineCollection;
@@ -120,22 +121,20 @@ namespace ts.server {
             }
 
             // path at least length two (root and leaf)
-            let insertionNode = <LineNode>this.startPath[this.startPath.length - 2];
             const leafNode = <LineLeaf>this.startPath[this.startPath.length - 1];
-            const len = lines.length;
 
-            if (len > 0) {
+            if (lines.length > 0) {
                 leafNode.text = lines[0];
 
-                if (len > 1) {
-                    let insertedNodes = <LineCollection[]>new Array(len - 1);
-                    let startNode = <LineCollection>leafNode;
+                if (lines.length > 1) {
+                    let insertedNodes: LineCollection[] = new Array(lines.length - 1);
                     for (let i = 1; i < lines.length; i++) {
                         insertedNodes[i - 1] = new LineLeaf(lines[i]);
                     }
                     let pathIndex = this.startPath.length - 2;
+                    let startNode: LineCollection = leafNode;
                     while (pathIndex >= 0) {
-                        insertionNode = <LineNode>this.startPath[pathIndex];
+                        const insertionNode = <LineNode>this.startPath[pathIndex];
                         insertedNodes = insertionNode.insertAt(startNode, insertedNodes);
                         pathIndex--;
                         startNode = insertionNode;
@@ -157,6 +156,7 @@ namespace ts.server {
                 }
             }
             else {
+                const insertionNode = <LineNode>this.startPath[this.startPath.length - 2];
                 // no content for leaf node, so delete it
                 insertionNode.remove(leafNode);
                 for (let j = this.startPath.length - 2; j >= 0; j--) {
@@ -167,18 +167,18 @@ namespace ts.server {
             return this.lineIndex;
         }
 
-        post(_relativeStart: number, _relativeLength: number, lineCollection: LineCollection): LineCollection {
+        post(_relativeStart: number, _relativeLength: number, lineCollection: LineCollection): void {
             // have visited the path for start of range, now looking for end
             // if range is on single line, we will never make this state transition
             if (lineCollection === this.lineCollectionAtBranch) {
                 this.state = CharRangeSection.End;
             }
             // always pop stack because post only called when child has been visited
-            this.stack.length--;
-            return undefined;
+            this.stack.pop();
+            //return undefined; //return value never used
         }
 
-        pre(_relativeStart: number, _relativeLength: number, lineCollection: LineCollection, _parent: LineCollection, nodeType: CharRangeSection) {
+        pre(_relativeStart: number, _relativeLength: number, lineCollection: LineCollection, _parent: LineCollection, nodeType: CharRangeSection): void {
             // currentNode corresponds to parent, but in the new tree
             const currentNode = this.stack[this.stack.length - 1];
 
@@ -210,20 +210,20 @@ namespace ts.server {
                     else {
                         child = fresh(lineCollection);
                         currentNode.add(child);
-                        this.startPath[this.startPath.length] = child;
+                        this.startPath.push(child);
                     }
                     break;
                 case CharRangeSection.Entire:
                     if (this.state !== CharRangeSection.End) {
                         child = fresh(lineCollection);
                         currentNode.add(child);
-                        this.startPath[this.startPath.length] = child;
+                        this.startPath.push(child);
                     }
                     else {
                         if (!lineCollection.isLeaf()) {
                             child = fresh(lineCollection);
                             currentNode.add(child);
-                            this.endBranch[this.endBranch.length] = child;
+                            this.endBranch.push(child);
                         }
                     }
                     break;
@@ -238,7 +238,7 @@ namespace ts.server {
                         if (!lineCollection.isLeaf()) {
                             child = fresh(lineCollection);
                             currentNode.add(child);
-                            this.endBranch[this.endBranch.length] = child;
+                            this.endBranch.push(child);
                         }
                     }
                     break;
@@ -250,9 +250,9 @@ namespace ts.server {
                     break;
             }
             if (this.goSubtree) {
-                this.stack[this.stack.length] = <LineNode>child;
+                this.stack.push(<LineNode>child);
             }
-            return lineCollection;
+            //return lineCollection; //return value never used!
         }
         // just gather text from the leaves
         leaf(relativeStart: number, relativeLength: number, ll: LineLeaf) {
@@ -264,7 +264,7 @@ namespace ts.server {
                 this.trailingText = ll.text.substring(relativeStart + relativeLength);
             }
             else {
-                // state is CharRangeSection.End
+                //state is CharRangeSection.End (todo: assert, or use a different type!)
                 this.trailingText = ll.text.substring(relativeStart + relativeLength);
             }
         }
@@ -273,7 +273,7 @@ namespace ts.server {
     // text change information
     //Must export b/c LineIndexSnapshot is exported
     export class TextChange {
-        constructor(public pos: number, public deleteLen: number, public insertedText?: string) {
+        constructor(public pos: number, public deleteLen: number, public insertedText: string) {
         }
 
         getTextChangeRange() {
@@ -308,8 +308,8 @@ namespace ts.server {
 
         // REVIEW: can optimize by coalescing simple edits
         //this still needs review...
-        edit(pos: number, deleteLen: number, insertedText?: string) {
-            this.changes[this.changes.length] = new TextChange(pos, deleteLen, insertedText); //Isn't this just push?
+        edit(pos: number, deleteLen: number, insertedText: string) {
+            this.changes.push(new TextChange(pos, deleteLen, insertedText));
             if (this.changes.length > ScriptVersionCache.changeNumberThreshold ||
                 deleteLen > ScriptVersionCache.changeLengthThreshold ||
                 insertedText && insertedText.length > ScriptVersionCache.changeLengthThreshold) {
@@ -386,7 +386,7 @@ namespace ts.server {
                     for (let i = oldVersion + 1; i <= newVersion; i++) {
                         const snap = this.versions[this.versionToIndex(i)];
                         for (const textChange of snap.changesSincePreviousVersion) {
-                            textChangeRanges[textChangeRanges.length] = textChange.getTextChangeRange(); //isn't this just push?
+                            textChangeRanges.push(textChange.getTextChangeRange());
                         }
                     }
                     return ts.collapseTextChangeRangesAcrossMultipleVersions(textChangeRanges);
@@ -534,16 +534,18 @@ namespace ts.server {
             return !walkFns.done;
         }
 
-        edit(pos: number, deleteLength: number, newText?: string): LineIndex { //This one actually does it.
+        //This doesn't mutate this lineIndex, it creates a new one.
+        edit(pos: number, deleteLength: number, newText: string): LineIndex { //This one actually does it.
             function editFlat(source: string, start: number, deleteLen: number, insertString: string) {
                 return source.substring(0, start) + insertString + source.substring(start + deleteLen, source.length);
             }
             if (this.root.charCount() === 0) {
                 // TODO: assert deleteLength === 0
-                if (newText !== undefined) {
+                Debug.assert(newText !== undefined);
+                //if (newText !== undefined) {
                     this.load(LineIndex.linesFromText(newText).lines);
                     return this;
-                }
+                //}
             }
             else {
                 let checkText: string;
@@ -551,18 +553,19 @@ namespace ts.server {
                     checkText = editFlat(this.getText(0, this.root.charCount()), pos, deleteLength, newText);
                 }
                 const walker = new EditWalker();
+                let suppressTrailingText = false;
                 if (pos >= this.root.charCount()) {
                     // insert at end
-                    pos = this.root.charCount() - 1;
+                    pos = this.root.charCount() - 1; //TODO: assert this?
                     const endString = this.getText(pos, 1);
-                    if (newText) {
+                    if (newText) { //shouldn't be necessary to test
                         newText = endString + newText;
                     }
                     else {
                         newText = endString;
                     }
                     deleteLength = 0;
-                    walker.suppressTrailingText = true;
+                    suppressTrailingText = true;
                 }
                 else if (deleteLength > 0) {
                     // check whether last characters deleted are line break
@@ -574,12 +577,15 @@ namespace ts.server {
                         newText = newText !== undefined ? newText + lineText : newText;
                     }
                 }
-                if (pos < this.root.charCount()) {
-                    this.root.walk(pos, deleteLength, walker);
-                    walker.insertLines(newText);
-                }
+                Debug.assert(pos < this.root.charCount());
+                //if (pos < this.root.charCount()) {//This will always be true! Because we check for `pos >= this.root.charCount()` and change it!
+                this.root.walk(pos, deleteLength, walker);
+                walker.insertLines(newText, suppressTrailingText);
+                //}
+
                 if (this.checkEdits) {
-                    const updatedText = this.getText(0, this.root.charCount());
+                    //`this.getText` didn't change, walker created a *new* node with updated text.
+                    const updatedText = walker.lineIndex.getText(0, walker.lineIndex.getLength());//this.getText(0, this.root.charCount());
                     Debug.assert(checkText === updatedText, "buffer edit mismatch");
                 }
                 return walker.lineIndex;
@@ -616,7 +622,9 @@ namespace ts.server {
             }
         }
 
-        static linesFromText(text: string) { //! dafuq is this?
+        //text -> array of lines
+        //note that lineMap may have one more entry than lines if the last line is empty (and doesn't end in "\n")
+        static linesFromText(text: string) {
             const lineStarts = ts.computeLineStarts(text);
 
             if (lineStarts.length === 0) {
@@ -634,7 +642,7 @@ namespace ts.server {
                 lines[lastLineIndex] = endText;
             }
             else {
-                lines.length--;
+                lines.pop();
             }
             return { lines, lineMap: lineStarts };
         }
@@ -659,7 +667,7 @@ namespace ts.server {
             }
         }
 
-        execWalk(rangeStart: number, rangeLength: number, walkFns: ILineIndexWalker, childIndex: number, nodeType: CharRangeSection) {
+        private execWalk(rangeStart: number, rangeLength: number, walkFns: ILineIndexWalker, childIndex: number, nodeType: CharRangeSection) {
             if (walkFns.pre) {
                 walkFns.pre(rangeStart, rangeLength, this.children[childIndex], this, nodeType);
             }
@@ -675,7 +683,7 @@ namespace ts.server {
             return walkFns.done;
         }
 
-        skipChild(relativeStart: number, relativeLength: number, childIndex: number, walkFns: ILineIndexWalker, nodeType: CharRangeSection) {
+        private skipChild(relativeStart: number, relativeLength: number, childIndex: number, walkFns: ILineIndexWalker, nodeType: CharRangeSection) {
             if (walkFns.pre && (!walkFns.done)) {
                 walkFns.pre(relativeStart, relativeLength, this.children[childIndex], this, nodeType);
                 walkFns.goSubtree = true;
@@ -685,16 +693,14 @@ namespace ts.server {
         walk(rangeStart: number, rangeLength: number, walkFns: ILineIndexWalker) {
             // assume (rangeStart < this.totalChars) && (rangeLength <= this.totalChars)
             let childIndex = 0;
-            let child = this.children[0];
-            let childCharCount = child.charCount();
+            let childCharCount = this.children[childIndex].charCount();
             // find sub-tree containing start
-            let adjustedStart = rangeStart;
+            let adjustedStart = rangeStart; //This will be the start relative to the child we end up in. TODO: factor out calculation of adjustedStart
             while (adjustedStart >= childCharCount) {
                 this.skipChild(adjustedStart, rangeLength, childIndex, walkFns, CharRangeSection.PreStart);
                 adjustedStart -= childCharCount;
                 childIndex++;
-                child = this.children[childIndex];
-                childCharCount = child.charCount();
+                childCharCount = this.children[childIndex].charCount();
             }
             // Case I: both start and end of range in same subtree
             if ((adjustedStart + rangeLength) <= childCharCount) {
@@ -709,7 +715,7 @@ namespace ts.server {
                 }
                 let adjustedLength = rangeLength - (childCharCount - adjustedStart);
                 childIndex++;
-                child = this.children[childIndex];
+                const child = this.children[childIndex];
                 childCharCount = child.charCount();
                 while (adjustedLength > childCharCount) {
                     if (this.execWalk(0, childCharCount, walkFns, childIndex, CharRangeSection.Mid)) {
@@ -717,7 +723,7 @@ namespace ts.server {
                     }
                     adjustedLength -= childCharCount;
                     childIndex++;
-                    child = this.children[childIndex];
+                    const child = this.children[childIndex];
                     childCharCount = child.charCount();
                 }
                 if (adjustedLength > 0) {
@@ -730,7 +736,7 @@ namespace ts.server {
             if (walkFns.pre) {
                 const clen = this.children.length;
                 if (childIndex < (clen - 1)) {
-                    for (let ej = childIndex + 1; ej < clen; ej++) {
+                    for (let ej = childIndex + 1; ej < clen; ej++) { //rename ej
                         this.skipChild(0, 0, ej, walkFns, CharRangeSection.PostEnd);
                     }
                 }
@@ -772,7 +778,7 @@ namespace ts.server {
             }
         }
 
-        //Input lineNumber is relative to start of this node.
+        //Input lineNumber is 1-based, relative to start of this node.
         //Input charOffset is a *running total* of the absolute position.
         //Output lineNumber is... overwritten, wtf
         //Ouptut offset is the final *total* charOffset
@@ -825,7 +831,7 @@ namespace ts.server {
             for (i = 0; i < this.children.length; i++) {
                 child = this.children[i];
                 const childLineCount = child.lineCount();
-                if (childLineCount >= relativeLineNumber) {
+                if (childLineCount >= relativeLineNumber) { //This is because lineNumber is 1-based!!!
                     break;
                 }
                 else {
@@ -865,7 +871,7 @@ namespace ts.server {
             };
         }
 
-        splitAfter(childIndex: number) {
+        private splitAfter(childIndex: number) {
             let splitNode: LineNode;
             const clen = this.children.length;
             childIndex++;
@@ -890,10 +896,10 @@ namespace ts.server {
                     this.children[i] = this.children[i + 1];
                 }
             }
-            this.children.length--;
+            this.children.pop();
         }
 
-        findChildIndex(child: LineCollection) {
+        private findChildIndex(child: LineCollection) { //just use indexOf, and assert that it's never -1
             let childIndex = 0;
             const clen = this.children.length;
             while ((this.children[childIndex] !== child) && (childIndex < clen)) childIndex++;
@@ -939,12 +945,12 @@ namespace ts.server {
                     }
                     for (let i = splitNodes.length - 1; i >= 0; i--) {
                         if (splitNodes[i].children.length === 0) {
-                            splitNodes.length--;
+                            splitNodes.pop();
                         }
                     }
                 }
                 if (shiftNode) {
-                    splitNodes[splitNodes.length] = shiftNode;
+                    splitNodes.push(shiftNode);
                 }
                 this.updateCounts();
                 for (let i = 0; i < splitNodeCount; i++) {
@@ -956,7 +962,7 @@ namespace ts.server {
 
         // assume there is room for the item; return true if more room
         add(collection: LineCollection) {
-            this.children[this.children.length] = collection; //Isn't this just 'push'?
+            this.children.push(collection);
             Debug.assert(this.children.length <= lineCollectionCapacity);
             //return value never used!
             //return (this.children.length < lineCollectionCapacity);

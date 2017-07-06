@@ -186,11 +186,12 @@ class C6 {
     }
     change(change) {
         console.log(change);
-        let { line, offset, endLine, endOffset, insertString } = change;
+        let { line, offset, endLine, endOffset, insertString } = change; //Note: these are all 1-based.
         let snap = this.getSnapshot();
         let index = snap.index;
-        const start = index.lineNumberToInfo(line).absolutePosition + offset - 1;
-        const end = index.lineNumberToInfo(endLine).absolutePosition + endOffset - 1;
+        //lineNumberToInfo takes a 1-based line number. But remember to decrement offset.
+        const start = index.lineNumberToInfo(line).absolutePosition + (offset - 1);
+        const end = index.lineNumberToInfo(endLine).absolutePosition + (endOffset - 1);
         const correctStart = lineAndOffsetToPos(this.correctText, line - 1, offset - 1);
         const correctEnd = lineAndOffsetToPos(this.correctText, endLine - 1, endOffset - 1);
         if (start !== correctStart)

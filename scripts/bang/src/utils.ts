@@ -106,7 +106,7 @@ export class CheapoScriptVersionCache {
 	private host: ts.server.FileReader;
 	private currentVersion = 0;
 
-	edit(pos: number, deleteLen: number, insertedText?: string) {
+	edit(pos: number, deleteLen: number, insertedText: string) {
 		this.changes.push(new ts.server.TextChange(pos, deleteLen, insertedText));
 	}
 
@@ -170,7 +170,7 @@ export class C6 {
 		if (this.changes.length > 0) {
 			if (this.changes.length !== 1) throw new Error(JSON.stringify(this.changes));
 			let snapIndex = snap.index;
-			for (const change of this.changes) {
+			for (const change of this.changes) { //TODO: it seems like there's only ever 1 change. Add an assert (to the real code) to see if this is true.
 				snapIndex = snapIndex.edit(change.pos, change.deleteLen, change.insertedText);
 			}
 			snap = new ts.server.LineIndexSnapshot(this.currentVersion + 1, this);
@@ -207,13 +207,14 @@ export class C6 {
 
 	change(change: Change) {
 		console.log(change);
-		let { line, offset, endLine, endOffset, insertString } = change;
+		let { line, offset, endLine, endOffset, insertString } = change; //Note: these are all 1-based.
 		let snap = this.getSnapshot();
 
 		let index = snap.index;
 
-		const start = index.lineNumberToInfo(line).absolutePosition + offset - 1;
-		const end = index.lineNumberToInfo(endLine).absolutePosition + endOffset - 1;
+		//lineNumberToInfo takes a 1-based line number. But remember to decrement offset.
+		const start = index.lineNumberToInfo(line).absolutePosition + (offset - 1);
+		const end = index.lineNumberToInfo(endLine).absolutePosition + (endOffset - 1);
 
 		const correctStart = lineAndOffsetToPos(this.correctText, line - 1, offset - 1);
 		const correctEnd = lineAndOffsetToPos(this.correctText, endLine - 1, endOffset - 1);
