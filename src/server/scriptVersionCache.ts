@@ -55,27 +55,26 @@ namespace ts.server {
         done: boolean; //?
         leaf(relativeStart: number, relativeLength: number, lineCollection: LineLeaf): void;
         pre?(relativeStart: number, relativeLength: number, lineCollection: LineCollection,
-            parent: LineNode, nodeType: CharRangeSection): void; //return value never used!
+            parent: LineNode, nodeType: CharRangeSection): void;
         post?(relativeStart: number, relativeLength: number, lineCollection: LineCollection,
-            parent: LineNode, nodeType: CharRangeSection): void; //return value never used!
+            parent: LineNode, nodeType: CharRangeSection): void;
     }
 
     class EditWalker implements ILineIndexWalker {
         goSubtree = true;
-        done = false;
+        get done() { return false; }
 
-        lineIndex = new LineIndex(); //This will be the output?
+        readonly lineIndex = new LineIndex();
         // path to start of range
-        private startPath: LineCollection[]; //THis must be the path down from the root?
-        private endBranch: LineCollection[] = []; //What is this?
+        private readonly startPath: LineCollection[];
+        private readonly endBranch: LineCollection[] = []; //What is this?
         private branchNode: LineNode;
         // path to current node
-        private stack: LineNode[];
+        private readonly stack: LineNode[];
         private state = CharRangeSection.Entire; //This is only ever Start, End, or Entire
-        private lineCollectionAtBranch: LineCollection | undefined;
+        private lineCollectionAtBranch: LineCollection;
         private initialText = "";
         private trailingText = "";
-        //suppressTrailingText = false; //Don't need an instance variable, just made it a parameter to insertLines
 
         constructor() {
             this.lineIndex.root = new LineNode();
@@ -175,7 +174,6 @@ namespace ts.server {
             }
             // always pop stack because post only called when child has been visited
             this.stack.pop();
-            //return undefined; //return value never used
         }
 
         pre(_relativeStart: number, _relativeLength: number, lineCollection: LineCollection, _parent: LineCollection, nodeType: CharRangeSection): void {
@@ -252,7 +250,6 @@ namespace ts.server {
             if (this.goSubtree) {
                 this.stack.push(<LineNode>child);
             }
-            //return lineCollection; //return value never used!
         }
         // just gather text from the leaves
         leaf(relativeStart: number, relativeLength: number, ll: LineLeaf) {
@@ -307,7 +304,6 @@ namespace ts.server {
         }
 
         // REVIEW: can optimize by coalescing simple edits
-        //this still needs review...
         edit(pos: number, deleteLen: number, insertedText: string) {
             this.changes.push(new TextChange(pos, deleteLen, insertedText));
             if (this.changes.length > ScriptVersionCache.changeNumberThreshold ||
@@ -342,7 +338,7 @@ namespace ts.server {
         reload(script: string) {
             this.currentVersion++;
             this.changes = []; // history wiped out by reload
-            const snap = new LineIndexSnapshot(this.currentVersion, this);
+            const snap = new LineIndexSnapshot(this.currentVersion, this, new LineIndex());
 
             // delete all versions
             for (let i = 0; i < this.versions.length; i++) {
@@ -350,7 +346,6 @@ namespace ts.server {
             }
 
             this.versions[this.currentVersionToIndex()] = snap;
-            snap.index = new LineIndex();
             const lm = LineIndex.linesFromText(script);
             snap.index.load(lm.lines);
 
@@ -364,9 +359,7 @@ namespace ts.server {
                 for (const change of this.changes) {
                     snapIndex = snapIndex.edit(change.pos, change.deleteLen, change.insertedText);
                 }
-                snap = new LineIndexSnapshot(this.currentVersion + 1, this);
-                snap.index = snapIndex;
-                snap.changesSincePreviousVersion = this.changes;
+                snap = new LineIndexSnapshot(this.currentVersion + 1, this, snapIndex, this.changes);
 
                 this.currentVersion = snap.version;
                 this.versions[this.currentVersionToIndex()] = snap;
@@ -404,22 +397,17 @@ namespace ts.server {
 
         static fromString(host: FileReader, script: string): ScriptVersionCache {
             const svc = new ScriptVersionCache();
-            const snap = new LineIndexSnapshot(0, svc);
+            const snap = new LineIndexSnapshot(0, svc, new LineIndex());
             svc.versions[svc.currentVersion] = snap;
             svc.host = host;
-            snap.index = new LineIndex();
             const lm = LineIndex.linesFromText(script);
             snap.index.load(lm.lines);
             return svc;
         }
     }
 
-    //TODO: don't export
-    export class LineIndexSnapshot implements IScriptSnapshot {
-        index: LineIndex; //mutable!
-        changesSincePreviousVersion: TextChange[] = [];
-
-        constructor(readonly version: number, readonly cache: { getTextChangesBetweenVersions(oldVersion: number, newVersion: number): TextChangeRange; }) {
+    export class LineIndexSnapshot implements ts.IScriptSnapshot {
+        constructor(readonly version: number, readonly cache: ScriptVersionCache, readonly index: LineIndex, readonly changesSincePreviousVersion: ReadonlyArray<TextChange> = emptyArray) {
         }
 
         getText(rangeStart: number, rangeEnd: number) {
@@ -430,17 +418,14 @@ namespace ts.server {
             return this.index.root.charCount();
         }
 
-        private getTextChangeRangeSinceVersion(scriptVersion: number) {
-            if (this.version <= scriptVersion) {
-                return ts.unchangedTextChangeRange;
-            }
-            else {
-                return this.cache.getTextChangesBetweenVersions(scriptVersion, this.version);
-            }
-        }
         getChangeRange(oldSnapshot: ts.IScriptSnapshot): ts.TextChangeRange {
             if (oldSnapshot instanceof LineIndexSnapshot && this.cache === oldSnapshot.cache) {
-                return this.getTextChangeRangeSinceVersion(oldSnapshot.version);
+                if (this.version <= oldSnapshot.version) {
+                    return ts.unchangedTextChangeRange;
+                }
+                else {
+                    return this.cache.getTextChangesBetweenVersions(oldSnapshot.version, this.version);
+                }
             }
         }
     }
@@ -601,8 +586,9 @@ namespace ts.server {
                 let charCount = 0;
                 let lineCount = 0;
                 for (let j = 0; j < lineCollectionCapacity; j++) {
-                    if (nodeIndex >= nodes.length)
+                    if (nodeIndex >= nodes.length) {
                         break;
+                    }
 
                     const node = nodes[nodeIndex];
                     interiorNode.add(node);
@@ -625,26 +611,27 @@ namespace ts.server {
         //text -> array of lines
         //note that lineMap may have one more entry than lines if the last line is empty (and doesn't end in "\n")
         static linesFromText(text: string) {
-            const lineStarts = ts.computeLineStarts(text);
+            const lineMap = ts.computeLineStarts(text);
 
-            if (lineStarts.length === 0) {
+            if (lineMap.length === 0) {
                 throw new Error("Pretty sure this is impossible. Always at least 1 line.");
                 //return { lines: <string[]>[], lineMap: lineStarts };
             }
-            const lines = <string[]>new Array(lineStarts.length);
-            const lastLineIndex = lineStarts.length - 1;
+            const lines = <string[]>new Array(lineMap.length);
+            const lastLineIndex = lineMap.length - 1;
             for (let i = 0; i < lastLineIndex; i++) {
-                lines[i] = text.substring(lineStarts[i], lineStarts[i + 1]);
+                lines[i] = text.substring(lineMap[i], lineMap[i + 1]);
             }
 
-            const endText = text.substring(lineStarts[lastLineIndex]);
+            const endText = text.substring(lineMap[lastLineIndex]);
             if (endText.length > 0) {
                 lines[lastLineIndex] = endText;
             }
             else {
                 lines.pop();
             }
-            return { lines, lineMap: lineStarts };
+
+            return { lines, lineMap };
         }
     }
 
@@ -899,10 +886,9 @@ namespace ts.server {
             this.children.pop();
         }
 
-        private findChildIndex(child: LineCollection) { //just use indexOf, and assert that it's never -1
-            let childIndex = 0;
-            const clen = this.children.length;
-            while ((this.children[childIndex] !== child) && (childIndex < clen)) childIndex++;
+        private findChildIndex(child: LineCollection) {
+            const childIndex = this.children.indexOf(child);
+            Debug.assert(childIndex !== -1);
             return childIndex;
         }
 
