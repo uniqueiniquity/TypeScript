@@ -282,15 +282,14 @@ namespace ts.server {
     //This is the main export of this file. Others are only exported for sake of unit tests
     export class ScriptVersionCache {
         private changes: TextChange[] = [];
-        private versions: LineIndexSnapshot[] = new Array<LineIndexSnapshot>(ScriptVersionCache.maxVersions);
+        private readonly versions: LineIndexSnapshot[] = new Array<LineIndexSnapshot>(ScriptVersionCache.maxVersions);
         private minVersion = 0;  // no versions earlier than min version will maintain change history
 
-        private host: FileReader;
         private currentVersion = 0;
 
-        private static changeNumberThreshold = 8;
-        private static changeLengthThreshold = 256;
-        private static maxVersions = 8;
+        private static readonly changeNumberThreshold = 8;
+        private static readonly changeLengthThreshold = 256;
+        private static readonly maxVersions = 8;
 
         private versionToIndex(version: number) {
             if (version < this.minVersion || version > this.currentVersion) {
@@ -322,16 +321,6 @@ namespace ts.server {
                 this.getSnapshot();
             }
             return this.currentVersion;
-        }
-
-        reloadFromFile(filename: string) {
-            let content = this.host.readFile(filename);
-            // If the file doesn't exist or cannot be read, we should
-            // wipe out its cached content on the server to avoid side effects.
-            if (!content) {
-                content = "";
-            }
-            this.reload(content);
         }
 
         // reload whole script, leaving no change history behind reload
@@ -395,11 +384,10 @@ namespace ts.server {
             }
         }
 
-        static fromString(host: FileReader, script: string): ScriptVersionCache {
+        static fromString(script: string) {
             const svc = new ScriptVersionCache();
             const snap = new LineIndexSnapshot(0, svc, new LineIndex());
             svc.versions[svc.currentVersion] = snap;
-            svc.host = host;
             const lm = LineIndex.linesFromText(script);
             snap.index.load(lm.lines);
             return svc;
