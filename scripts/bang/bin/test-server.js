@@ -83,7 +83,7 @@ class DumbSession extends ts.server.Session {
 function getRequestsFromLog() {
     const log = fs_1.readFileSync(logLocation, "utf-8");
     const events = parseLog_1.default(log);
-    const requests = events.filter(e => e.type === "request").map(r => JSON.parse(r.text));
+    const requests = events.filter(e => e.type === "request").map(e => JSON.parse(e.text));
     //Doesn't look like these are important.
     //const x = events.filter(e => e.type === "event").map(e => JSON.parse(e.text));
     return requests.filter((r) => {
@@ -118,15 +118,58 @@ function getRequestsFromLog() {
         }
     });
 }
-const requests = JSON.parse(fs_1.readFileSync("./requests-backup.json", "utf-8"));
+exports.getRequestsFromLog = getRequestsFromLog;
+//const requests = JSON.parse(readFileSync("./requests-backup.json", "utf-8"));
+const requests = getRequestsFromLog();
 function testChanges(changer) {
+    /*const requests = [
+        {
+            command: "change",
+            arguments: {
+                line: 1,
+                offset: 1,
+                endLine: 1,
+                endOffset: 1,
+                insertString: "\n\n"
+            }
+        },
+        {
+            command: "change",
+            arguments: {
+                line: 1,
+                offset: 1,
+                endLine: 2,
+                endOffset: 1,
+                insertString: ""
+            }
+        },
+        {
+            command: "change",
+            arguments: {
+                line: 1,
+                offset: 1,
+                endLine: 1,
+                endOffset: 1,
+                insertString: "\n    "
+            }
+        },
+        {
+            command: "change",
+            arguments: {
+                line: 2,
+                offset: 5,
+                endLine: 2,
+                endOffset: 5,
+                insertString: "n"
+            }
+        }
+    ];*/
     for (const rq of requests) {
-        console.log(rq);
         switch (rq.command) {
             case "open":
                 break; //ignore
             case "change":
-                console.log(rq.arguments);
+                //console.log(rq.arguments);
                 const { line, offset, endLine, endOffset, insertString } = rq.arguments;
                 changer.change({ line, offset, endLine, endOffset, insertString });
                 break;
@@ -138,6 +181,7 @@ function testChanges(changer) {
         }
     }
 }
+exports.testChanges = testChanges;
 function testFake() {
     const c2 = new utils_1.C6();
     testChanges(c2);
@@ -188,7 +232,10 @@ function testSession() {
 //(ts.server.ScriptVersionCache as any).changeNumberThreshold = Number.MAX_SAFE_INTEGER;
 //(ts.server.ScriptVersionCache as any).changeLengthThreshold = Number.MAX_SAFE_INTEGER;
 //testSession();
-testFake();
+if (module.parent === null) {
+    console.log("!");
+    testFake();
+}
 /*
 TypeError: Cannot read property 'charCount' of undefined
     at LineNode.walk (/home/andy/TypeScript/built/local/scriptVersionCache.ts:702:39)

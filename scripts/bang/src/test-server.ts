@@ -85,10 +85,10 @@ class DumbSession extends ts.server.Session {
 	}
 }
 
-function getRequestsFromLog(): any[] {
+export function getRequestsFromLog(): any[] {
 	const log = readFileSync(logLocation, "utf-8");
 	const events = parseLog(log);
-	const requests = events.filter(e => e.type === "request").map(r => JSON.parse(r.text));
+	const requests = events.filter(e => e.type === "request").map(e => JSON.parse(e.text));
 
 	//Doesn't look like these are important.
 	//const x = events.filter(e => e.type === "event").map(e => JSON.parse(e.text));
@@ -129,8 +129,8 @@ function getRequestsFromLog(): any[] {
 	});
 }
 
-const requests = JSON.parse(readFileSync("./requests-backup.json", "utf-8"));
-//const requests = getRequestsFromLog();
+//const requests = JSON.parse(readFileSync("./requests-backup.json", "utf-8"));
+const requests = getRequestsFromLog();
 //writeFileSync("./requests.json", JSON.stringify(requests, undefined, 2));
 //process.exit(0);
 
@@ -140,7 +140,7 @@ interface Changer {
 }
 
 
-function testChanges(changer: Changer) {
+export function testChanges(changer: Changer) {
 	/*const requests = [
 		{
 			command: "change",
@@ -259,7 +259,10 @@ function testSession() {
 //(ts.server.ScriptVersionCache as any).changeLengthThreshold = Number.MAX_SAFE_INTEGER;
 //testSession();
 
-testFake();
+if (module.parent === null) {
+	console.log("!");
+	testFake();
+}
 
 
 /*

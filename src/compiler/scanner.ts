@@ -327,13 +327,17 @@ namespace ts {
 
     //uses zero-based line and column
     export function getPositionOfLineAndCharacter(sourceFile: SourceFile, line: number, character: number): number {
-        return computePositionOfLineAndCharacter(getLineStarts(sourceFile), line, character);
+
+        return computePositionOfLineAndCharacter(sourceFile.text, getLineStarts(sourceFile), line, character);
     }
 
     //was internal
-    export function computePositionOfLineAndCharacter(lineStarts: number[], line: number, character: number): number {
+    export function computePositionOfLineAndCharacter(text: string, lineStarts: number[], line: number, character: number): number {
         Debug.assert(line >= 0 && line < lineStarts.length);
-        return lineStarts[line] + character;
+        const lineEnd = line < lineStarts.length - 1 ? lineStarts[line + 1] : text.length;
+        const res = lineStarts[line] + character;
+        Debug.assert(res < lineEnd);
+        return res;
     }
 
     /* @internal */
