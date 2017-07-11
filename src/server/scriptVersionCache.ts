@@ -15,17 +15,6 @@ namespace ts.server {
         walk(rangeStart: number, rangeLength: number, walkFns: ILineIndexWalker): void;
     }
 
-    export interface AbsolutePositionAndLineText {
-        absolutePosition: number;
-        lineText: string | undefined;
-    }
-
-    export interface AbsolutePositionAndLineText {
-        absolutePosition: number;
-        //Text of the line that `absolutePosition` is on.
-        lineText: string | undefined;
-    }
-
     //Must export b/c ILineIndexWalker is exported
     export const enum CharRangeSection {
         PreStart, //?
@@ -34,6 +23,11 @@ namespace ts.server {
         Mid, //?
         End, //?
         PostEnd //?
+    }
+
+    export interface AbsolutePositionAndLineText {
+        absolutePosition: number;
+        lineText: string | undefined;
     }
 
     //either EditWalker, or an object literal in LineIndex.every
@@ -59,7 +53,7 @@ namespace ts.server {
         private branchNode: LineNode;
         // path to current node
         private readonly stack: LineNode[];
-        private state = CharRangeSection.Entire; //This is only ever Start, End, or Entire
+        private state: CharRangeSection.Start | CharRangeSection.End | CharRangeSection.Entire = CharRangeSection.Entire;
         private lineCollectionAtBranch: LineCollection;
         private initialText = "";
         private trailingText = "";
@@ -249,7 +243,7 @@ namespace ts.server {
                 this.trailingText = ll.text.substring(relativeStart + relativeLength);
             }
             else {
-                //state is CharRangeSection.End (todo: assert, or use a different type!)
+                Debug.assert(this.state === CharRangeSection.End);
                 this.trailingText = ll.text.substring(relativeStart + relativeLength);
             }
         }
@@ -411,12 +405,6 @@ namespace ts.server {
         root: LineNode;
         // set this to true to check each edit for accuracy
         checkEdits = true;//false;
-
-        //kill (left behind in diff)
-        /*charOffsetToLineNumberAndPos(position: number): protocol.Location { //rename: positionToLineAndColumn
-            const { zeroBasedLine, zeroBasedColumn } = this.root.charOffsetToLineNumberAndPos(0, position);
-            return { line: zeroBasedLine + 1, offset: zeroBasedColumn + 1 };
-        }*/
 
         absolutePositionOfStartOfLine(oneBasedLine: number): number {
             return this.lineNumberToInfo(oneBasedLine).absolutePosition;
@@ -686,11 +674,8 @@ namespace ts.server {
             }
             // Process any subtrees after the one containing range end
             if (walkFns.pre) {
-                const clen = this.children.length;
-                if (childIndex < (clen - 1)) {
-                    for (let ej = childIndex + 1; ej < clen; ej++) { //rename ej
-                        this.skipChild(0, 0, ej, walkFns, CharRangeSection.PostEnd);
-                    }
+                for (let i = childIndex + 1; i < this.children.length; i++) {
+                    this.skipChild(0, 0, i, walkFns, CharRangeSection.PostEnd);
                 }
             }
         }
