@@ -235,6 +235,7 @@ export class C6 {
 			start = end = 0;
 		}
 
+		//verify that the snapshot is correct.
 		const text = snap.getText(start, end);
 		if (text !== this.correctText.slice(start, end)) {
 			console.log(JSON.stringify(text));
@@ -248,7 +249,15 @@ export class C6 {
 
 
 function correctChange(text: string, start: number, end: number, insertString: string) {
+	assert(start >= 0);
+	assert(start <= end);
+	assert(end <= text.length);
+
 	return text.slice(0, start) + insertString + text.slice(end);
+}
+
+function assert(cond: boolean) {
+	if (!cond) throw new Error("Assertion failed");
 }
 
 function lineAndOffsetToPos(text: string, zeroBasedLine: number, zeroBasedColumn: number) {

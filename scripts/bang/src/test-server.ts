@@ -141,7 +141,7 @@ interface Changer {
 
 
 function testChanges(changer: Changer) {
-	const requests = [
+	/*const requests = [
 		{
 			command: "change",
 			arguments: {
@@ -182,7 +182,7 @@ function testChanges(changer: Changer) {
 				insertString: "n"
 			}
 		}
-	];
+	];*/
 
 	for (const rq of requests) {
 		switch (rq.command) {
