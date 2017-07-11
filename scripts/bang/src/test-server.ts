@@ -115,6 +115,8 @@ function getRequestsFromLog(): any[] {
 			case "configure":
 			case "close":
 			case "compilerOptionsForInferredProjects":
+				return false;
+
 			case "completions":
 			case "change":
 			case "open":
@@ -139,13 +141,55 @@ interface Changer {
 
 
 function testChanges(changer: Changer) {
+	const requests = [
+		{
+			command: "change",
+			arguments: {
+				line: 1,
+				offset: 1,
+				endLine: 1,
+				endOffset: 1,
+				insertString: "\n\n"
+			}
+		},
+		{
+			command: "change",
+			arguments: {
+				line: 1,
+				offset: 1,
+				endLine: 2,
+				endOffset: 1,
+				insertString: ""
+			}
+		},
+		{
+			command: "change",
+			arguments: {
+				line: 1,
+				offset: 1,
+				endLine: 1,
+				endOffset: 1,
+				insertString: "\n    "
+			}
+		},
+		{
+			command: "change",
+			arguments: {
+				line: 2,
+				offset: 5,
+				endLine: 2,
+				endOffset: 5,
+				insertString: "n"
+			}
+		}
+	];
+
 	for (const rq of requests) {
-		console.log(rq);
 		switch (rq.command) {
 			case "open":
 				break; //ignore
 			case "change":
-				console.log(rq.arguments);
+				//console.log(rq.arguments);
 				const { line, offset, endLine, endOffset, insertString } = rq.arguments;
 				changer.change({ line, offset, endLine, endOffset, insertString });
 				break;
@@ -213,9 +257,9 @@ function testSession() {
 //(ts.server.ScriptVersionCache as any).maxVersions = 999999;
 //(ts.server.ScriptVersionCache as any).changeNumberThreshold = Number.MAX_SAFE_INTEGER;
 //(ts.server.ScriptVersionCache as any).changeLengthThreshold = Number.MAX_SAFE_INTEGER;
-testSession();
+//testSession();
 
-//testFake();
+testFake();
 
 
 /*

@@ -650,6 +650,8 @@ namespace ts.server {
         }
 
         walk(rangeStart: number, rangeLength: number, walkFns: ILineIndexWalker) {
+            Debug.assert((rangeStart + rangeLength) <= this.totalChars); //This catches the bug!
+
             // assume (rangeStart < this.totalChars) && (rangeLength <= this.totalChars)
             let childIndex = 0;
             let childCharCount = this.children[childIndex].charCount();
@@ -674,6 +676,8 @@ namespace ts.server {
                 }
                 let adjustedLength = rangeLength - (childCharCount - adjustedStart);
                 childIndex++;
+                Debug.assert(adjustedStart !== undefined);
+                Debug.assert(childCharCount !== undefined);
                 childCharCount = this.children[childIndex].charCount();
                 while (adjustedLength > childCharCount) {
                     if (this.execWalk(0, childCharCount, walkFns, childIndex, CharRangeSection.Mid)) {

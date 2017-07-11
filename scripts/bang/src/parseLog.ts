@@ -12,14 +12,13 @@ export default function parseLog(log: string): LogEvent[] {
             scn.skipSpaces();
             foo();
         }
-        else if (scn.tryEat("Error:")) {
-            break;//Found an error, bail out.
-        }
         else {
             //Sometimes there is `request:` *not* preceded by "Info: ".
             //e.g. line 29698
             //TODO: find out why!
-            scn.skipRestOfLine();//foo();
+            const ln = scn.takeRestOfLine();//foo();
+            //if (ln.indexOf("'charCount'") !== -1)
+            //    break;
         }
     }
 

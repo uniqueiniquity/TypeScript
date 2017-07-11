@@ -45,14 +45,6 @@ class DumbSession extends ts.server.Session {
                 return { close() { } };
             },
         };
-        /*const host: ts.server.ServerHost = {
-            ...ts.sys, //TODO: replace readFile with a shim
-            setTimeout(): never { throw new Error(); },
-            clearTimeout(): never { throw new Error(); },
-            setImmediate(): never { throw new Error(); },
-            clearImmediate(): never { throw new Error(); },
-            //gc, trace, require
-        };*/
         const cancellationToken = {
             isCancellationRequested: () => false,
             setRequest() { },
@@ -98,9 +90,6 @@ function getRequestsFromLog() {
         const text = JSON.stringify(r);
         if (!text.includes("Cookie.ts"))
             return false;
-        //No error if I exclude these events...
-        //if (text.includes(`"insertString":""`))
-        //    return false;
         switch (r.command) {
             case "signatureHelp":
             case "geterr":
@@ -117,6 +106,7 @@ function getRequestsFromLog() {
             case "configure":
             case "close":
             case "compilerOptionsForInferredProjects":
+                return false;
             case "completions":
             case "change":
             case "open":
@@ -128,8 +118,7 @@ function getRequestsFromLog() {
         }
     });
 }
-//const requests = JSON.parse(readFileSync("./requests.json", "utf-8"));
-const requests = getRequestsFromLog();
+const requests = JSON.parse(fs_1.readFileSync("./requests-backup.json", "utf-8"));
 function testChanges(changer) {
     for (const rq of requests) {
         console.log(rq);
@@ -195,11 +184,11 @@ function testSession() {
     }
     process.exit(0); //Else server will leave it open
 }
-ts.server.ScriptVersionCache.maxVersions = 999999;
-ts.server.ScriptVersionCache.changeNumberThreshold = Number.MAX_SAFE_INTEGER;
-ts.server.ScriptVersionCache.changeLengthThreshold = Number.MAX_SAFE_INTEGER;
-testSession();
-//testFake();
+//(ts.server.ScriptVersionCache as any).maxVersions = 999999;
+//(ts.server.ScriptVersionCache as any).changeNumberThreshold = Number.MAX_SAFE_INTEGER;
+//(ts.server.ScriptVersionCache as any).changeLengthThreshold = Number.MAX_SAFE_INTEGER;
+//testSession();
+testFake();
 /*
 TypeError: Cannot read property 'charCount' of undefined
     at LineNode.walk (/home/andy/TypeScript/built/local/scriptVersionCache.ts:702:39)
