@@ -9,6 +9,7 @@ namespace ts.server {
     //LineNode | LineLeaf
     //must export b/c LineLeaf is exported
     export interface LineCollection {
+        validate(): void; //kill
         charCount(): number;
         lineCount(): number;
         isLeaf(): this is LineLeaf;
@@ -356,8 +357,8 @@ namespace ts.server {
                     return ts.collapseTextChangeRangesAcrossMultipleVersions(textChangeRanges);
                 }
                 else {
-                    Debug.fail("?");
-                    //return undefined;
+                    //Debug.fail("?");
+                    return undefined;
                 }
             }
             else {
@@ -377,7 +378,7 @@ namespace ts.server {
     }
 
     export class LineIndexSnapshot implements ts.IScriptSnapshot {
-        constructor(readonly version: number, readonly cache: ScriptVersionCache, readonly index: LineIndex, readonly changesSincePreviousVersion: ReadonlyArray<TextChange> = emptyArray) {
+        constructor(readonly version: number, readonly cache: { getTextChangesBetweenVersions(oldVersion: number, newVersion: number): TextChangeRange }, readonly index: LineIndex, readonly changesSincePreviousVersion: ReadonlyArray<TextChange> = emptyArray) {
         }
 
         getText(rangeStart: number, rangeEnd: number) {
@@ -405,6 +406,10 @@ namespace ts.server {
         root: LineNode;
         // set this to true to check each edit for accuracy
         checkEdits = true;//false;
+
+        validate() {
+            this.root.validate();
+        }
 
         absolutePositionOfStartOfLine(oneBasedLine: number): number {
             return this.lineNumberToInfo(oneBasedLine).absolutePosition;
@@ -529,6 +534,7 @@ namespace ts.server {
 
                 if (this.checkEdits) {
                     const updatedText = walker.lineIndex.getText(0, walker.lineIndex.getLength());
+                    walker.lineIndex.validate();
                     Debug.assert(checkText === updatedText, "buffer edit mismatch");
                 }
 
@@ -595,6 +601,18 @@ namespace ts.server {
         totalLines = 0;
         private children: LineCollection[] = [];
 
+        validate() {
+            let totalChars = 0;
+            let totalLines = 0;
+            for (const child of this.children) {
+                child.validate();
+                totalChars += child.charCount();
+                totalLines += child.lineCount();
+            }
+            Debug.assert(this.totalChars === totalChars);
+            Debug.assert(this.totalLines === totalLines);
+        }
+
         isLeaf() {
             return false;
         }
@@ -656,8 +674,7 @@ namespace ts.server {
                 }
                 let adjustedLength = rangeLength - (childCharCount - adjustedStart);
                 childIndex++;
-                const child = this.children[childIndex];
-                childCharCount = child.charCount();
+                childCharCount = this.children[childIndex].charCount();
                 while (adjustedLength > childCharCount) {
                     if (this.execWalk(0, childCharCount, walkFns, childIndex, CharRangeSection.Mid)) {
                         return;
@@ -871,7 +888,11 @@ namespace ts.server {
 
     //This is exported! Probably shouldn't be
     export class LineLeaf implements LineCollection {
-        constructor(public text: string) {
+        constructor(public text: string) {} //mutable, whaaa?
+
+        validate() {
+            const idx = this.text.indexOf("\n");
+            Debug.assert(idx === -1 || idx === this.text.length - 1);
         }
 
         isLeaf() {

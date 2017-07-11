@@ -114,12 +114,12 @@ function getRequestsFromLog() {
             case "definition":
             case "references":
                 return false;
-            case "completions":
             case "configure":
-            case "change":
-            case "open":
             case "close":
             case "compilerOptionsForInferredProjects":
+            case "completions":
+            case "change":
+            case "open":
                 //if (r.arguments.file && r.arguments.file !== "/Users/asvetl/work/applications/frontend/node_modules/@types/cookie/index.d.ts")
                 //    return false;
                 return true;
@@ -128,9 +128,11 @@ function getRequestsFromLog() {
         }
     });
 }
-const requests = JSON.parse(fs_1.readFileSync("./requests.json", "utf-8"));
+//const requests = JSON.parse(readFileSync("./requests.json", "utf-8"));
+const requests = getRequestsFromLog();
 function testChanges(changer) {
     for (const rq of requests) {
+        console.log(rq);
         switch (rq.command) {
             case "open":
                 break; //ignore
@@ -151,12 +153,6 @@ function testFake() {
     const c2 = new utils_1.C6();
     testChanges(c2);
 }
-function test2() {
-    const c = new utils_1.C6();
-    c.change({ line: 1, offset: 1, endLine: 1, endOffset: 1, insertString: "\n" });
-    c.change({ line: 2, offset: 1, endLine: 2, endOffset: 1, insertString: "e" });
-    c.change({ line: 2, offset: 2, endLine: 2, endOffset: 2, insertString: "x" });
-}
 function testSession() {
     const sess = new DumbSession();
     sess.onMessage(JSON.stringify({
@@ -168,46 +164,42 @@ function testSession() {
             projectRootPath: "/Users/asvetl/work/applications/frontend"
         }
     }));
-    const sessionChanger = {
+    /*const sessionChanger: Changer = {
         change(change) {
-            const args = Object.assign({}, change, { file: "/a.ts" });
+            const args = { ...change, file: "/a.ts" };
             sess.onMessage(JSON.stringify({ command: "change", arguments: args }));
         },
         getText() {
             const args = {
-                file: "/a.ts",
-                line: 1,
-                offset: 1
+              file: "/a.ts",
+              line: 1,
+              offset: 1
             };
             sess.onMessage(JSON.stringify({ command: "completions", arguments: args }));
         }
-    };
-    testChanges(sessionChanger);
-    /*
+    }
+    //testChanges(sessionChanger);*/
     try {
         for (const rq of requests) {
             //console.log("SEND: ", JSON.stringify(rq));
             sess.onMessage(JSON.stringify(rq));
         }
         console.log("NO ERROR");
-    } catch (_e) {
-        const e: Error = _e;
+    }
+    catch (_e) {
+        const e = _e;
         const isCorrect = e.message.includes("charCount");
         console.log(isCorrect ? "Caught the correct error!" : "BOO");
-
         const j = JSON.parse(e.message.split('\n')[2]);
         console.log(j.message);
     }
-
     process.exit(0); //Else server will leave it open
-    */
 }
-//ts.server.ScriptVersionCache.maxVersions = 999999;
-//ts.server.ScriptVersionCache.changeNumberThreshold = Number.MAX_SAFE_INTEGER;
-//ts.server.ScriptVersionCache.changeLengthThreshold = Number.MAX_SAFE_INTEGER;
-//testSession();
+ts.server.ScriptVersionCache.maxVersions = 999999;
+ts.server.ScriptVersionCache.changeNumberThreshold = Number.MAX_SAFE_INTEGER;
+ts.server.ScriptVersionCache.changeLengthThreshold = Number.MAX_SAFE_INTEGER;
+testSession();
 //testFake();
-test2();
 /*
 TypeError: Cannot read property 'charCount' of undefined
     at LineNode.walk (/home/andy/TypeScript/built/local/scriptVersionCache.ts:702:39)

@@ -1,1193 +1,5 @@
 [
   {
-    "seq": 90,
-    "type": "request",
-    "command": "open",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "fileContent": "",
-      "scriptKindName": "TS",
-      "projectRootPath": "/Users/asvetl/work/applications/frontend"
-    }
-  },
-  {
-    "seq": 94,
-    "type": "request",
-    "command": "open",
-    "arguments": {
-      "file": "/users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "fileContent": "",
-      "scriptKindName": "TS",
-      "projectRootPath": "/Users/asvetl/work/applications/frontend"
-    }
-  },
-  {
-    "seq": 96,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 1,
-      "offset": 1,
-      "endLine": 1,
-      "endOffset": 1,
-      "insertString": "\n"
-    }
-  },
-  {
-    "seq": 97,
-    "type": "request",
-    "command": "configure",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "formatOptions": {
-        "tabSize": 4,
-        "indentSize": 4,
-        "convertTabsToSpaces": true,
-        "newLineCharacter": "\n",
-        "insertSpaceAfterCommaDelimiter": true,
-        "insertSpaceAfterSemicolonInForStatements": true,
-        "insertSpaceBeforeAndAfterBinaryOperators": true,
-        "insertSpaceAfterKeywordsInControlFlowStatements": true,
-        "insertSpaceAfterFunctionKeywordForAnonymousFunctions": true,
-        "insertSpaceBeforeFunctionParenthesis": false,
-        "insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": false,
-        "insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": false,
-        "insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
-        "insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces": false,
-        "insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces": false,
-        "placeOpenBraceOnNewLineForFunctions": false,
-        "placeOpenBraceOnNewLineForControlBlocks": false
-      }
-    }
-  },
-  {
-    "seq": 99,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 1,
-      "endLine": 2,
-      "endOffset": 1,
-      "insertString": "e"
-    }
-  },
-  {
-    "seq": 100,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 2
-    }
-  },
-  {
-    "seq": 102,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 2,
-      "endLine": 2,
-      "endOffset": 2,
-      "insertString": "x"
-    }
-  },
-  {
-    "seq": 104,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 3,
-      "endLine": 2,
-      "endOffset": 3,
-      "insertString": "p"
-    }
-  },
-  {
-    "seq": 106,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 4,
-      "endLine": 2,
-      "endOffset": 4,
-      "insertString": "o"
-    }
-  },
-  {
-    "seq": 108,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 1,
-      "endLine": 2,
-      "endOffset": 5,
-      "insertString": "export"
-    }
-  },
-  {
-    "seq": 109,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 7,
-      "endLine": 2,
-      "endOffset": 7,
-      "insertString": " "
-    }
-  },
-  {
-    "seq": 110,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 8,
-      "endLine": 2,
-      "endOffset": 8,
-      "insertString": "f"
-    }
-  },
-  {
-    "seq": 111,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 9
-    }
-  },
-  {
-    "seq": 113,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 9,
-      "endLine": 2,
-      "endOffset": 9,
-      "insertString": "u"
-    }
-  },
-  {
-    "seq": 115,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 10,
-      "endLine": 2,
-      "endOffset": 10,
-      "insertString": "n"
-    }
-  },
-  {
-    "seq": 117,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 11,
-      "endLine": 2,
-      "endOffset": 11,
-      "insertString": "c"
-    }
-  },
-  {
-    "seq": 119,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 12,
-      "endLine": 2,
-      "endOffset": 12,
-      "insertString": "t"
-    }
-  },
-  {
-    "seq": 121,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 13,
-      "endLine": 2,
-      "endOffset": 13,
-      "insertString": "i"
-    }
-  },
-  {
-    "seq": 123,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 14,
-      "endLine": 2,
-      "endOffset": 14,
-      "insertString": "o"
-    }
-  },
-  {
-    "seq": 125,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 15,
-      "endLine": 2,
-      "endOffset": 15,
-      "insertString": "n"
-    }
-  },
-  {
-    "seq": 127,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 16,
-      "endLine": 2,
-      "endOffset": 16,
-      "insertString": " "
-    }
-  },
-  {
-    "seq": 133,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 17,
-      "endLine": 2,
-      "endOffset": 17,
-      "insertString": "g"
-    }
-  },
-  {
-    "seq": 134,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 18
-    }
-  },
-  {
-    "seq": 135,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 18,
-      "endLine": 2,
-      "endOffset": 18,
-      "insertString": "e"
-    }
-  },
-  {
-    "seq": 136,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 19,
-      "endLine": 2,
-      "endOffset": 19,
-      "insertString": "t"
-    }
-  },
-  {
-    "seq": 143,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 20,
-      "endLine": 2,
-      "endOffset": 20,
-      "insertString": "G"
-    }
-  },
-  {
-    "seq": 144,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 21,
-      "endLine": 2,
-      "endOffset": 21,
-      "insertString": "e"
-    }
-  },
-  {
-    "seq": 149,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 22,
-      "endLine": 2,
-      "endOffset": 22,
-      "insertString": "o"
-    }
-  },
-  {
-    "seq": 151,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 23,
-      "endLine": 2,
-      "endOffset": 23,
-      "insertString": "o"
-    }
-  },
-  {
-    "seq": 152,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 24,
-      "endLine": 2,
-      "endOffset": 24,
-      "insertString": "k"
-    }
-  },
-  {
-    "seq": 153,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 25
-    }
-  },
-  {
-    "seq": 159,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 24,
-      "endLine": 2,
-      "endOffset": 25,
-      "insertString": ""
-    }
-  },
-  {
-    "seq": 160,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 23,
-      "endLine": 2,
-      "endOffset": 24,
-      "insertString": ""
-    }
-  },
-  {
-    "seq": 161,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 22,
-      "endLine": 2,
-      "endOffset": 23,
-      "insertString": ""
-    }
-  },
-  {
-    "seq": 162,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 21,
-      "endLine": 2,
-      "endOffset": 22,
-      "insertString": ""
-    }
-  },
-  {
-    "seq": 163,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 20,
-      "endLine": 2,
-      "endOffset": 21,
-      "insertString": ""
-    }
-  },
-  {
-    "seq": 164,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 20,
-      "endLine": 2,
-      "endOffset": 20,
-      "insertString": "C"
-    }
-  },
-  {
-    "seq": 165,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 21
-    }
-  },
-  {
-    "seq": 166,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 21,
-      "endLine": 2,
-      "endOffset": 21,
-      "insertString": "o"
-    }
-  },
-  {
-    "seq": 167,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 22,
-      "endLine": 2,
-      "endOffset": 22,
-      "insertString": "o"
-    }
-  },
-  {
-    "seq": 168,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 23,
-      "endLine": 2,
-      "endOffset": 23,
-      "insertString": "k"
-    }
-  },
-  {
-    "seq": 169,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 24,
-      "endLine": 2,
-      "endOffset": 24,
-      "insertString": "i"
-    }
-  },
-  {
-    "seq": 170,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 25
-    }
-  },
-  {
-    "seq": 176,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 25,
-      "endLine": 2,
-      "endOffset": 25,
-      "insertString": "e"
-    }
-  },
-  {
-    "seq": 177,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 26
-    }
-  },
-  {
-    "seq": 184,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 26,
-      "endLine": 2,
-      "endOffset": 26,
-      "insertString": "s"
-    }
-  },
-  {
-    "seq": 185,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 27
-    }
-  },
-  {
-    "seq": 190,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 27,
-      "endLine": 2,
-      "endOffset": 27,
-      "insertString": "()"
-    }
-  },
-  {
-    "seq": 192,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 28,
-      "endLine": 2,
-      "endOffset": 29,
-      "insertString": ")"
-    }
-  },
-  {
-    "seq": 196,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 29,
-      "endLine": 2,
-      "endOffset": 29,
-      "insertString": ":"
-    }
-  },
-  {
-    "seq": 197,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 30,
-      "endLine": 2,
-      "endOffset": 30,
-      "insertString": " "
-    }
-  },
-  {
-    "seq": 200,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 31,
-      "endLine": 2,
-      "endOffset": 31,
-      "insertString": "{}"
-    }
-  },
-  {
-    "seq": 201,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 32,
-      "endLine": 2,
-      "endOffset": 33,
-      "insertString": "}"
-    }
-  },
-  {
-    "seq": 206,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 33,
-      "endLine": 2,
-      "endOffset": 33,
-      "insertString": " "
-    }
-  },
-  {
-    "seq": 211,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 33,
-      "endLine": 2,
-      "endOffset": 34,
-      "insertString": ""
-    }
-  },
-  {
-    "seq": 212,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 32,
-      "endLine": 2,
-      "endOffset": 33,
-      "insertString": ""
-    }
-  },
-  {
-    "seq": 213,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 31,
-      "endLine": 2,
-      "endOffset": 32,
-      "insertString": ""
-    }
-  },
-  {
-    "seq": 219,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 31,
-      "endLine": 2,
-      "endOffset": 31,
-      "insertString": "v"
-    }
-  },
-  {
-    "seq": 220,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 32
-    }
-  },
-  {
-    "seq": 222,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 32,
-      "endLine": 2,
-      "endOffset": 32,
-      "insertString": "o"
-    }
-  },
-  {
-    "seq": 224,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 33,
-      "endLine": 2,
-      "endOffset": 33,
-      "insertString": "i"
-    }
-  },
-  {
-    "seq": 226,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 34,
-      "endLine": 2,
-      "endOffset": 34,
-      "insertString": "d"
-    }
-  },
-  {
-    "seq": 228,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 35,
-      "endLine": 2,
-      "endOffset": 35,
-      "insertString": " "
-    }
-  },
-  {
-    "seq": 229,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 36,
-      "endLine": 2,
-      "endOffset": 36,
-      "insertString": "{}"
-    }
-  },
-  {
-    "seq": 230,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 37,
-      "endLine": 2,
-      "endOffset": 37,
-      "insertString": "\n    \n"
-    }
-  },
-  {
-    "seq": 235,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 3,
-      "offset": 1,
-      "endLine": 3,
-      "endOffset": 5,
-      "insertString": ""
-    }
-  },
-  {
-    "seq": 241,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 3,
-      "offset": 1,
-      "endLine": 4,
-      "endOffset": 1,
-      "insertString": ""
-    }
-  },
-  {
-    "seq": 246,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 37,
-      "endLine": 2,
-      "endOffset": 37,
-      "insertString": "\n    "
-    }
-  },
-  {
-    "seq": 250,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 3,
-      "offset": 5,
-      "endLine": 3,
-      "endOffset": 5,
-      "insertString": "c"
-    }
-  },
-  {
-    "seq": 251,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 3,
-      "offset": 6
-    }
-  },
-  {
-    "seq": 259,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 3,
-      "offset": 5,
-      "endLine": 3,
-      "endOffset": 6,
-      "insertString": ""
-    }
-  },
-  {
-    "seq": 290,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 31,
-      "endLine": 2,
-      "endOffset": 35,
-      "insertString": ""
-    }
-  },
-  {
-    "seq": 291,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 31,
-      "endLine": 2,
-      "endOffset": 31,
-      "insertString": "s"
-    }
-  },
-  {
-    "seq": 292,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 32
-    }
-  },
-  {
-    "seq": 294,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 32,
-      "endLine": 2,
-      "endOffset": 32,
-      "insertString": "t"
-    }
-  },
-  {
-    "seq": 296,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 33,
-      "endLine": 2,
-      "endOffset": 33,
-      "insertString": "i"
-    }
-  },
-  {
-    "seq": 297,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 34,
-      "endLine": 2,
-      "endOffset": 34,
-      "insertString": "r"
-    }
-  },
-  {
-    "seq": 298,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 35,
-      "endLine": 2,
-      "endOffset": 35,
-      "insertString": "n"
-    }
-  },
-  {
-    "seq": 299,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 36,
-      "endLine": 2,
-      "endOffset": 36,
-      "insertString": "g"
-    }
-  },
-  {
-    "seq": 303,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 31,
-      "endLine": 2,
-      "endOffset": 37,
-      "insertString": ""
-    }
-  },
-  {
-    "seq": 308,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 31,
-      "endLine": 2,
-      "endOffset": 31,
-      "insertString": "s"
-    }
-  },
-  {
-    "seq": 309,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 32
-    }
-  },
-  {
-    "seq": 311,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 32,
-      "endLine": 2,
-      "endOffset": 32,
-      "insertString": "t"
-    }
-  },
-  {
-    "seq": 313,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 33,
-      "endLine": 2,
-      "endOffset": 33,
-      "insertString": "r"
-    }
-  },
-  {
-    "seq": 315,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 34,
-      "endLine": 2,
-      "endOffset": 34,
-      "insertString": "i"
-    }
-  },
-  {
-    "seq": 317,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 35,
-      "endLine": 2,
-      "endOffset": 35,
-      "insertString": "n"
-    }
-  },
-  {
-    "seq": 319,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 36,
-      "endLine": 2,
-      "endOffset": 36,
-      "insertString": "g"
-    }
-  },
-  {
-    "seq": 423,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 31,
-      "endLine": 2,
-      "endOffset": 37,
-      "insertString": ""
-    }
-  },
-  {
-    "seq": 424,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 31,
-      "endLine": 2,
-      "endOffset": 31,
-      "insertString": "v"
-    }
-  },
-  {
-    "seq": 425,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 32
-    }
-  },
-  {
-    "seq": 427,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 32,
-      "endLine": 2,
-      "endOffset": 32,
-      "insertString": "o"
-    }
-  },
-  {
-    "seq": 428,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 33,
-      "endLine": 2,
-      "endOffset": 33,
-      "insertString": "i"
-    }
-  },
-  {
-    "seq": 430,
-    "type": "request",
-    "command": "change",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 34,
-      "endLine": 2,
-      "endOffset": 34,
-      "insertString": "d"
-    }
-  },
-  {
-    "seq": 460,
-    "type": "request",
-    "command": "close",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts"
-    }
-  },
-  {
     "seq": 469,
     "type": "request",
     "command": "open",
@@ -1212,33 +24,6 @@
     }
   },
   {
-    "seq": 474,
-    "type": "request",
-    "command": "configure",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "formatOptions": {
-        "tabSize": 4,
-        "indentSize": 4,
-        "convertTabsToSpaces": true,
-        "newLineCharacter": "\n",
-        "insertSpaceAfterCommaDelimiter": true,
-        "insertSpaceAfterSemicolonInForStatements": true,
-        "insertSpaceBeforeAndAfterBinaryOperators": true,
-        "insertSpaceAfterKeywordsInControlFlowStatements": true,
-        "insertSpaceAfterFunctionKeywordForAnonymousFunctions": true,
-        "insertSpaceBeforeFunctionParenthesis": false,
-        "insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": false,
-        "insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": false,
-        "insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
-        "insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces": false,
-        "insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces": false,
-        "placeOpenBraceOnNewLineForFunctions": false,
-        "placeOpenBraceOnNewLineForControlBlocks": false
-      }
-    }
-  },
-  {
     "seq": 479,
     "type": "request",
     "command": "change",
@@ -1249,16 +34,6 @@
       "endLine": 2,
       "endOffset": 1,
       "insertString": "e"
-    }
-  },
-  {
-    "seq": 480,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 2
     }
   },
   {
@@ -1350,16 +125,6 @@
       "endLine": 2,
       "endOffset": 8,
       "insertString": "f"
-    }
-  },
-  {
-    "seq": 499,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 9
     }
   },
   {
@@ -1480,16 +245,6 @@
     }
   },
   {
-    "seq": 516,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 18
-    }
-  },
-  {
     "seq": 517,
     "type": "request",
     "command": "change",
@@ -1568,16 +323,6 @@
     }
   },
   {
-    "seq": 531,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 24
-    }
-  },
-  {
     "seq": 532,
     "type": "request",
     "command": "change",
@@ -1588,16 +333,6 @@
       "endLine": 2,
       "endOffset": 24,
       "insertString": "o"
-    }
-  },
-  {
-    "seq": 533,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 25
     }
   },
   {
@@ -1614,16 +349,6 @@
     }
   },
   {
-    "seq": 535,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 26
-    }
-  },
-  {
     "seq": 536,
     "type": "request",
     "command": "change",
@@ -1634,16 +359,6 @@
       "endLine": 2,
       "endOffset": 26,
       "insertString": "k"
-    }
-  },
-  {
-    "seq": 537,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 27
     }
   },
   {
@@ -1660,16 +375,6 @@
     }
   },
   {
-    "seq": 540,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 28
-    }
-  },
-  {
     "seq": 541,
     "type": "request",
     "command": "change",
@@ -1680,16 +385,6 @@
       "endLine": 2,
       "endOffset": 28,
       "insertString": "e"
-    }
-  },
-  {
-    "seq": 542,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 29
     }
   },
   {
@@ -1716,16 +411,6 @@
       "endLine": 2,
       "endOffset": 30,
       "insertString": "n"
-    }
-  },
-  {
-    "seq": 555,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 31
     }
   },
   {
@@ -1806,16 +491,7 @@
       "insertString": "s"
     }
   },
-  {
-    "seq": 562,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 37
-    }
-  },
+
   {
     "seq": 564,
     "type": "request",
@@ -1921,16 +597,6 @@
     }
   },
   {
-    "seq": 580,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 45
-    }
-  },
-  {
     "seq": 581,
     "type": "request",
     "command": "change",
@@ -2022,16 +688,6 @@
     }
   },
   {
-    "seq": 589,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 52
-    }
-  },
-  {
     "seq": 597,
     "type": "request",
     "command": "change",
@@ -2107,16 +763,6 @@
       "endLine": 2,
       "endOffset": 57,
       "insertString": "v"
-    }
-  },
-  {
-    "seq": 613,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 2,
-      "offset": 58
     }
   },
   {
@@ -2276,16 +922,6 @@
     }
   },
   {
-    "seq": 641,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 6,
-      "offset": 2
-    }
-  },
-  {
     "seq": 643,
     "type": "request",
     "command": "change",
@@ -2361,16 +997,6 @@
       "endLine": 6,
       "endOffset": 8,
       "insertString": "f"
-    }
-  },
-  {
-    "seq": 652,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 6,
-      "offset": 9
     }
   },
   {
@@ -2475,16 +1101,6 @@
       "endLine": 6,
       "endOffset": 16,
       "insertString": "n"
-    }
-  },
-  {
-    "seq": 668,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 6,
-      "offset": 17
     }
   },
   {
@@ -2605,16 +1221,6 @@
     }
   },
   {
-    "seq": 694,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 6,
-      "offset": 16
-    }
-  },
-  {
     "seq": 696,
     "type": "request",
     "command": "change",
@@ -2638,16 +1244,6 @@
       "endLine": 6,
       "endOffset": 17,
       "insertString": "g"
-    }
-  },
-  {
-    "seq": 698,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 6,
-      "offset": 18
     }
   },
   {
@@ -2781,16 +1377,6 @@
     }
   },
   {
-    "seq": 709,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 6,
-      "offset": 28
-    }
-  },
-  {
     "seq": 710,
     "type": "request",
     "command": "change",
@@ -2804,16 +1390,6 @@
     }
   },
   {
-    "seq": 711,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 6,
-      "offset": 29
-    }
-  },
-  {
     "seq": 712,
     "type": "request",
     "command": "change",
@@ -2824,16 +1400,6 @@
       "endLine": 6,
       "endOffset": 29,
       "insertString": "e"
-    }
-  },
-  {
-    "seq": 713,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 6,
-      "offset": 30
     }
   },
   {
@@ -2860,16 +1426,6 @@
       "endLine": 6,
       "endOffset": 31,
       "insertString": "n"
-    }
-  },
-  {
-    "seq": 723,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 6,
-      "offset": 32
     }
   },
   {
@@ -2948,16 +1504,6 @@
       "endLine": 6,
       "endOffset": 37,
       "insertString": "s"
-    }
-  },
-  {
-    "seq": 732,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 6,
-      "offset": 38
     }
   },
   {
@@ -3078,16 +1624,6 @@
     }
   },
   {
-    "seq": 759,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 6,
-      "offset": 47
-    }
-  },
-  {
     "seq": 761,
     "type": "request",
     "command": "change",
@@ -3137,16 +1673,6 @@
       "endLine": 6,
       "endOffset": 46,
       "insertString": "a"
-    }
-  },
-  {
-    "seq": 772,
-    "type": "request",
-    "command": "completions",
-    "arguments": {
-      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
-      "line": 6,
-      "offset": 47
     }
   },
   {
@@ -3735,14 +2261,6 @@
     }
   },
   {
-    "seq": 869,
-    "type": "request",
-    "command": "close",
-    "arguments": {
-      "file": "/users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts"
-    }
-  },
-  {
     "seq": 870,
     "type": "request",
     "command": "change",
@@ -3753,6 +2271,2315 @@
       "endLine": 3,
       "endOffset": 23,
       "insertString": "a"
+    }
+  },
+  {
+    "seq": 871,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 3,
+      "offset": 24,
+      "endLine": 3,
+      "endOffset": 24,
+      "insertString": "r"
+    }
+  },
+  {
+    "seq": 872,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 3,
+      "offset": 25,
+      "endLine": 3,
+      "endOffset": 25,
+      "insertString": "d"
+    }
+  },
+  {
+    "seq": 873,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 3,
+      "offset": 26,
+      "endLine": 3,
+      "endOffset": 26,
+      "insertString": " "
+    }
+  },
+  {
+    "seq": 874,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 3,
+      "offset": 27,
+      "endLine": 3,
+      "endOffset": 27,
+      "insertString": "c"
+    }
+  },
+  {
+    "seq": 878,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 3,
+      "offset": 28,
+      "endLine": 3,
+      "endOffset": 28,
+      "insertString": "d"
+    }
+  },
+  {
+    "seq": 879,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 3,
+      "offset": 28,
+      "endLine": 3,
+      "endOffset": 29,
+      "insertString": ""
+    }
+  },
+  {
+    "seq": 880,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 3,
+      "offset": 27,
+      "endLine": 3,
+      "endOffset": 28,
+      "insertString": ""
+    }
+  },
+  {
+    "seq": 881,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 3,
+      "offset": 27,
+      "endLine": 3,
+      "endOffset": 27,
+      "insertString": "d"
+    }
+  },
+  {
+    "seq": 882,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 3,
+      "offset": 28,
+      "endLine": 3,
+      "endOffset": 28,
+      "insertString": "o"
+    }
+  },
+  {
+    "seq": 883,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 3,
+      "offset": 29,
+      "endLine": 3,
+      "endOffset": 29,
+      "insertString": "m"
+    }
+  },
+  {
+    "seq": 884,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 3,
+      "offset": 30,
+      "endLine": 3,
+      "endOffset": 30,
+      "insertString": "a"
+    }
+  },
+  {
+    "seq": 885,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 3,
+      "offset": 31,
+      "endLine": 3,
+      "endOffset": 31,
+      "insertString": "i"
+    }
+  },
+  {
+    "seq": 886,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 3,
+      "offset": 32,
+      "endLine": 3,
+      "endOffset": 32,
+      "insertString": "n"
+    }
+  },
+  {
+    "seq": 887,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 3,
+      "offset": 33,
+      "endLine": 3,
+      "endOffset": 33,
+      "insertString": " "
+    }
+  },
+  {
+    "seq": 888,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 3,
+      "offset": 34,
+      "endLine": 3,
+      "endOffset": 34,
+      "insertString": "c"
+    }
+  },
+  {
+    "seq": 889,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 3,
+      "offset": 35,
+      "endLine": 3,
+      "endOffset": 35,
+      "insertString": "o"
+    }
+  },
+  {
+    "seq": 890,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 3,
+      "offset": 36,
+      "endLine": 3,
+      "endOffset": 36,
+      "insertString": "o"
+    }
+  },
+  {
+    "seq": 891,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 3,
+      "offset": 37,
+      "endLine": 3,
+      "endOffset": 37,
+      "insertString": "k"
+    }
+  },
+  {
+    "seq": 892,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 3,
+      "offset": 38,
+      "endLine": 3,
+      "endOffset": 38,
+      "insertString": "i"
+    }
+  },
+  {
+    "seq": 893,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 3,
+      "offset": 39,
+      "endLine": 3,
+      "endOffset": 39,
+      "insertString": "e"
+    }
+  },
+  {
+    "seq": 897,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 3,
+      "offset": 40,
+      "endLine": 3,
+      "endOffset": 40,
+      "insertString": "j"
+    }
+  },
+  {
+    "seq": 901,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 3,
+      "offset": 40,
+      "endLine": 3,
+      "endOffset": 41,
+      "insertString": ""
+    }
+  },
+  {
+    "seq": 905,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 12,
+      "offset": 1,
+      "endLine": 12,
+      "endOffset": 1,
+      "insertString": "\n"
+    }
+  },
+  {
+    "seq": 906,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 13,
+      "offset": 1,
+      "endLine": 13,
+      "endOffset": 1,
+      "insertString": "/"
+    }
+  },
+  {
+    "seq": 907,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 13,
+      "offset": 2,
+      "endLine": 13,
+      "endOffset": 2,
+      "insertString": "*"
+    }
+  },
+  {
+    "seq": 908,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 13,
+      "offset": 3,
+      "endLine": 13,
+      "endOffset": 3,
+      "insertString": "* */"
+    }
+  },
+  {
+    "seq": 909,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 13,
+      "offset": 4,
+      "endLine": 13,
+      "endOffset": 4,
+      "insertString": "\n * \n * \n * @export\n * @param name \n * @returns \n"
+    }
+  },
+  {
+    "seq": 913,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 4,
+      "endLine": 14,
+      "endOffset": 4,
+      "insertString": "G"
+    }
+  },
+  {
+    "seq": 914,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 5,
+      "endLine": 14,
+      "endOffset": 5,
+      "insertString": "e"
+    }
+  },
+  {
+    "seq": 915,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 6,
+      "endLine": 14,
+      "endOffset": 6,
+      "insertString": "t"
+    }
+  },
+  {
+    "seq": 916,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 7,
+      "endLine": 14,
+      "endOffset": 7,
+      "insertString": " "
+    }
+  },
+  {
+    "seq": 917,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 8,
+      "endLine": 14,
+      "endOffset": 8,
+      "insertString": "v"
+    }
+  },
+  {
+    "seq": 918,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 9,
+      "endLine": 14,
+      "endOffset": 9,
+      "insertString": "a"
+    }
+  },
+  {
+    "seq": 919,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 10,
+      "endLine": 14,
+      "endOffset": 10,
+      "insertString": "l"
+    }
+  },
+  {
+    "seq": 920,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 11,
+      "endLine": 14,
+      "endOffset": 11,
+      "insertString": "u"
+    }
+  },
+  {
+    "seq": 921,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 12,
+      "endLine": 14,
+      "endOffset": 12,
+      "insertString": "e"
+    }
+  },
+  {
+    "seq": 922,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 13,
+      "endLine": 14,
+      "endOffset": 13,
+      "insertString": " "
+    }
+  },
+  {
+    "seq": 923,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 14,
+      "endLine": 14,
+      "endOffset": 14,
+      "insertString": "f"
+    }
+  },
+  {
+    "seq": 924,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 15,
+      "endLine": 14,
+      "endOffset": 15,
+      "insertString": "r"
+    }
+  },
+  {
+    "seq": 925,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 16,
+      "endLine": 14,
+      "endOffset": 16,
+      "insertString": "o"
+    }
+  },
+  {
+    "seq": 926,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 17,
+      "endLine": 14,
+      "endOffset": 17,
+      "insertString": "m"
+    }
+  },
+  {
+    "seq": 927,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 18,
+      "endLine": 14,
+      "endOffset": 18,
+      "insertString": " "
+    }
+  },
+  {
+    "seq": 928,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 19,
+      "endLine": 14,
+      "endOffset": 19,
+      "insertString": "w"
+    }
+  },
+  {
+    "seq": 929,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 20,
+      "endLine": 14,
+      "endOffset": 20,
+      "insertString": "i"
+    }
+  },
+  {
+    "seq": 930,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 21,
+      "endLine": 14,
+      "endOffset": 21,
+      "insertString": "l"
+    }
+  },
+  {
+    "seq": 931,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 22,
+      "endLine": 14,
+      "endOffset": 22,
+      "insertString": "d"
+    }
+  },
+  {
+    "seq": 932,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 23,
+      "endLine": 14,
+      "endOffset": 23,
+      "insertString": "c"
+    }
+  },
+  {
+    "seq": 933,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 24,
+      "endLine": 14,
+      "endOffset": 24,
+      "insertString": "a"
+    }
+  },
+  {
+    "seq": 934,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 25,
+      "endLine": 14,
+      "endOffset": 25,
+      "insertString": "r"
+    }
+  },
+  {
+    "seq": 935,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 26,
+      "endLine": 14,
+      "endOffset": 26,
+      "insertString": "d"
+    }
+  },
+  {
+    "seq": 936,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 27,
+      "endLine": 14,
+      "endOffset": 27,
+      "insertString": " "
+    }
+  },
+  {
+    "seq": 937,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 28,
+      "endLine": 14,
+      "endOffset": 28,
+      "insertString": "o"
+    }
+  },
+  {
+    "seq": 940,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 28,
+      "endLine": 14,
+      "endOffset": 29,
+      "insertString": ""
+    }
+  },
+  {
+    "seq": 941,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 28,
+      "endLine": 14,
+      "endOffset": 28,
+      "insertString": "d"
+    }
+  },
+  {
+    "seq": 942,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 29,
+      "endLine": 14,
+      "endOffset": 29,
+      "insertString": "o"
+    }
+  },
+  {
+    "seq": 943,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 30,
+      "endLine": 14,
+      "endOffset": 30,
+      "insertString": "c"
+    }
+  },
+  {
+    "seq": 944,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 31,
+      "endLine": 14,
+      "endOffset": 31,
+      "insertString": "m"
+    }
+  },
+  {
+    "seq": 948,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 31,
+      "endLine": 14,
+      "endOffset": 32,
+      "insertString": ""
+    }
+  },
+  {
+    "seq": 949,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 30,
+      "endLine": 14,
+      "endOffset": 31,
+      "insertString": ""
+    }
+  },
+  {
+    "seq": 950,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 30,
+      "endLine": 14,
+      "endOffset": 30,
+      "insertString": "m"
+    }
+  },
+  {
+    "seq": 951,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 31,
+      "endLine": 14,
+      "endOffset": 31,
+      "insertString": "a"
+    }
+  },
+  {
+    "seq": 952,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 32,
+      "endLine": 14,
+      "endOffset": 32,
+      "insertString": "i"
+    }
+  },
+  {
+    "seq": 953,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 33,
+      "endLine": 14,
+      "endOffset": 33,
+      "insertString": "n"
+    }
+  },
+  {
+    "seq": 954,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 34,
+      "endLine": 14,
+      "endOffset": 34,
+      "insertString": " "
+    }
+  },
+  {
+    "seq": 955,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 35,
+      "endLine": 14,
+      "endOffset": 35,
+      "insertString": "c"
+    }
+  },
+  {
+    "seq": 956,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 36,
+      "endLine": 14,
+      "endOffset": 36,
+      "insertString": "o"
+    }
+  },
+  {
+    "seq": 957,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 37,
+      "endLine": 14,
+      "endOffset": 37,
+      "insertString": "o"
+    }
+  },
+  {
+    "seq": 958,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 38,
+      "endLine": 14,
+      "endOffset": 38,
+      "insertString": "k"
+    }
+  },
+  {
+    "seq": 959,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 39,
+      "endLine": 14,
+      "endOffset": 39,
+      "insertString": "i"
+    }
+  },
+  {
+    "seq": 960,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 14,
+      "offset": 40,
+      "endLine": 14,
+      "endOffset": 40,
+      "insertString": "e"
+    }
+  },
+  {
+    "seq": 964,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 10,
+      "offset": 1,
+      "endLine": 11,
+      "endOffset": 1,
+      "insertString": ""
+    }
+  },
+  {
+    "seq": 968,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 9,
+      "offset": 63,
+      "endLine": 9,
+      "endOffset": 63,
+      "insertString": "\n    "
+    }
+  },
+  {
+    "seq": 972,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 10,
+      "offset": 1,
+      "endLine": 10,
+      "endOffset": 5,
+      "insertString": ""
+    }
+  },
+  {
+    "seq": 976,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 1,
+      "endLine": 22,
+      "endOffset": 1,
+      "insertString": ""
+    }
+  },
+  {
+    "seq": 977,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 20,
+      "offset": 51,
+      "endLine": 20,
+      "endOffset": 51,
+      "insertString": "\n    "
+    }
+  },
+  {
+    "seq": 981,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 1,
+      "endLine": 21,
+      "endOffset": 5,
+      "insertString": ""
+    }
+  },
+  {
+    "seq": 985,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 1,
+      "offset": 1,
+      "endLine": 1,
+      "endOffset": 1,
+      "insertString": "\n"
+    }
+  },
+  {
+    "seq": 986,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 1,
+      "offset": 1,
+      "endLine": 1,
+      "endOffset": 1,
+      "insertString": "i"
+    }
+  },
+  {
+    "seq": 989,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 1,
+      "offset": 2,
+      "endLine": 1,
+      "endOffset": 2,
+      "insertString": "m"
+    }
+  },
+  {
+    "seq": 991,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 1,
+      "offset": 3,
+      "endLine": 1,
+      "endOffset": 3,
+      "insertString": "p"
+    }
+  },
+  {
+    "seq": 993,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 1,
+      "offset": 4,
+      "endLine": 1,
+      "endOffset": 4,
+      "insertString": "o"
+    }
+  },
+  {
+    "seq": 995,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 1,
+      "offset": 5,
+      "endLine": 1,
+      "endOffset": 5,
+      "insertString": "r"
+    }
+  },
+  {
+    "seq": 997,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 1,
+      "offset": 6,
+      "endLine": 1,
+      "endOffset": 6,
+      "insertString": "t"
+    }
+  },
+  {
+    "seq": 999,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 1,
+      "offset": 7,
+      "endLine": 1,
+      "endOffset": 7,
+      "insertString": " "
+    }
+  },
+  {
+    "seq": 1000,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 1,
+      "offset": 8,
+      "endLine": 1,
+      "endOffset": 8,
+      "insertString": "*"
+    }
+  },
+  {
+    "seq": 1001,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 1,
+      "offset": 9,
+      "endLine": 1,
+      "endOffset": 9,
+      "insertString": " "
+    }
+  },
+  {
+    "seq": 1002,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 1,
+      "offset": 10,
+      "endLine": 1,
+      "endOffset": 10,
+      "insertString": "a"
+    }
+  },
+  {
+    "seq": 1005,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 1,
+      "offset": 11,
+      "endLine": 1,
+      "endOffset": 11,
+      "insertString": "s"
+    }
+  },
+  {
+    "seq": 1007,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 1,
+      "offset": 12,
+      "endLine": 1,
+      "endOffset": 12,
+      "insertString": " "
+    }
+  },
+  {
+    "seq": 1011,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 1,
+      "offset": 13,
+      "endLine": 1,
+      "endOffset": 13,
+      "insertString": "c"
+    }
+  },
+  {
+    "seq": 1012,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 1,
+      "offset": 14,
+      "endLine": 1,
+      "endOffset": 14,
+      "insertString": "o"
+    }
+  },
+  {
+    "seq": 1013,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 1,
+      "offset": 15,
+      "endLine": 1,
+      "endOffset": 15,
+      "insertString": "o"
+    }
+  },
+  {
+    "seq": 1014,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 1,
+      "offset": 16,
+      "endLine": 1,
+      "endOffset": 16,
+      "insertString": "k"
+    }
+  },
+  {
+    "seq": 1016,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 1,
+      "offset": 17,
+      "endLine": 1,
+      "endOffset": 17,
+      "insertString": "i"
+    }
+  },
+  {
+    "seq": 1017,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 1,
+      "offset": 18,
+      "endLine": 1,
+      "endOffset": 18,
+      "insertString": "e"
+    }
+  },
+  {
+    "seq": 1018,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 1,
+      "offset": 19,
+      "endLine": 1,
+      "endOffset": 19,
+      "insertString": " "
+    }
+  },
+  {
+    "seq": 1019,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 1,
+      "offset": 20,
+      "endLine": 1,
+      "endOffset": 20,
+      "insertString": "f"
+    }
+  },
+  {
+    "seq": 1022,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 1,
+      "offset": 21,
+      "endLine": 1,
+      "endOffset": 21,
+      "insertString": "r"
+    }
+  },
+  {
+    "seq": 1024,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 1,
+      "offset": 22,
+      "endLine": 1,
+      "endOffset": 22,
+      "insertString": "o"
+    }
+  },
+  {
+    "seq": 1026,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 1,
+      "offset": 23,
+      "endLine": 1,
+      "endOffset": 23,
+      "insertString": "m"
+    }
+  },
+  {
+    "seq": 1028,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 1,
+      "offset": 24,
+      "endLine": 1,
+      "endOffset": 24,
+      "insertString": " "
+    }
+  },
+  {
+    "seq": 1029,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 1,
+      "offset": 25,
+      "endLine": 1,
+      "endOffset": 25,
+      "insertString": "\"\""
+    }
+  },
+  {
+    "seq": 1030,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 1,
+      "offset": 26,
+      "endLine": 1,
+      "endOffset": 26,
+      "insertString": "c"
+    }
+  },
+  {
+    "seq": 1031,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 1,
+      "offset": 27,
+      "endLine": 1,
+      "endOffset": 27,
+      "insertString": "o"
+    }
+  },
+  {
+    "seq": 1032,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 1,
+      "offset": 28,
+      "endLine": 1,
+      "endOffset": 28,
+      "insertString": "o"
+    }
+  },
+  {
+    "seq": 1033,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 1,
+      "offset": 29,
+      "endLine": 1,
+      "endOffset": 29,
+      "insertString": "k"
+    }
+  },
+  {
+    "seq": 1034,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 1,
+      "offset": 30,
+      "endLine": 1,
+      "endOffset": 30,
+      "insertString": "i"
+    }
+  },
+  {
+    "seq": 1035,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 1,
+      "offset": 31,
+      "endLine": 1,
+      "endOffset": 31,
+      "insertString": "e"
+    }
+  },
+  {
+    "seq": 1036,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 1,
+      "offset": 32,
+      "endLine": 1,
+      "endOffset": 33,
+      "insertString": "\""
+    }
+  },
+  {
+    "seq": 1037,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 1,
+      "offset": 33,
+      "endLine": 1,
+      "endOffset": 33,
+      "insertString": ";"
+    }
+  },
+  {
+    "seq": 1042,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 22,
+      "offset": 1,
+      "endLine": 23,
+      "endOffset": 1,
+      "insertString": ""
+    }
+  },
+  {
+    "seq": 1043,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 51,
+      "endLine": 21,
+      "endOffset": 51,
+      "insertString": "\n    "
+    }
+  },
+  {
+    "seq": 1076,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 46,
+      "endLine": 21,
+      "endOffset": 49,
+      "insertString": ""
+    }
+  },
+  {
+    "seq": 1077,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 46,
+      "endLine": 21,
+      "endOffset": 46,
+      "insertString": "s"
+    }
+  },
+  {
+    "seq": 1079,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 47,
+      "endLine": 21,
+      "endOffset": 47,
+      "insertString": "t"
+    }
+  },
+  {
+    "seq": 1080,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 48,
+      "endLine": 21,
+      "endOffset": 48,
+      "insertString": "i"
+    }
+  },
+  {
+    "seq": 1081,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 49,
+      "endLine": 21,
+      "endOffset": 49,
+      "insertString": "n"
+    }
+  },
+  {
+    "seq": 1082,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 50,
+      "endLine": 21,
+      "endOffset": 50,
+      "insertString": "r"
+    }
+  },
+  {
+    "seq": 1086,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 50,
+      "endLine": 21,
+      "endOffset": 51,
+      "insertString": ""
+    }
+  },
+  {
+    "seq": 1087,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 49,
+      "endLine": 21,
+      "endOffset": 50,
+      "insertString": ""
+    }
+  },
+  {
+    "seq": 1088,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 48,
+      "endLine": 21,
+      "endOffset": 49,
+      "insertString": ""
+    }
+  },
+  {
+    "seq": 1089,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 48,
+      "endLine": 21,
+      "endOffset": 48,
+      "insertString": "r"
+    }
+  },
+
+  {
+    "seq": 1092,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 49,
+      "endLine": 21,
+      "endOffset": 49,
+      "insertString": "i"
+    }
+  },
+  {
+    "seq": 1094,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 50,
+      "endLine": 21,
+      "endOffset": 50,
+      "insertString": "n"
+    }
+  },
+  {
+    "seq": 1096,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 51,
+      "endLine": 21,
+      "endOffset": 51,
+      "insertString": "g"
+    }
+  },
+  {
+    "seq": 1098,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 52,
+      "endLine": 21,
+      "endOffset": 52,
+      "insertString": " "
+    }
+  },
+  {
+    "seq": 1099,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 53,
+      "endLine": 21,
+      "endOffset": 53,
+      "insertString": "|"
+    }
+  },
+  {
+    "seq": 1100,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 54,
+      "endLine": 21,
+      "endOffset": 54,
+      "insertString": " "
+    }
+  },
+  {
+    "seq": 1101,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 55,
+      "endLine": 21,
+      "endOffset": 55,
+      "insertString": "u"
+    }
+  },
+  {
+    "seq": 1103,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 56,
+      "endLine": 21,
+      "endOffset": 56,
+      "insertString": "n"
+    }
+  },
+  {
+    "seq": 1104,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 55,
+      "endLine": 21,
+      "endOffset": 57,
+      "insertString": "UniversalLinkData"
+    }
+  },
+  {
+    "seq": 1105,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 2,
+      "offset": 1,
+      "endLine": 2,
+      "endOffset": 1,
+      "insertString": "import { UniversalLinkData } from \"cordova-universal-links-plugin/index\";\n"
+    }
+  },
+  {
+    "seq": 1109,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 22,
+      "offset": 67,
+      "endLine": 22,
+      "endOffset": 72,
+      "insertString": ""
+    }
+  },
+  {
+    "seq": 1110,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 22,
+      "offset": 55,
+      "endLine": 22,
+      "endOffset": 66,
+      "insertString": ""
+    }
+  },
+  {
+    "seq": 1111,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 22,
+      "offset": 55,
+      "endLine": 22,
+      "endOffset": 55,
+      "insertString": "u"
+    }
+  },
+  {
+    "seq": 1112,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 2,
+      "offset": 1,
+      "endLine": 3,
+      "endOffset": 1,
+      "insertString": ""
+    }
+  },
+  {
+    "seq": 1113,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 55,
+      "endLine": 21,
+      "endOffset": 57,
+      "insertString": ""
+    }
+  },
+  {
+    "seq": 1114,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 55,
+      "endLine": 21,
+      "endOffset": 56,
+      "insertString": ""
+    }
+  },
+  {
+    "seq": 1115,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 53,
+      "endLine": 21,
+      "endOffset": 54,
+      "insertString": ""
+    }
+  },
+  {
+    "seq": 1116,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 53,
+      "endLine": 21,
+      "endOffset": 54,
+      "insertString": ""
+    }
+  },
+  {
+    "seq": 1117,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 46,
+      "endLine": 21,
+      "endOffset": 52,
+      "insertString": ""
+    }
+  },
+  {
+    "seq": 1118,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 46,
+      "endLine": 21,
+      "endOffset": 46,
+      "insertString": "any"
+    }
+  },
+  {
+    "seq": 1122,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 46,
+      "endLine": 21,
+      "endOffset": 49,
+      "insertString": ""
+    }
+  },
+  {
+    "seq": 1123,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 46,
+      "endLine": 21,
+      "endOffset": 46,
+      "insertString": "s"
+    }
+  },
+  {
+    "seq": 1126,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 47,
+      "endLine": 21,
+      "endOffset": 47,
+      "insertString": "t"
+    }
+  },
+  {
+    "seq": 1128,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 48,
+      "endLine": 21,
+      "endOffset": 48,
+      "insertString": "r"
+    }
+  },
+  {
+    "seq": 1129,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 49,
+      "endLine": 21,
+      "endOffset": 49,
+      "insertString": "i"
+    }
+  },
+  {
+    "seq": 1134,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 49,
+      "endLine": 21,
+      "endOffset": 50,
+      "insertString": ""
+    }
+  },
+  {
+    "seq": 1138,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 49,
+      "endLine": 21,
+      "endOffset": 49,
+      "insertString": "i"
+    }
+  },
+  {
+    "seq": 1140,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 50,
+      "endLine": 21,
+      "endOffset": 50,
+      "insertString": "n"
+    }
+  },
+  {
+    "seq": 1141,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 51,
+      "endLine": 21,
+      "endOffset": 51,
+      "insertString": "g"
+    }
+  },
+  {
+    "seq": 1142,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 52,
+      "endLine": 21,
+      "endOffset": 52,
+      "insertString": " "
+    }
+  },
+  {
+    "seq": 1143,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 53,
+      "endLine": 21,
+      "endOffset": 53,
+      "insertString": "|"
+    }
+  },
+  {
+    "seq": 1144,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 54,
+      "endLine": 21,
+      "endOffset": 54,
+      "insertString": " "
+    }
+  },
+  {
+    "seq": 1148,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 55,
+      "endLine": 21,
+      "endOffset": 55,
+      "insertString": "u"
+    }
+  },
+  {
+    "seq": 1151,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 56,
+      "endLine": 21,
+      "endOffset": 56,
+      "insertString": "n"
+    }
+  },
+  {
+    "seq": 1153,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 57,
+      "endLine": 21,
+      "endOffset": 57,
+      "insertString": "d"
+    }
+  },
+  {
+    "seq": 1155,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 58,
+      "endLine": 21,
+      "endOffset": 58,
+      "insertString": "e"
+    }
+  },
+  {
+    "seq": 1157,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 55,
+      "endLine": 21,
+      "endOffset": 59,
+      "insertString": "undefined"
+    }
+  },
+  {
+    "seq": 1161,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 22,
+      "offset": 21,
+      "endLine": 22,
+      "endOffset": 21,
+      "insertString": "c"
+    }
+  },
+  {
+    "seq": 1163,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 22,
+      "offset": 22,
+      "endLine": 22,
+      "endOffset": 22,
+      "insertString": "o"
+    }
+  },
+  {
+    "seq": 1164,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 22,
+      "offset": 23,
+      "endLine": 22,
+      "endOffset": 23,
+      "insertString": "o"
+    }
+  },
+  {
+    "seq": 1165,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 22,
+      "offset": 24,
+      "endLine": 22,
+      "endOffset": 24,
+      "insertString": "k"
+    }
+  },
+  {
+    "seq": 1166,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 22,
+      "offset": 25,
+      "endLine": 22,
+      "endOffset": 25,
+      "insertString": "i"
+    }
+  },
+  {
+    "seq": 1169,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 22,
+      "offset": 26,
+      "endLine": 22,
+      "endOffset": 26,
+      "insertString": "e"
+    }
+  },
+  {
+    "seq": 1173,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 22,
+      "offset": 27,
+      "endLine": 22,
+      "endOffset": 27,
+      "insertString": "s"
+    }
+  },
+  {
+    "seq": 1179,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 22,
+      "offset": 21,
+      "endLine": 22,
+      "endOffset": 28,
+      "insertString": "cookies"
+    }
+  },
+  {
+    "seq": 1180,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 22,
+      "offset": 28,
+      "endLine": 22,
+      "endOffset": 28,
+      "insertString": "."
+    }
+  },
+  {
+    "seq": 1185,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 22,
+      "offset": 28,
+      "endLine": 22,
+      "endOffset": 29,
+      "insertString": ""
+    }
+  },
+  {
+    "seq": 1186,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 22,
+      "offset": 27,
+      "endLine": 22,
+      "endOffset": 28,
+      "insertString": ""
+    }
+  },
+  {
+    "seq": 1188,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 22,
+      "offset": 27,
+      "endLine": 22,
+      "endOffset": 27,
+      "insertString": "."
+    }
+  },
+  {
+    "seq": 1189,
+    "type": "request",
+    "command": "completions",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 22,
+      "offset": 28
+    }
+  },
+  {
+    "seq": 1195,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 22,
+      "offset": 28,
+      "endLine": 22,
+      "endOffset": 28,
+      "insertString": "p"
+    }
+  },
+  {
+    "seq": 1197,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 22,
+      "offset": 29,
+      "endLine": 22,
+      "endOffset": 29,
+      "insertString": "a"
+    }
+  },
+  {
+    "seq": 1261,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 22,
+      "offset": 1,
+      "endLine": 23,
+      "endOffset": 1,
+      "insertString": ""
+    }
+  },
+  {
+    "seq": 1275,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 21,
+      "offset": 66,
+      "endLine": 21,
+      "endOffset": 66,
+      "insertString": "\n    "
+    }
+  },
+  {
+    "seq": 1284,
+    "type": "request",
+    "command": "change",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 22,
+      "offset": 5,
+      "endLine": 22,
+      "endOffset": 5,
+      "insertString": "n"
+    }
+  },
+  {
+    "seq": 1285,
+    "type": "request",
+    "command": "completions",
+    "arguments": {
+      "file": "/Users/asvetl/work/applications/frontend/src/app/utils/Cookie.ts",
+      "line": 22,
+      "offset": 6
     }
   }
 ]

@@ -48,7 +48,7 @@ export abstract class C4C5 {
 	private correctText = "";
 
 	constructor() {
-		this.svc = this.SVC.fromString(host, "");
+		this.svc = this.SVC.fromString("");
 	}
 
 	change(change: Change) {
@@ -117,9 +117,7 @@ export class CheapoScriptVersionCache {
 			for (const change of this.changes) {
 				snapIndex = snapIndex.edit(change.pos, change.deleteLen, change.insertedText);
 			}
-			snap = new ts.server.LineIndexSnapshot(this.currentVersion + 1, this);
-			snap.index = snapIndex;
-			snap.changesSincePreviousVersion = this.changes;
+			snap = new ts.server.LineIndexSnapshot(this.currentVersion + 1, this, snapIndex, this.changes);
 
 			this.currentVersion = snap.version;
 			this.versions[this.currentVersion] = snap;
@@ -142,12 +140,11 @@ export class CheapoScriptVersionCache {
 
 	static fromString(host: ts.server.FileReader, script: string): CheapoScriptVersionCache {
 		const svc = new CheapoScriptVersionCache();
-		const snap = new ts.server.LineIndexSnapshot(0, svc);
+		const index = new ts.server.LineIndex();
+		index.load(ts.server.LineIndex.linesFromText(script).lines);
+		const snap = new ts.server.LineIndexSnapshot(0, svc, index);
 		svc.versions[svc.currentVersion] = snap;
 		svc.host = host;
-		snap.index = new ts.server.LineIndex();
-		const lm = ts.server.LineIndex.linesFromText(script);
-		snap.index.load(lm.lines);
 		return svc;
 	}
 }
@@ -173,9 +170,7 @@ export class C6 {
 			for (const change of this.changes) { //TODO: it seems like there's only ever 1 change. Add an assert (to the real code) to see if this is true.
 				snapIndex = snapIndex.edit(change.pos, change.deleteLen, change.insertedText);
 			}
-			snap = new ts.server.LineIndexSnapshot(this.currentVersion + 1, this);
-			snap.index = snapIndex;
-			snap.changesSincePreviousVersion = this.changes;
+			snap = new ts.server.LineIndexSnapshot(this.currentVersion + 1, this, snapIndex, this.changes);
 
 			this.currentVersion = snap.version;
 			this.versions[this.currentVersion] = snap;
@@ -199,14 +194,14 @@ export class C6 {
 
 	constructor() {
 		const outer = this;
-		const snap = new ts.server.LineIndexSnapshot(0, this);
+		const index = new ts.server.LineIndex();
+		index.load(ts.server.LineIndex.linesFromText("").lines);
+		const snap = new ts.server.LineIndexSnapshot(0, this, index);
 		this.versions[this.currentVersion] = snap;
-		snap.index = new ts.server.LineIndex(); //public mutable properties, always fun...
-		snap.index.load(ts.server.LineIndex.linesFromText("").lines);
 	}
 
 	change(change: Change) {
-		console.log(change);
+		console.log("CHANGE:", change);
 		let { line, offset, endLine, endOffset, insertString } = change; //Note: these are all 1-based.
 		let snap = this.getSnapshot();
 
@@ -305,9 +300,9 @@ export class ChangerOld {
 	getText() {
 		const snp = this.txt.getSnapshot();
 		const change = snp.getChangeRange(this.prevSnapshot)!;
-		console.log(this.prevSnapshot, change);
+		//console.log(this.prevSnapshot, change);
 		if (change) {
-			console.log("!");
+			//console.log("!");
 			const start = change.span.start;
 			const length = change.span.length;
 			snp.getText(start, start + length);

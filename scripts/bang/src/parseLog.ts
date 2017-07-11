@@ -12,6 +12,9 @@ export default function parseLog(log: string): LogEvent[] {
             scn.skipSpaces();
             foo();
         }
+        else if (scn.tryEat("Error:")) {
+            break;//Found an error, bail out.
+        }
         else {
             //Sometimes there is `request:` *not* preceded by "Info: ".
             //e.g. line 29698
@@ -20,7 +23,7 @@ export default function parseLog(log: string): LogEvent[] {
         }
     }
 
-    function foo() {
+    function foo(): void {
         if (scn.tryEat("request: ")) {
             events.push({ type: "request", text: scn.takeRestOfLine() });
         }

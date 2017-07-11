@@ -47,14 +47,6 @@ class DumbSession extends ts.server.Session {
 				return { close() {} };
 			},
 		};
-		/*const host: ts.server.ServerHost = {
-			...ts.sys, //TODO: replace readFile with a shim
-			setTimeout(): never { throw new Error(); },
-			clearTimeout(): never { throw new Error(); },
-			setImmediate(): never { throw new Error(); },
-			clearImmediate(): never { throw new Error(); },
-			//gc, trace, require
-		};*/
 		const cancellationToken: ts.server.ServerCancellationToken = {
 			isCancellationRequested: () => false,
 			setRequest() {},
@@ -93,7 +85,7 @@ class DumbSession extends ts.server.Session {
 	}
 }
 
-function getRequestsFromLog() {
+function getRequestsFromLog(): any[] {
 	const log = readFileSync(logLocation, "utf-8");
 	const events = parseLog(log);
 	const requests = events.filter(e => e.type === "request").map(r => JSON.parse(r.text));
@@ -105,9 +97,6 @@ function getRequestsFromLog() {
 		const text = JSON.stringify(r);
 		if (!text.includes("Cookie.ts"))
 			return false;
-		//No error if I exclude these events...
-		//if (text.includes(`"insertString":""`))
-		//    return false;
 
 		switch (r.command) {
 			case "signatureHelp":
@@ -122,12 +111,13 @@ function getRequestsFromLog() {
 			case "definition":
 			case "references":
 				return false;
-			case "completions":
+
 			case "configure":
-			case "change":
-			case "open":
 			case "close":
 			case "compilerOptionsForInferredProjects":
+			case "completions":
+			case "change":
+			case "open":
 				//if (r.arguments.file && r.arguments.file !== "/Users/asvetl/work/applications/frontend/node_modules/@types/cookie/index.d.ts")
 				//    return false;
 				return true;
@@ -137,7 +127,7 @@ function getRequestsFromLog() {
 	});
 }
 
-const requests = JSON.parse(readFileSync("./requests.json", "utf-8"));
+const requests = JSON.parse(readFileSync("./requests-backup.json", "utf-8"));
 //const requests = getRequestsFromLog();
 //writeFileSync("./requests.json", JSON.stringify(requests, undefined, 2));
 //process.exit(0);
@@ -150,6 +140,7 @@ interface Changer {
 
 function testChanges(changer: Changer) {
 	for (const rq of requests) {
+		console.log(rq);
 		switch (rq.command) {
 			case "open":
 				break; //ignore
@@ -172,13 +163,6 @@ function testFake() {
 	testChanges(c2);
 }
 
-function test2() {
-	const c = new C6();
-	c.change({ line: 1, offset: 1, endLine: 1, endOffset: 1, insertString: "\n" });
-	c.change({ line: 2, offset: 1, endLine: 2, endOffset: 1, insertString: "e" });
-	c.change({ line: 2, offset: 2, endLine: 2, endOffset: 2, insertString: "x" });
-}
-
 function testSession() {
 	const sess = new DumbSession();
 
@@ -192,7 +176,7 @@ function testSession() {
 		}
 	}));
 
-	const sessionChanger: Changer = {
+	/*const sessionChanger: Changer = {
 		change(change) {
 			const args = { ...change, file: "/a.ts" };
 			sess.onMessage(JSON.stringify({ command: "change", arguments: args }));
@@ -206,9 +190,8 @@ function testSession() {
 			sess.onMessage(JSON.stringify({ command: "completions", arguments: args }));
 		}
 	}
-	testChanges(sessionChanger);
+	//testChanges(sessionChanger);*/
 
-	/*
 	try {
 		for (const rq of requests) {
 			//console.log("SEND: ", JSON.stringify(rq));
@@ -225,17 +208,14 @@ function testSession() {
 	}
 
 	process.exit(0); //Else server will leave it open
-	*/
 }
 
-//ts.server.ScriptVersionCache.maxVersions = 999999;
-//ts.server.ScriptVersionCache.changeNumberThreshold = Number.MAX_SAFE_INTEGER;
-//ts.server.ScriptVersionCache.changeLengthThreshold = Number.MAX_SAFE_INTEGER;
-//testSession();
+//(ts.server.ScriptVersionCache as any).maxVersions = 999999;
+//(ts.server.ScriptVersionCache as any).changeNumberThreshold = Number.MAX_SAFE_INTEGER;
+//(ts.server.ScriptVersionCache as any).changeLengthThreshold = Number.MAX_SAFE_INTEGER;
+testSession();
 
 //testFake();
-
-test2();
 
 
 /*

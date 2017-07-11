@@ -42,7 +42,7 @@ exports.C3 = C3;
 class C4C5 {
     constructor() {
         this.correctText = "";
-        this.svc = this.SVC.fromString(host, "");
+        this.svc = this.SVC.fromString("");
     }
     change(change) {
         const { svc } = this;
@@ -103,9 +103,7 @@ class CheapoScriptVersionCache {
             for (const change of this.changes) {
                 snapIndex = snapIndex.edit(change.pos, change.deleteLen, change.insertedText);
             }
-            snap = new ts.server.LineIndexSnapshot(this.currentVersion + 1, this);
-            snap.index = snapIndex;
-            snap.changesSincePreviousVersion = this.changes;
+            snap = new ts.server.LineIndexSnapshot(this.currentVersion + 1, this, snapIndex, this.changes);
             this.currentVersion = snap.version;
             this.versions[this.currentVersion] = snap;
             this.changes = [];
@@ -126,12 +124,11 @@ class CheapoScriptVersionCache {
     }
     static fromString(host, script) {
         const svc = new CheapoScriptVersionCache();
-        const snap = new ts.server.LineIndexSnapshot(0, svc);
+        const index = new ts.server.LineIndex();
+        index.load(ts.server.LineIndex.linesFromText(script).lines);
+        const snap = new ts.server.LineIndexSnapshot(0, svc, index);
         svc.versions[svc.currentVersion] = snap;
         svc.host = host;
-        snap.index = new ts.server.LineIndex();
-        const lm = ts.server.LineIndex.linesFromText(script);
-        snap.index.load(lm.lines);
         return svc;
     }
 }
@@ -148,10 +145,10 @@ class C6 {
         this.currentVersion = 0;
         this.changes = [];
         const outer = this;
-        const snap = new ts.server.LineIndexSnapshot(0, this);
+        const index = new ts.server.LineIndex();
+        index.load(ts.server.LineIndex.linesFromText("").lines);
+        const snap = new ts.server.LineIndexSnapshot(0, this, index);
         this.versions[this.currentVersion] = snap;
-        snap.index = new ts.server.LineIndex(); //public mutable properties, always fun...
-        snap.index.load(ts.server.LineIndex.linesFromText("").lines);
     }
     getSnapshot() {
         let snap = this.versions[this.currentVersion];
@@ -162,9 +159,7 @@ class C6 {
             for (const change of this.changes) {
                 snapIndex = snapIndex.edit(change.pos, change.deleteLen, change.insertedText);
             }
-            snap = new ts.server.LineIndexSnapshot(this.currentVersion + 1, this);
-            snap.index = snapIndex;
-            snap.changesSincePreviousVersion = this.changes;
+            snap = new ts.server.LineIndexSnapshot(this.currentVersion + 1, this, snapIndex, this.changes);
             this.currentVersion = snap.version;
             this.versions[this.currentVersion] = snap;
             this.changes = [];
@@ -185,7 +180,7 @@ class C6 {
         return ts.collapseTextChangeRangesAcrossMultipleVersions(textChangeRanges);
     }
     change(change) {
-        console.log(change);
+        console.log("CHANGE:", change);
         let { line, offset, endLine, endOffset, insertString } = change; //Note: these are all 1-based.
         let snap = this.getSnapshot();
         let index = snap.index;
@@ -262,9 +257,9 @@ class ChangerOld {
     getText() {
         const snp = this.txt.getSnapshot();
         const change = snp.getChangeRange(this.prevSnapshot);
-        console.log(this.prevSnapshot, change);
+        //console.log(this.prevSnapshot, change);
         if (change) {
-            console.log("!");
+            //console.log("!");
             const start = change.span.start;
             const length = change.span.length;
             snp.getText(start, start + length);
