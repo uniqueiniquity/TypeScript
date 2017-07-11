@@ -73,16 +73,9 @@ namespace ts.server {
                 return ts.createTextSpanFromBounds(start, end);
             }
             const index = this.svc.getSnapshot().index;
-            const lineInfo = index.lineNumberToInfo(line + 1);
-            let len: number;
-            if (lineInfo.lineText !== undefined) {
-                len = lineInfo.lineText.length;
-            }
-            else {
-                const nextLineInfo = index.lineNumberToInfo(line + 2);
-                len = nextLineInfo.absolutePosition - lineInfo.absolutePosition;
-            }
-            return ts.createTextSpan(lineInfo.absolutePosition, len);
+            const { lineText, absolutePosition } = index.lineNumberToInfo(line + 1);
+            const len = lineText !== undefined ? lineText.length : index.absolutePositionOfStartOfLine(line + 2) - absolutePosition;
+            return ts.createTextSpan(absolutePosition, len);
         }
 
         /**
@@ -93,25 +86,16 @@ namespace ts.server {
             if (!this.svc) {
                 return computePositionOfLineAndCharacter(this.getLineMap(), line - 1, offset - 1);
             }
-            const index = this.svc.getSnapshot().index;
-
-            const lineInfo = index.lineNumberToInfo(line);
             //TODO: assert this offset is actually on the line
-            return lineInfo.absolutePosition + offset - 1;
+            return this.svc.getSnapshot().index.absolutePositionOfStartOfLine(line) + (offset - 1);
         }
 
-        /**
-         * @param line 1-based index
-         * @param offset 1-based index
-         */
-        //Above documentation must be referring to the outputs, not the inputs.
-        positionToLineOffset(position: number): ILineInfo2 {
+        positionToLineOffset(position: number): protocol.Location {
             if (!this.svc) {
                 const { line, character } = computeLineAndCharacterOfPosition(this.getLineMap(), position);
                 return { line: line + 1, offset: character + 1 };
             }
-            const index = this.svc.getSnapshot().index;
-            return index.charOffsetToLineNumberAndPos(position); //changed charOffsetToLineNumberAndPos to handle offset+1 itself
+            return this.svc.getSnapshot().index.positionToLineOffset(position);
         }
 
         private getFileText(tempFileName?: string) {
@@ -367,11 +351,7 @@ namespace ts.server {
             return this.textStorage.lineOffsetToPosition(line, offset);
         }
 
-        /**
-         * @param line 1-based index
-         * @param offset 1-based index
-         */
-        positionToLineOffset(position: number): ILineInfo2 {
+        positionToLineOffset(position: number): protocol.Location {
             return this.textStorage.positionToLineOffset(position);
         }
 
