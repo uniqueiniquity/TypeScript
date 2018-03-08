@@ -317,7 +317,7 @@ namespace ts.server {
                 allowLocalPluginLoads: opts.allowLocalPluginLoads
             };
             this.projectService = new ProjectService(settings);
-            this.gcTimer = new GcTimer(this.host, /*delay*/ 7000, this.logger);
+            this.gcTimer = new GcTimer(this.host, /*delay*/ 1500, this.logger);
         }
 
         private sendRequestCompletedEvent(requestId: number): void {
@@ -1994,7 +1994,7 @@ namespace ts.server {
         }
 
         public onMessage(message: string) {
-            this.gcTimer.scheduleCollect();
+            this.gcTimer.clearCollect();
             let start: number[];
             if (this.logger.hasLevel(LogLevel.requestTime)) {
                 start = this.hrtime();
@@ -2038,6 +2038,9 @@ namespace ts.server {
                     request ? request.seq : 0,
                     /*success*/ false,
                     "Error processing request. " + (<StackTraceError>err).message + "\n" + (<StackTraceError>err).stack);
+            }
+            finally {
+                this.gcTimer.scheduleCollect();
             }
         }
     }

@@ -205,11 +205,23 @@ namespace ts.server {
         }
 
         public scheduleCollect() {
-            if (!this.host.gc || this.timerId !== undefined) {
+            if (!this.host.gc) {
                 // no global.gc or collection was already scheduled - skip this request
                 return;
             }
+            else if (this.timerId !== undefined) {
+                this.host.clearTimeout(this.timerId);
+            }
             this.timerId = this.host.setTimeout(GcTimer.run, this.delay, this);
+        }
+
+        public clearCollect() {
+            if (!this.host.gc) {
+                // no global.gc or collection was already scheduled - skip this request
+                return;
+            }
+            this.host.clearTimeout(this.timerId);
+            this.timerId = undefined;
         }
 
         private static run(self: GcTimer) {
