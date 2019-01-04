@@ -495,7 +495,7 @@ namespace ts.FindAllReferences.Core {
         const state = new State(sourceFiles, sourceFilesSet, node ? getSpecialSearchKind(node) : SpecialSearchKind.None, checker, cancellationToken, searchMeaning, options, result);
 
         const exportSpecifier = !options.isForRename ? undefined : find(symbol.declarations, isExportSpecifier);
-        if (exportSpecifier) {
+        if (exportSpecifier && (exportSpecifier.propertyName || options.usePrefixAndSuffixForRenamingShorthandExports)) {
             // When renaming at an export specifier, rename the export and not the thing being exported.
             getReferencesAtExportSpecifier(exportSpecifier.name, symbol, exportSpecifier, state.createSearch(node, originalSymbol, /*comingFrom*/ undefined), state, /*addReferencesHere*/ true, /*alwaysGetReferences*/ true);
         }
@@ -1104,7 +1104,7 @@ namespace ts.FindAllReferences.Core {
         }
 
         // For `export { foo as bar }`, rename `foo`, but not `bar`.
-        if (!state.options.usePrefixAndSuffixForRenamingShorthandExports || !state.options.isForRename || alwaysGetReferences) {
+        if ((!state.options.usePrefixAndSuffixForRenamingShorthandExports && referenceLocation !== propertyName) || !state.options.isForRename || alwaysGetReferences) {
             const exportKind = referenceLocation.originalKeywordKind === SyntaxKind.DefaultKeyword ? ExportKind.Default : ExportKind.Named;
             const exportSymbol = Debug.assertDefined(exportSpecifier.symbol);
             const exportInfo = Debug.assertDefined(getExportInfo(exportSymbol, exportKind, state.checker));
