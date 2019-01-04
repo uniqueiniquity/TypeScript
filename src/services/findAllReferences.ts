@@ -504,7 +504,7 @@ namespace ts.FindAllReferences.Core {
             searchForImportsOfExport(node, symbol, { exportingModuleSymbol: Debug.assertDefined(symbol.parent, "Expected export symbol to have a parent"), exportKind: ExportKind.Default }, state);
         }
         else {
-            const search = state.createSearch(node, symbol, /*comingFrom*/ undefined, { allSearchSymbols: node ? populateSearchSymbolSet(symbol, node, checker, !!options.isForRename, !!options.implementations) : [symbol] });
+            const search = state.createSearch(node, symbol, /*comingFrom*/ undefined, { allSearchSymbols: node ? populateSearchSymbolSet(symbol, node, checker, !!options.isForRename, !!options.implementations, !!options.usePrefixAndSuffixForRenamingShorthandExports) : [symbol] });
 
             // Try to get the smallest valid scope that we can limit our search to;
             // otherwise we'll need to search globally (i.e. include each file).
@@ -1512,9 +1512,10 @@ namespace ts.FindAllReferences.Core {
 
     // For certain symbol kinds, we need to include other symbols in the search set.
     // This is not needed when searching for re-exports.
-    function populateSearchSymbolSet(symbol: Symbol, location: Node, checker: TypeChecker, isForRename: boolean, implementations: boolean): Symbol[] {
+    function populateSearchSymbolSet(symbol: Symbol, location: Node, checker: TypeChecker, isForRename: boolean, implementations: boolean, usePrefixAndSuffixForRenamingShorthandExports: boolean): Symbol[] {
         const result: Symbol[] = [];
         forEachRelatedSymbol<void>(symbol, location, checker, isForRename,
+            usePrefixAndSuffixForRenamingShorthandExports,
             (sym, root, base) => { result.push(base || root || sym); },
             /*allowBaseTypes*/ () => !implementations);
         return result;
@@ -1522,8 +1523,9 @@ namespace ts.FindAllReferences.Core {
 
     function forEachRelatedSymbol<T>(
         symbol: Symbol, location: Node, checker: TypeChecker, isForRenamePopulateSearchSymbolSet: boolean,
+        usePrefixAndSuffixForRenamingShorthandExports: boolean,
         cbSymbol: (symbol: Symbol, rootSymbol?: Symbol, baseSymbol?: Symbol, kind?: NodeEntryKind) => T | undefined,
-        allowBaseTypes: (rootSymbol: Symbol) => boolean,
+        allowBaseTypes: (rootSymbol: Symbol) => boolean
     ): T | undefined {
         const containingObjectLiteralElement = getContainingObjectLiteralElement(location);
         if (containingObjectLiteralElement) {
@@ -1574,6 +1576,12 @@ namespace ts.FindAllReferences.Core {
             return fromRoot(symbol.flags & SymbolFlags.FunctionScopedVariable ? paramProps[1] : paramProps[0]);
         }
 
+        if (!usePrefixAndSuffixForRenamingShorthandExports) {
+            const bindingElement = getObjectBindingElementWithoutPropertyName(symbol);
+            const bindingElementPropertySymbol = bindingElement && getPropertySymbolFromBindingElement(checker, bindingElement);
+            return bindingElementPropertySymbol && fromRoot(bindingElementPropertySymbol);
+        }
+
         // symbolAtLocation for a binding element is the local symbol. See if the search symbol is the property.
         // Don't do this when populating search set for a rename -- just rename the local.
         if (!isForRenamePopulateSearchSymbolSet) {
@@ -1604,6 +1612,7 @@ namespace ts.FindAllReferences.Core {
     function getRelatedSymbol(search: Search, referenceSymbol: Symbol, referenceLocation: Node, state: State): RelatedSymbol | undefined {
         const { checker } = state;
         return forEachRelatedSymbol(referenceSymbol, referenceLocation, checker, /*isForRenamePopulateSearchSymbolSet*/ false,
+            !!state.options.usePrefixAndSuffixForRenamingShorthandExports,
             (sym, rootSymbol, baseSymbol, kind): RelatedSymbol | undefined => search.includes(baseSymbol || rootSymbol || sym)
                 // For a base type, use the symbol for the derived type. For a synthetic (e.g. union) property, use the union symbol.
                 ? { symbol: rootSymbol && !(getCheckFlags(sym) & CheckFlags.Synthetic) ? rootSymbol : sym, kind }
