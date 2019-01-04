@@ -1515,7 +1515,7 @@ namespace ts.FindAllReferences.Core {
     function populateSearchSymbolSet(symbol: Symbol, location: Node, checker: TypeChecker, isForRename: boolean, implementations: boolean, usePrefixAndSuffixForRenamingShorthandExports: boolean): Symbol[] {
         const result: Symbol[] = [];
         forEachRelatedSymbol<void>(symbol, location, checker, isForRename,
-            usePrefixAndSuffixForRenamingShorthandExports,
+            !isForRename || usePrefixAndSuffixForRenamingShorthandExports,
             (sym, root, base) => { result.push(base || root || sym); },
             /*allowBaseTypes*/ () => !implementations);
         return result;
@@ -1523,7 +1523,7 @@ namespace ts.FindAllReferences.Core {
 
     function forEachRelatedSymbol<T>(
         symbol: Symbol, location: Node, checker: TypeChecker, isForRenamePopulateSearchSymbolSet: boolean,
-        usePrefixAndSuffixForRenamingShorthandExports: boolean,
+        excludeReferenceToShorthandBinding: boolean,
         cbSymbol: (symbol: Symbol, rootSymbol?: Symbol, baseSymbol?: Symbol, kind?: NodeEntryKind) => T | undefined,
         allowBaseTypes: (rootSymbol: Symbol) => boolean
     ): T | undefined {
@@ -1576,7 +1576,7 @@ namespace ts.FindAllReferences.Core {
             return fromRoot(symbol.flags & SymbolFlags.FunctionScopedVariable ? paramProps[1] : paramProps[0]);
         }
 
-        if (!usePrefixAndSuffixForRenamingShorthandExports) {
+        if (!excludeReferenceToShorthandBinding) {
             const bindingElement = getObjectBindingElementWithoutPropertyName(symbol);
             const bindingElementPropertySymbol = bindingElement && getPropertySymbolFromBindingElement(checker, bindingElement);
             return bindingElementPropertySymbol && fromRoot(bindingElementPropertySymbol);
@@ -1612,7 +1612,7 @@ namespace ts.FindAllReferences.Core {
     function getRelatedSymbol(search: Search, referenceSymbol: Symbol, referenceLocation: Node, state: State): RelatedSymbol | undefined {
         const { checker } = state;
         return forEachRelatedSymbol(referenceSymbol, referenceLocation, checker, /*isForRenamePopulateSearchSymbolSet*/ false,
-            !!state.options.usePrefixAndSuffixForRenamingShorthandExports,
+            !state.options.isForRename || !!state.options.usePrefixAndSuffixForRenamingShorthandExports,
             (sym, rootSymbol, baseSymbol, kind): RelatedSymbol | undefined => search.includes(baseSymbol || rootSymbol || sym)
                 // For a base type, use the symbol for the derived type. For a synthetic (e.g. union) property, use the union symbol.
                 ? { symbol: rootSymbol && !(getCheckFlags(sym) & CheckFlags.Synthetic) ? rootSymbol : sym, kind }
