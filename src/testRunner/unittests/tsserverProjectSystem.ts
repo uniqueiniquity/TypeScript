@@ -9970,7 +9970,7 @@ export function Test2() {
             });
 
             // rename with prefixText and suffixText enabled
-            session.getProjectService().setHostConfiguration({ preferences: { usePrefixAndSuffixForRenamingShorthandExports: true } });
+            session.getProjectService().setHostConfiguration({ preferences: { usePrefixAndSuffixTextForRename: true } });
             const response2 = executeSessionRequest<protocol.RenameRequest, protocol.RenameResponse>(session, protocol.CommandTypes.Rename, protocolFileLocationFromSubstring(aTs, "x"));
             assert.deepEqual<protocol.RenameResponseBody | undefined>(response2, {
                 info: {
