@@ -1566,7 +1566,7 @@ namespace ts {
 
                 case SyntaxKind.NullKeyword:
                     reportInvalidOptionValue(option && option.name === "extends"); // "extends" is the only option we don't allow null/undefined for
-                    return null; // tslint:disable-line:no-null-keyword
+                    return null; // eslint-disable-line no-null/no-null
 
                 case SyntaxKind.StringLiteral:
                     if (!isDoubleQuotedString(valueExpression)) {
@@ -1935,7 +1935,7 @@ namespace ts {
     }
 
     function isNullOrUndefined(x: any): x is null | undefined {
-        // tslint:disable-next-line:no-null-keyword
+        // eslint-disable-next-line no-null/no-null
         return x === undefined || x === null;
     }
 

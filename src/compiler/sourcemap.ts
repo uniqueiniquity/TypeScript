@@ -70,11 +70,12 @@ namespace ts {
 
         function setSourceContent(sourceIndex: number, content: string | null) {
             enter();
+            // eslint-disable-next-line no-null/no-null
             if (content !== null) {
                 if (!sourcesContent) sourcesContent = [];
                 while (sourcesContent.length < sourceIndex) {
-                    // tslint:disable-next-line:no-null-keyword boolean-trivia
-                    sourcesContent.push(null);
+                    // tslint:disable-next-line no-null-keyword boolean-trivia
+                    sourcesContent.push(null); // eslint-disable-line no-null/no-null
                 }
                 sourcesContent[sourceIndex] = content;
             }
@@ -296,21 +297,21 @@ namespace ts {
     }
 
     function isStringOrNull(x: any) {
-        // tslint:disable-next-line:no-null-keyword
+        // eslint-disable-next-line no-null/no-null
         return typeof x === "string" || x === null;
     }
 
     export function isRawSourceMap(x: any): x is RawSourceMap {
-        // tslint:disable-next-line:no-null-keyword
+        // eslint-disable-next-line no-null/no-null
         return x !== null
             && typeof x === "object"
             && x.version === 3
             && typeof x.file === "string"
             && typeof x.mappings === "string"
             && isArray(x.sources) && every(x.sources, isString)
-            && (x.sourceRoot === undefined || x.sourceRoot === null || typeof x.sourceRoot === "string")
-            && (x.sourcesContent === undefined || x.sourcesContent === null || isArray(x.sourcesContent) && every(x.sourcesContent, isStringOrNull))
-            && (x.names === undefined || x.names === null || isArray(x.names) && every(x.names, isString));
+            && (x.sourceRoot === undefined || x.sourceRoot === null || typeof x.sourceRoot === "string") // eslint-disable-line no-null/no-null
+            && (x.sourcesContent === undefined || x.sourcesContent === null || isArray(x.sourcesContent) && every(x.sourcesContent, isStringOrNull)) // eslint-disable-line no-null/no-null
+            && (x.names === undefined || x.names === null || isArray(x.names) && every(x.names, isString)); // eslint-disable-line no-null/no-null
     }
 
     export function tryParseRawSourceMap(text: string) {

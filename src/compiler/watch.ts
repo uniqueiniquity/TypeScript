@@ -286,6 +286,7 @@ namespace ts {
     export function createProgramHost<T extends BuilderProgram>(system: System, createProgram: CreateProgram<T>): ProgramHost<T> {
         const getDefaultLibLocation = memoize(() => getDirectoryPath(normalizePath(system.getExecutingFilePath())));
         let host: DirectoryStructureHost = system;
+        // eslint-disable-next-line no-unused-expressions
         host; // tslint:disable-line no-unused-expression (TODO: `host` is unused!)
         return {
             useCaseSensitiveFileNames: () => system.useCaseSensitiveFileNames,

@@ -73,7 +73,7 @@ namespace ts {
 
     /** Create a MapLike with good performance. */
     function createDictionaryObject<T>(): MapLike<T> {
-        const map = Object.create(/*prototype*/ null); // tslint:disable-line:no-null-keyword
+        const map = Object.create(/*prototype*/ null); // eslint-disable-line no-null/no-null
 
         // Using 'delete' on an object causes V8 to put the object in dictionary mode.
         // This disables creation of hidden classes, which are expensive when an object is
@@ -941,6 +941,7 @@ namespace ts {
             switch (comparer(next, last)) {
                 // equality comparison
                 case true:
+                    // falls through
 
                 // relational comparison
                 case Comparison.EqualTo:
@@ -1591,7 +1592,7 @@ namespace ts {
     }
 
     /** Does nothing. */
-    export function noop(_?: {} | null | undefined): void { } // tslint:disable-line no-empty
+    export function noop(_?: {} | null | undefined): void { } // eslint-disable-line no-empty-function
 
     /** Do nothing and return false */
     export function returnFalse(): false { return false; }
@@ -1702,8 +1703,10 @@ namespace ts {
     export type AnyConstructor = new (...args: unknown[]) => unknown;
 
     export namespace Debug {
+        /* eslint-disable prefer-const */
         export let currentAssertionLevel = AssertionLevel.None;
         export let isDebugging = false;
+        /* eslint-enable prefer-const */
 
         export function shouldAssert(level: AssertionLevel): boolean {
             return currentAssertionLevel >= level;
@@ -1753,6 +1756,7 @@ namespace ts {
         }
 
         export function assertDefined<T>(value: T | null | undefined, message?: string): T {
+            // eslint-disable-next-line no-null/no-null
             if (value === undefined || value === null) return fail(message);
             return value;
         }
@@ -2254,7 +2258,7 @@ namespace ts {
         return arg => f(arg) || g(arg);
     }
 
-    export function assertType<T>(_: T): void { } // tslint:disable-line no-empty
+    export function assertType<T>(_: T): void { } // eslint-disable-line no-empty-function
 
     export function singleElementArray<T>(t: T | undefined): T[] | undefined {
         return t === undefined ? undefined : [t];

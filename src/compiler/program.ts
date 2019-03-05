@@ -897,6 +897,7 @@ namespace ts {
         // unconditionally set oldProgram to undefined to prevent it from being captured in closure
         oldProgram = undefined;
 
+        // eslint-disable-next-line prefer-const
         program = {
             getRootFileNames: () => rootNames,
             getSourceFile,
@@ -2072,6 +2073,7 @@ namespace ts {
 
             function collectDynamicImportOrRequireCalls(file: SourceFile) {
                 const r = /import|require/g;
+                // eslint-disable-next-line no-null/no-null
                 while (r.exec(file.text) !== null) {
                     const node = getNodeAtPosition(file, r.lastIndex);
                     if (isRequireCall(node, /*checkArgumentIsStringLiteralLike*/ true)) {
@@ -3041,7 +3043,7 @@ namespace ts {
 
         function getCompilerOptionsObjectLiteralSyntax() {
             if (_compilerOptionsObjectLiteralSyntax === undefined) {
-                _compilerOptionsObjectLiteralSyntax = null; // tslint:disable-line:no-null-keyword
+                _compilerOptionsObjectLiteralSyntax = null; // eslint-disable-line no-null/no-null
                 const jsonObjectLiteral = getTsConfigObjectLiteralExpression(options.configFile);
                 if (jsonObjectLiteral) {
                     for (const prop of getPropertyAssignment(jsonObjectLiteral, "compilerOptions")) {

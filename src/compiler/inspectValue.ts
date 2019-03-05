@@ -100,7 +100,7 @@ namespace ts {
     function getPrototypeMembers(fn: AnyFunction, recurser: Recurser): ReadonlyArray<ValueInfo> {
         const prototype = fn.prototype as unknown;
         // tslint:disable-next-line no-unnecessary-type-assertion (TODO: update LKG and it will really be unnecessary)
-        return typeof prototype !== "object" || prototype === null ? emptyArray : mapDefined(getEntriesOfObject(prototype as object), ({ key, value }) =>
+        return typeof prototype !== "object" || prototype === null ? emptyArray : mapDefined(getEntriesOfObject(prototype as object), ({ key, value }) => // eslint-disable-line no-null/no-null
             key === "constructor" ? undefined : getValueInfo(key, value, recurser));
     }
 
@@ -140,7 +140,7 @@ namespace ts {
     }
 
     function isNullOrUndefined(value: unknown): value is null | undefined {
-        return value == null; // tslint:disable-line
+        return value == null; // eslint-disable-line
     }
 
     function anyValue(name: string, comment?: string): ValueInfo {
