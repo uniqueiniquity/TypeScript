@@ -374,7 +374,7 @@ namespace ts {
     const gutterSeparator = " ";
     const resetEscapeSequence = "\u001b[0m";
     const ellipsis = "...";
-    const halfIndent = "  ";
+    const halfIndent = "  "; // eslint-disable-line rulesdir/no-double-space
     const indent = "    ";
     function getCategoryFormat(category: DiagnosticCategory): ForegroundColorEscapeSequences {
         switch (category) {
@@ -514,7 +514,7 @@ namespace ts {
                     result += newLine;
 
                     for (let i = 0; i < indent; i++) {
-                        result += "  ";
+                        result += "  "; // eslint-disable-line rulesdir/no-double-space
                     }
                 }
                 result += diagnosticChain.messageText;

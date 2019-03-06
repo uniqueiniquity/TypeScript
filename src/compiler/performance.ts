@@ -36,13 +36,13 @@ namespace ts.performance {
         };
 
         function enter() {
-            if (++enterCount === 1) {
+            if (++enterCount === 1) { // eslint-disable-line rulesdir/no-increment-decrement
                 mark(startMarkName);
             }
         }
 
         function exit() {
-            if (--enterCount === 0) {
+            if (--enterCount === 0) { // eslint-disable-line rulesdir/no-increment-decrement
                 mark(endMarkName);
                 measure(measureName, startMarkName, endMarkName);
             }

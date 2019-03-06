@@ -1,22 +1,26 @@
-{
+const rulesDirPlugin = require('eslint-plugin-rulesdir');
+rulesDirPlugin.RULES_DIR = "../scripts/eslint/rules";
+
+module.exports = {
     "parser": "@typescript-eslint/parser",
     "plugins": [
         "@typescript-eslint",
         "import",
         "jsdoc",
         "no-null",
-        "prefer-arrow"
+        "prefer-arrow",
+        "rulesdir"
     ],
     "rules": {
         "@typescript-eslint/adjacent-overload-signatures": "error",
         "@typescript-eslint/array-type": ["error", "array"],
         "no-restricted-globals": ["error", "setInterval", "setTimeout"],
-        // boolean-trivia (custom),
+        "rulesdir/boolean-trivia": "error",
         "@typescript-eslint/prefer-function-type": "error",
         "@typescript-eslint/class-name-casing": "error",
         // "spaced-comment": ["error", "always"] (can't ignore block comments),
         "curly": ["error", "multi-line"],
-        // debug-assert (custom),
+        "rulesdir/debug-assert": "error",
         "no-new-func": "error",
         // import-spacing (use Prettier),
         // "@typescript-eslint/indent": ["error", 4, {
@@ -30,11 +34,11 @@
         "no-labels": ["error", { "allowLoop": true, "allowSwitch": true }],
         "linebreak-style": ["error", "windows"],
         "new-parens": "error",
-        // next-line (custom),
+        "rulesdir/next-line": ["error", ["check-catch", "check-else"]],
         "no-caller": "error",
-        // no-bom (custom),
+        "rulesdir/no-bom": "error",
         "no-new-wrappers": "error",
-        // no-double-space (custom),
+        "rulesdir/no-double-space": "error",
         "import/no-duplicates": "error",
         "constructor-super": "error",
         "no-duplicate-case": "error",
@@ -43,8 +47,8 @@
         "no-empty-function": "error",
         "no-eval": "error",
         "import/no-extraneous-dependencies": ["error", { "optionalDependencies": false }],
-        // "no-in-operator" (custom),
-        // "no-increment-decrement" (custom),
+        "rulesdir/no-in-operator": "error",
+        "rulesdir/no-increment-decrement": "error",
         "@typescript-eslint/no-inferrable-types": "error",
         "@typescript-eslint/prefer-namespace-keyword": "error",
         "no-template-curly-in-string": "error",
@@ -58,7 +62,7 @@
         // "no-fallthrough": "error" (causes problems with our usage),
         "@typescript-eslint/no-this-alias": "error",
         "no-trailing-spaces": "error",
-        // no-type-assertion-whitespace (custom),
+        "rulesdir/no-type-assertion-whitespace": "error",
         "no-undef-init": "error",
         // no-unnecessary-qualifier (needs type info)
         // no-unnecessary-type-assertion (needs type info)
@@ -70,13 +74,13 @@
         "brace-style": ["error", "stroustrup", { "allowSingleLine": true }], // one-line?
         "func-names": ["error", "always", { "generators": "never" }],
         "prefer-const": "error",
-        // "prefer-for-of" (need to do),
+        "rulesdir/prefer-for-of": "error",
         "prefer-object-spread": "error",
         "quotes": ["error", "double", { "avoidEscape": true, "allowTemplateLiterals": true }],
         "semi": "error",
         "space-in-parens": "error",
         "eqeqeq": "error",
-        // "type-operator-spacing" (custom),
+        "rulesdir/type-operator-spacing": "error",
         "@typescript-eslint/type-annotation-spacing": "error",
         // "unified-signature" (need to finish),
         "use-isnan": "error",
@@ -85,4 +89,4 @@
         // id-match (need to figure out regex)
         // whitespace (use Prettier)
     }
-}
+};

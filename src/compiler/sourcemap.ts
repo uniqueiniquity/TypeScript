@@ -75,7 +75,7 @@ namespace ts {
                 if (!sourcesContent) sourcesContent = [];
                 while (sourcesContent.length < sourceIndex) {
                     // tslint:disable-next-line no-null-keyword boolean-trivia
-                    sourcesContent.push(null); // eslint-disable-line no-null/no-null
+                    sourcesContent.push(null); // eslint-disable-line no-null/no-null, rulesdir/boolean-trivia
                 }
                 sourcesContent[sourceIndex] = content;
             }

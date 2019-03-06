@@ -115,7 +115,7 @@ namespace ts {
     declare const Map: (new <T>() => Map<T>) | undefined;
     // Internet Explorer's Map doesn't support iteration, so don't use it.
     // tslint:disable-next-line no-in-operator variable-name
-    export const MapCtr = typeof Map !== "undefined" && "entries" in Map.prototype ? Map : shimMap();
+    export const MapCtr = typeof Map !== "undefined" && "entries" in Map.prototype ? Map : shimMap(); // eslint-disable-line rulesdir/no-in-operator
 
     // Keep the class inside a function so it doesn't get compiled if it's not used.
     export function shimMap(): new <T>() => Map<T> {
@@ -222,7 +222,7 @@ namespace ts {
 
             has(key: string): boolean {
                 // tslint:disable-next-line:no-in-operator
-                return key in this.data;
+                return key in this.data; // eslint-disable-line rulesdir/no-in-operator
             }
 
             delete(key: string): boolean {
@@ -1769,6 +1769,7 @@ namespace ts {
         }
 
         export function assertNever(member: never, message = "Illegal value:", stackCrawlMark?: AnyFunction): never {
+            // eslint-disable-next-line rulesdir/no-in-operator
             const detail = typeof member === "object" && "kind" in member && "pos" in member ? "SyntaxKind: " + showSyntaxKind(member as Node) : JSON.stringify(member);
             return fail(`${message} ${detail}`, stackCrawlMark || assertNever);
         }
@@ -2289,9 +2290,11 @@ namespace ts {
             }
         }
         while (newIndex < newLen) {
+            // eslint-disable-next-line rulesdir/no-increment-decrement
             inserted(newItems[newIndex++]);
         }
         while (oldIndex < oldLen) {
+            // eslint-disable-next-line rulesdir/no-increment-decrement
             deleted(oldItems[oldIndex++]);
         }
     }

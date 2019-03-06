@@ -685,8 +685,8 @@ namespace ts {
         function createNewProgram(program: Program, hasInvalidatedResolution: HasInvalidatedResolution) {
             // Compile the program
             writeLog("CreatingProgramWith::");
-            writeLog(`  roots: ${JSON.stringify(rootFileNames)}`);
-            writeLog(`  options: ${JSON.stringify(compilerOptions)}`);
+            writeLog(`  roots: ${JSON.stringify(rootFileNames)}`); // eslint-disable-line rulesdir/no-double-space
+            writeLog(`  options: ${JSON.stringify(compilerOptions)}`); // eslint-disable-line rulesdir/no-double-space
 
             const needsUpdateInTypeRootWatch = hasChangedCompilerOptions || !program;
             hasChangedCompilerOptions = false;
