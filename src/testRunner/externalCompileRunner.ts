@@ -26,8 +26,8 @@ abstract class ExternalCompileRunnerBase extends RunnerBase {
         const testList = this.tests && this.tests.length ? this.tests : this.enumerateTestFiles();
 
         // tslint:disable-next-line:no-this-assignment
-        const cls = this;
-        describe(`${this.kind()} code samples`, function(this: Mocha.ISuiteCallbackContext) {
+        const cls = this; // eslint-disable-line @typescript-eslint/no-this-alias
+        describe(`${this.kind()} code samples`, function(this: Mocha.ISuiteCallbackContext) { // eslint-disable-line func-names
             this.timeout(600_000); // 10 minutes
             for (const test of testList) {
                 cls.runTest(typeof test === "string" ? test : test.file);
@@ -36,9 +36,9 @@ abstract class ExternalCompileRunnerBase extends RunnerBase {
     }
     private runTest(directoryName: string) {
         // tslint:disable-next-line:no-this-assignment
-        const cls = this;
+        const cls = this; // eslint-disable-line @typescript-eslint/no-this-alias
         const timeout = 600_000; // 10 minutes
-        describe(directoryName, function(this: Mocha.ISuiteCallbackContext) {
+        describe(directoryName, function(this: Mocha.ISuiteCallbackContext) { // eslint-disable-line func-names
             this.timeout(timeout);
             const cp: typeof import("child_process") = require("child_process");
 
@@ -94,6 +94,7 @@ class UserCodeRunner extends ExternalCompileRunnerBase {
         return "user";
     }
     report(result: ExecResult) {
+        /* eslint-disable no-null/no-null */
         // tslint:disable-next-line:no-null-keyword
         return result.status === 0 && !result.stdout.length && !result.stderr.length ? null : `Exit Code: ${result.status}
 Standard output:
@@ -102,6 +103,7 @@ ${sortErrors(stripAbsoluteImportPaths(result.stdout.toString().replace(/\r\n/g, 
 
 Standard error:
 ${stripAbsoluteImportPaths(result.stderr.toString().replace(/\r\n/g, "\n"))}`;
+        /* eslint-enable no-null/no-null */
     }
 }
 
@@ -151,6 +153,7 @@ class DefinitelyTypedRunner extends ExternalCompileRunnerBase {
     report(result: ExecResult, cwd: string) {
         const stdout = removeExpectedErrors(result.stdout.toString(), cwd);
         const stderr = result.stderr.toString();
+        /* eslint-disable no-null/no-null */
         // tslint:disable-next-line:no-null-keyword
         return !stdout.length && !stderr.length ? null : `Exit Code: ${result.status}
 Standard output:
@@ -159,6 +162,7 @@ ${stdout.replace(/\r\n/g, "\n")}
 
 Standard error:
 ${stderr.replace(/\r\n/g, "\n")}`;
+        /* eslint-enable no-null/no-null */
     }
 }
 

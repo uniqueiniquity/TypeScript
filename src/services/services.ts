@@ -36,7 +36,7 @@ namespace ts {
 
         private assertHasRealPosition(message?: string) {
             // tslint:disable-next-line:debug-assert
-            Debug.assert(!positionIsSynthesized(this.pos) && !positionIsSynthesized(this.end), message || "Node must have a real position for this operation");
+            Debug.assert(!positionIsSynthesized(this.pos) && !positionIsSynthesized(this.end), message || "Node must have a real position for this operation"); // eslint-disable-line rulesdir/debug-assert
         }
 
         public getSourceFile(): SourceFile {
@@ -1012,7 +1012,7 @@ namespace ts {
         return sourceFile;
     }
 
-    export let disableIncrementalParsing = false;
+    export let disableIncrementalParsing = false; // eslint-disable-line prefer-const
 
     export function updateLanguageServiceSourceFile(sourceFile: SourceFile, scriptSnapshot: IScriptSnapshot, version: string, textChangeRange: TextChangeRange | undefined, aggressiveChecks?: boolean): SourceFile {
         // If we were given a text change range, and our version or open-ness changed, then

@@ -283,7 +283,7 @@ namespace ts.server {
                     req.seq = i;
                     i++;
                     /* tslint:disable no-null-keyword */
-                    req.arguments = null;
+                    req.arguments = null; // eslint-disable-line no-null/no-null
                     /* tslint:enable no-null-keyword */
                     session.onMessage(JSON.stringify(req));
                     req.seq = i;
@@ -336,6 +336,7 @@ namespace ts.server {
 
                 session.send = Session.prototype.send;
                 assert(session.send);
+                // eslint-disable-next-line no-unused-expressions
                 expect(session.send(msg)).to.not.exist; // tslint:disable-line no-unused-expression
                 expect(lastWrittenToHost).to.equal(resultMsg);
             });

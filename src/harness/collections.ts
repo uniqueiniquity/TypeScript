@@ -252,6 +252,7 @@ namespace collections {
 
         constructor(parent?: Metadata) {
             this._parent = parent;
+            // eslint-disable-next-line no-null/no-null
             this._map = Object.create(parent ? parent._map : null); // tslint:disable-line:no-null-keyword
         }
 
@@ -299,6 +300,7 @@ namespace collections {
         }
 
         public clear(): void {
+            // eslint-disable-next-line no-null/no-null
             this._map = Object.create(this._parent ? this._parent._map : null); // tslint:disable-line:no-null-keyword
             this._size = -1;
             this._version++;

@@ -2,11 +2,11 @@ namespace Harness.LanguageService {
 
     export function makeDefaultProxy(info: ts.server.PluginCreateInfo): ts.LanguageService {
         // tslint:disable-next-line:no-null-keyword
-        const proxy = Object.create(/*prototype*/ null);
+        const proxy = Object.create(/*prototype*/ null); // eslint-disable-line no-null/no-null
         const langSvc: any = info.languageService;
         for (const k of Object.keys(langSvc)) {
             // tslint:disable-next-line only-arrow-functions
-            proxy[k] = function () {
+            proxy[k] = function () { // eslint-disable-line func-names
                 return langSvc[k].apply(langSvc, arguments);
             };
         }
@@ -599,6 +599,7 @@ namespace Harness.LanguageService {
             };
 
             const coreServicesShim = this.factory.createCoreServicesShim(this.host);
+            // eslint-disable-next-line prefer-const
             shimResult = unwrapJSONCallResult(coreServicesShim.getPreProcessedFileInfo(fileName, ts.ScriptSnapshot.fromString(fileContents)));
 
             const convertResult: ts.PreProcessedFileInfo = {
@@ -767,7 +768,7 @@ namespace Harness.LanguageService {
 
         setTimeout(callback: (...args: any[]) => void, ms: number, ...args: any[]): any {
             // tslint:disable-next-line:ban
-            return setTimeout(callback, ms, args);
+            return setTimeout(callback, ms, args); // eslint-disable-line no-restricted-globals
         }
 
         clearTimeout(timeoutId: any): void {
@@ -797,7 +798,7 @@ namespace Harness.LanguageService {
                                 const proxy = makeDefaultProxy(info);
                                 const langSvc: any = info.languageService;
                                 // tslint:disable-next-line only-arrow-functions
-                                proxy.getQuickInfoAtPosition = function () {
+                                proxy.getQuickInfoAtPosition = function () { // eslint-disable-line func-names
                                     const parts = langSvc.getQuickInfoAtPosition.apply(langSvc, arguments);
                                     if (parts.displayParts.length > 0) {
                                         parts.displayParts[0].text = "Proxied";

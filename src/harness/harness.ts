@@ -1,5 +1,6 @@
 // Block scoped definitions work poorly for global variables, temporarily enable var
 /* tslint:disable:no-var-keyword */
+/* eslint-disable no-var */
 
 // this will work in the browser via browserify
 var _chai: typeof chai = require("chai");
@@ -28,6 +29,7 @@ var assert: typeof _chai.assert = _chai.assert;
     };
 }
 
+// eslint-disable-next-line no-new-func
 var global: NodeJS.Global = Function("return this").call(undefined); // tslint:disable-line:function-constructor
 
 declare var window: {};
@@ -44,6 +46,7 @@ interface XMLHttpRequest {
     getResponseHeader(header: string): string | null;
     overrideMimeType(mime: string): void;
 }
+/* eslint-enable no-var */
 /* tslint:enable:no-var-keyword prefer-const */
 
 namespace Utils {
@@ -62,7 +65,7 @@ namespace Utils {
         }
     }
 
-    export let currentExecutionEnvironment = getExecutionEnvironment();
+    export const currentExecutionEnvironment = getExecutionEnvironment();
 
     export function encodeString(s: string): string {
         return ts.sys.bufferFrom!(s).toString("utf8");
@@ -78,7 +81,7 @@ namespace Utils {
         switch (environment) {
             case ExecutionEnvironment.Browser:
                 // tslint:disable-next-line:no-eval
-                eval(fileContents);
+                eval(fileContents); // eslint-disable-line no-eval
                 break;
             case ExecutionEnvironment.Node:
                 const vm = require("vm");
@@ -130,6 +133,8 @@ namespace Utils {
     export function memoize<T extends ts.AnyFunction>(f: T, memoKey: (...anything: any[]) => string): T {
         const cache = ts.createMap<any>();
 
+        // (TODO: shouldn't flag functions with 'this' param)
+        // eslint-disable-next-line func-names
         return <any>(function(this: any, ...args: any[]) {
             const key = memoKey(...args);
             if (cache.has(key)) {
@@ -468,7 +473,7 @@ namespace Utils {
 
 namespace Harness {
     // tslint:disable-next-line:interface-name
-    export interface IO {
+    export interface IO { // eslint-disable-line @typescript-eslint/interface-name-prefix
         newLine(): string;
         getCurrentDirectory(): string;
         useCaseSensitiveFileNames(): boolean;
@@ -638,7 +643,7 @@ namespace Harness {
         toString(): string;
     }
 
-    declare var URL: {
+    declare const URL: {
         prototype: URL;
         new(url: string, base?: string | URL): URL;
     };
@@ -931,6 +936,7 @@ namespace Harness {
             writeFile,
             directoryName: Utils.memoize(directoryName, path => path),
             getDirectories: () => [],
+            // eslint-disable-next-line no-empty-function
             createDirectory: () => {}, // tslint:disable-line no-empty
             fileExists,
             directoryExists,
@@ -940,6 +946,7 @@ namespace Harness {
             log: s => console.log(s),
             args: () => [],
             getExecutingFilePath: () => "",
+            // eslint-disable-next-line no-empty-function
             exit: () => {}, // tslint:disable-line no-empty
             readDirectory,
             getAccessibleFileSystemEntries,
@@ -986,8 +993,10 @@ namespace Harness {
     ) => void;
 
     // Settings
+    /* eslint-disable prefer-const */
     export let userSpecifiedRoot = "";
     export let lightMode = false;
+    /* eslint-enable prefer-const */
 
     /** Functionality for compiling TypeScript code */
     export namespace Compiler {
@@ -1487,7 +1496,7 @@ namespace Harness {
         export function doErrorBaseline(baselinePath: string, inputFiles: ReadonlyArray<TestFile>, errors: ReadonlyArray<ts.Diagnostic>, pretty?: boolean) {
             Baseline.runBaseline(baselinePath.replace(/\.tsx?$/, ".errors.txt"),
                 // tslint:disable-next-line no-null-keyword
-                !errors || (errors.length === 0) ? null : getErrorBaseline(inputFiles, errors, pretty));
+                !errors || (errors.length === 0) ? null : getErrorBaseline(inputFiles, errors, pretty)); // eslint-disable-line no-null/no-null
         }
 
         export function doTypeAndSymbolBaseline(baselinePath: string, program: ts.Program, allFiles: {unitName: string, content: string}[], opts?: Baseline.BaselineOptions, multifile?: boolean, skipTypeBaselines?: boolean, skipSymbolBaselines?: boolean, hasErrorBaseline?: boolean) {
@@ -1566,7 +1575,7 @@ namespace Harness {
                     result += content;
                 }
                 /* tslint:disable:no-null-keyword */
-                return result || null;
+                return result || null; // eslint-disable-line no-null/no-null
                 /* tslint:enable:no-null-keyword */
             }
 
@@ -1639,7 +1648,7 @@ namespace Harness {
                     // We need to return null here or the runBaseLine will actually create a empty file.
                     // Baselining isn't required here because there is no output.
                     /* tslint:disable:no-null-keyword */
-                    sourceMapCode = null;
+                    sourceMapCode = null; // eslint-disable-line no-null/no-null
                     /* tslint:enable:no-null-keyword */
                 }
                 else {
@@ -1695,6 +1704,7 @@ namespace Harness {
                 jsCode += getErrorBaseline(tsConfigFiles.concat(declFileCompilationResult.declInputFiles, declFileCompilationResult.declOtherFiles), declFileCompilationResult.declResult.diagnostics);
             }
 
+            // eslint-disable-next-line no-null/no-null
             Baseline.runBaseline(baselinePath.replace(/\.tsx?/, ts.Extension.Js), jsCode.length > 0 ? tsCode + "\r\n\r\n" + jsCode : null); // tslint:disable-line no-null-keyword
         }
 
@@ -1850,7 +1860,7 @@ namespace Harness {
 
             let match: RegExpExecArray | null;
             /* tslint:disable:no-null-keyword */
-            while ((match = optionRegex.exec(content)) !== null) {
+            while ((match = optionRegex.exec(content)) !== null) { // eslint-disable-line no-null/no-null
             /* tslint:enable:no-null-keyword */
                 opts[match[1]] = match[2].trim();
             }
@@ -2030,7 +2040,7 @@ namespace Harness {
             const refFileName = referencePath(relativeFileName, opts && opts.Baselinefolder, opts && opts.Subfolder);
 
             /* tslint:disable:no-null-keyword */
-            if (actual === null) {
+            if (actual === null) { // eslint-disable-line no-null/no-null
             /* tslint:enable:no-null-keyword */
                 actual = noContent;
             }
@@ -2095,7 +2105,7 @@ namespace Harness {
             const writtenFiles = ts.createMap<true>();
             const errors: Error[] = [];
             // tslint:disable-next-line:no-null-keyword
-            if (gen !== null) {
+            if (gen !== null) { // eslint-disable-line no-null/no-null
                 for (let {done, value} = gen.next(); !done; { done, value } = gen.next()) {
                     const [name, content, count] = value as [string, string, number | undefined];
                     if (count === 0) continue; // Allow error reporter to skip writing files without errors

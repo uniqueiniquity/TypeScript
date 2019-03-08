@@ -1168,7 +1168,7 @@ const { length } = [#|function|] () {
 
     _testConvertToAsyncFunction("convertToAsyncFunction_catchBlockUniqueParams", `
 function [#|f|]() {
-	return Promise.resolve().then(x => 1).catch(x => "a").then(x => !!x);
+    return Promise.resolve().then(x => 1).catch(x => "a").then(x => !!x);
 }
 `);
 

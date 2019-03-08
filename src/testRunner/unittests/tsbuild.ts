@@ -531,7 +531,7 @@ export const b = new A();`);
             it(`Generates files matching the baseline`, () => {
                 const patch = fs!.diff();
                 // tslint:disable-next-line:no-null-keyword
-                Harness.Baseline.runBaseline("outfile-concat.js", patch ? vfs.formatPatch(patch) : null);
+                Harness.Baseline.runBaseline("outfile-concat.js", patch ? vfs.formatPatch(patch) : null); // eslint-disable-line no-null/no-null
             });
             it("verify readFile calls", () => {
                 const expected = [

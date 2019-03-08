@@ -97,7 +97,7 @@ module.exports = {
                                 ) + doubleSpace.index;
 
                         if (
-                            strings.some(
+                            !strings.some(
                                 s => s.range[0] <= pos && s.range[1] > pos
                             )
                         ) {

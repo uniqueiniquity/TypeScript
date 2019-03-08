@@ -45,9 +45,12 @@ interface IoLog {
     dirs: {
         path: string;
         re: string;
+        // TODO: camelcase doesn't handle PropertySignatures well
+        /* eslint-disable camelcase */
         re_m: boolean;
         re_g: boolean;
         re_i: boolean;
+        /* eslint-enable camelcase */
         opts: { recursive?: boolean; };
         result?: string[];
     }[];
@@ -248,9 +251,11 @@ namespace Playback {
                 const getBase = () => recordLogFileNameBase + i;
                 while (underlying.fileExists(ts.combinePaths(getBase(), "test.json"))) i++;
                 const newLog = oldStyleLogIntoNewStyleLog(recordLog, (path, str) => underlying.writeFile(path, str), getBase());
+                // eslint-disable-next-line no-null/no-null
                 underlying.writeFile(ts.combinePaths(getBase(), "test.json"), JSON.stringify(newLog, null, 4)); // tslint:disable-line:no-null-keyword
                 const syntheticTsconfig = generateTsconfig(newLog);
                 if (syntheticTsconfig) {
+                    // eslint-disable-next-line no-null/no-null
                     underlying.writeFile(ts.combinePaths(getBase(), "tsconfig.json"), JSON.stringify(syntheticTsconfig, null, 4)); // tslint:disable-line:no-null-keyword
                 }
                 recordLog = undefined;
@@ -364,7 +369,7 @@ namespace Playback {
     function recordReplay<T extends ts.AnyFunction>(original: T, underlying: any) {
         function createWrapper(record: T, replay: T): T {
             // tslint:disable-next-line only-arrow-functions
-            return <any>(function () {
+            return <any>(function () { // eslint-disable-line func-names
                 if (replayLog !== undefined) {
                     return replay.apply(undefined, arguments);
                 }

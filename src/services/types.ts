@@ -103,7 +103,7 @@ namespace ts {
      * the same values.
      */
     // tslint:disable-next-line interface-name
-    export interface IScriptSnapshot {
+    export interface IScriptSnapshot { // eslint-disable-line @typescript-eslint/interface-name-prefix
         /** Gets a portion of the script snapshot specified by [start, end). */
         getText(start: number, end: number): string;
 

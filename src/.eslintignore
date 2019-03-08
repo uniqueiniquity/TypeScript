@@ -1,0 +1,2 @@
+# exclude .d.ts files
+**/*.d.ts

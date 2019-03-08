@@ -1,4 +1,5 @@
 // tslint:disable:no-null-keyword
+/* eslint-disable no-null/no-null */
 namespace vfs {
     /**
      * Posix-style path to the TypeScript compiler build outputs (including tsc.js, lib.d.ts, etc.)
@@ -327,7 +328,7 @@ namespace vfs {
             if (existingNode) throw createIOError("EEXIST");
 
             const time = this.time();
-            const node = this._mknod(parent ? parent.dev : ++devCount, S_IFDIR, /*mode*/ 0o777, time);
+            const node = this._mknod(parent ? parent.dev : ++devCount, S_IFDIR, /*mode*/ 0o777, time); // eslint-disable-line rulesdir/no-increment-decrement
             node.source = source;
             node.resolver = resolver;
             this._addLink(parent, links, basename, node, time);
@@ -509,7 +510,7 @@ namespace vfs {
         private _mkdir({ parent, links, node: existingNode, basename }: WalkResult) {
             if (existingNode) throw createIOError("EEXIST");
             const time = this.time();
-            const node = this._mknod(parent ? parent.dev : ++devCount, S_IFDIR, /*mode*/ 0o777, time);
+            const node = this._mknod(parent ? parent.dev : ++devCount, S_IFDIR, /*mode*/ 0o777, time); // eslint-disable-line rulesdir/no-increment-decrement
             this._addLink(parent, links, basename, node, time);
         }
 
@@ -849,7 +850,7 @@ namespace vfs {
         private _mknod(dev: number, type: number, mode: number, time = this.time()) {
             return <Inode>{
                 dev,
-                ino: ++inoCount,
+                ino: ++inoCount,  // eslint-disable-line rulesdir/no-increment-decrement
                 mode: (mode & ~S_IFMT & ~0o022 & 0o7777) | (type & S_IFMT),
                 atimeMs: time,
                 mtimeMs: time,
@@ -1560,4 +1561,5 @@ namespace vfs {
         return text;
     }
 }
+/* eslint-enable no-null/no-null */
 // tslint:enable:no-null-keyword

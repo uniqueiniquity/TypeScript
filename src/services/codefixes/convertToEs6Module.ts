@@ -308,6 +308,7 @@ namespace ts.codefix {
     }
 
     // TODO: GH#22492 this will cause an error if a change has been made inside the body of the node.
+    // eslint-disable-next-line camelcase
     function convertExportsDotXEquals_replaceNode(name: string | undefined, exported: Expression): Statement {
         const modifiers = [createToken(SyntaxKind.ExportKeyword)];
         switch (exported.kind) {

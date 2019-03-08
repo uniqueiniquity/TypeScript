@@ -668,6 +668,7 @@ namespace ts.server {
                         msg += `\n\nFile text of ${fileRequest.file}:${indent(text)}\n`;
                     }
                 }
+                // eslint-disable-next-line no-empty
                 catch {} // tslint:disable-line no-empty
             }
 

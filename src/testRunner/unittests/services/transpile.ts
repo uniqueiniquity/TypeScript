@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 namespace ts {
     describe("unittests:: services:: Transpile", () => {
 
@@ -59,14 +60,14 @@ namespace ts {
                 it("Correct errors for " + justName, () => {
                     Harness.Baseline.runBaseline(justName.replace(/\.tsx?$/, ".errors.txt"),
                         // tslint:disable-next-line no-null-keyword
-                        transpileResult.diagnostics!.length === 0 ? null : Harness.Compiler.getErrorBaseline(toBeCompiled, transpileResult.diagnostics!));
+                        transpileResult.diagnostics!.length === 0 ? null : Harness.Compiler.getErrorBaseline(toBeCompiled, transpileResult.diagnostics!)); // eslint-disable-line no-null/no-null
                 });
 
                 if (canUseOldTranspile) {
                     it("Correct errors (old transpile) for " + justName, () => {
                         Harness.Baseline.runBaseline(justName.replace(/\.tsx?$/, ".oldTranspile.errors.txt"),
                             // tslint:disable-next-line no-null-keyword
-                            oldTranspileDiagnostics.length === 0 ? null : Harness.Compiler.getErrorBaseline(toBeCompiled, oldTranspileDiagnostics));
+                            oldTranspileDiagnostics.length === 0 ? null : Harness.Compiler.getErrorBaseline(toBeCompiled, oldTranspileDiagnostics)); // eslint-disable-line no-null/no-null
                     });
                 }
 

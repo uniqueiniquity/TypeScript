@@ -5,7 +5,7 @@ namespace ts.server {
     }
 
     // tslint:disable-next-line interface-name (for backwards-compatibility)
-    export interface ITypingsInstaller {
+    export interface ITypingsInstaller { // eslint-disable-line @typescript-eslint/interface-name-prefix
         isKnownTypesPackageName(name: string): boolean;
         installPackage(options: InstallPackageOptionsWithProject): Promise<ApplyCodeActionCommandResult>;
         /* @internal */

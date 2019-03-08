@@ -22,6 +22,7 @@ namespace ts.codefix {
         },
         fixIds: [fixIdInstallTypesPackage, fixIdGenerateTypes],
         getAllCodeActions: context => {
+            // eslint-disable-next-line no-null/no-null
             let savedTypesDir: string | null | undefined = null; // tslint:disable-line no-null-keyword
             return codeFixAll(context, errorCodes, (changes, diag, commands) => {
                 const packageName = tryGetImportedPackageName(diag.file, diag.start);
@@ -35,6 +36,7 @@ namespace ts.codefix {
                         break;
                     }
                     case fixIdGenerateTypes: {
+                        // eslint-disable-next-line no-null/no-null
                         const typesDir = savedTypesDir !== null ? savedTypesDir : savedTypesDir = getOrCreateTypesDirectory(changes, context);
                         const command = typesDir === undefined ? undefined : tryGenerateTypes(typesDir, packageName, context);
                         if (command) commands.push(command);

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 namespace ts.projectSystem {
     import Tsc_WatchDirectory = TestFSWithWatch.Tsc_WatchDirectory;
     describe("unittests:: tsserver:: watchEnvironment:: tsserverProjectSystem watchDirectories implementation", () => {

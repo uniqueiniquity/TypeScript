@@ -14,11 +14,12 @@
 //
 
 /* @internal */
-let debugObjectHost: { CollectGarbage(): void } = (function (this: any) { return this; })();
+const debugObjectHost: { CollectGarbage(): void } = (function (this: any) { return this; })(); // eslint-disable-line func-names
 
 // We need to use 'null' to interface with the managed side.
 /* tslint:disable:no-null-keyword */
 /* tslint:disable:no-in-operator */
+/* eslint-disable no-null/no-null */
 
 /* @internal */
 namespace ts {
@@ -1263,6 +1264,7 @@ namespace ts {
     }
 }
 
+/* eslint-disable no-null/no-null */
 /* tslint:enable:no-in-operator */
 /* tslint:enable:no-null */
 

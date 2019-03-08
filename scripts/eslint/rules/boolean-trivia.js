@@ -66,7 +66,7 @@ module.exports = {
 
                 if (
                     functionName.startsWith("set") ||
-                    functionName.startsWith("get")
+                    functionName.startsWith("assert")
                 ) {
                     return true;
                 }

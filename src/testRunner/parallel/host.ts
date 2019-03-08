@@ -1,4 +1,5 @@
 // tslint:disable no-unnecessary-type-assertion (TODO: tslint can't find node types)
+// eslint-disable no-unnecessary-type-assertion
 
 namespace Harness.Parallel.Host {
     export function start() {
@@ -303,7 +304,7 @@ namespace Harness.Parallel.Host {
                             }
                             else {
                                 // tslint:disable-next-line:ban
-                                worker.timer = setTimeout(killChild, data.payload.duration, data.payload);
+                                worker.timer = setTimeout(killChild, data.payload.duration, data.payload); // eslint-disable-line no-restricted-globals
                             }
                             break;
                         }
@@ -568,6 +569,7 @@ namespace Harness.Parallel.Host {
                 consoleReporter.epilogue();
                 if (noColors) Base.useColors = savedUseColors;
 
+                // eslint-disable-next-line no-null/no-null
                 IO.writeFile(perfdataFileName(configOption), JSON.stringify(newPerfData, null, 4)); // tslint:disable-line:no-null-keyword
 
                 if (xunitReporter) {
@@ -626,7 +628,8 @@ namespace Harness.Parallel.Host {
             shimNoopTestInterface(global);
         }
 
+        // Do real startup on next tick, so all unit tests have been collected
         // tslint:disable-next-line:ban
-        setTimeout(() => startDelayed(perfData, totalCost), 0); // Do real startup on next tick, so all unit tests have been collected
+        setTimeout(() => startDelayed(perfData, totalCost), 0); // eslint-disable-line no-restricted-globals
     }
 }

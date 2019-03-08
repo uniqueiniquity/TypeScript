@@ -600,6 +600,7 @@ namespace FourSlash {
                 throw new Error("Expected exactly one output from emit of " + this.activeFile.fileName);
             }
 
+            // eslint-disable-next-line no-new-func
             const evaluation = new Function(`${emit.outputFiles[0].text};\r\nreturn (${expr});`)(); // tslint:disable-line:function-constructor
             if (evaluation !== value) {
                 this.raiseError(`Expected evaluation of expression "${expr}" to equal "${value}", but got "${evaluation}"`);
@@ -3160,7 +3161,7 @@ ${code}
             const format = new FourSlashInterface.Format(state);
             const cancellation = new FourSlashInterface.Cancellation(state);
             // tslint:disable-next-line:no-eval
-            const f = eval(wrappedCode);
+            const f = eval(wrappedCode); // eslint-disable-line no-eval
             f(test, goTo, plugins, verify, edit, debug, format, cancellation, FourSlashInterface.Classification, FourSlashInterface.Completion, verifyOperationIsCancelled);
         }
         catch (err) {

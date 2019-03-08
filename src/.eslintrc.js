@@ -3,6 +3,9 @@ rulesDirPlugin.RULES_DIR = "../scripts/eslint/rules";
 
 module.exports = {
     "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "warnOnUnsupportedTypeScriptVersion": false
+    },
     "plugins": [
         "@typescript-eslint",
         "import",
@@ -22,12 +25,7 @@ module.exports = {
         "curly": ["error", "multi-line"],
         "rulesdir/debug-assert": "error",
         "no-new-func": "error",
-        // import-spacing (use Prettier),
-        // "@typescript-eslint/indent": ["error", 4, {
-        //     // "flatTernaryExpressions": true,
-        //     "ignoreComments": true,
-        //     "SwitchCase": 1
-        // }] (try using prettier),
+        "no-tabs": "error",
         "@typescript-eslint/interface-name-prefix": "error",
         "@typescript-eslint/prefer-interface": "error",
         // jsdoc-format (not sure...)
@@ -44,10 +42,9 @@ module.exports = {
         "no-duplicate-case": "error",
         // "no-redeclare": "error" (doesn't handle namespace merging),
         "no-empty": "error",
-        "no-empty-function": "error",
+        "no-empty-function": ["error", { "allow": ["constructors"] }],
         "no-eval": "error",
         "import/no-extraneous-dependencies": ["error", { "optionalDependencies": false }],
-        "rulesdir/no-in-operator": "error",
         "rulesdir/no-increment-decrement": "error",
         "@typescript-eslint/no-inferrable-types": "error",
         "@typescript-eslint/prefer-namespace-keyword": "error",
@@ -67,13 +64,13 @@ module.exports = {
         // no-unnecessary-qualifier (needs type info)
         // no-unnecessary-type-assertion (needs type info)
         "no-unsafe-finally": "error",
-        "no-unused-expressions": "error",
+        "no-unused-expressions": ["error", { "allowTernary": true }],
         "no-var": "error",
         "quote-props": ["error", "consistent-as-needed"],
         "object-shorthand": "error",
-        "brace-style": ["error", "stroustrup", { "allowSingleLine": true }], // one-line?
-        "func-names": ["error", "always", { "generators": "never" }],
-        "prefer-const": "error",
+        "brace-style": ["error", "stroustrup", { "allowSingleLine": true }], // one-line? need to see if STATEMENT_LIST_PARENTS can be extended with ts-specific things (like module block)
+        "func-names": ["error", "always", { "generators": "never" }], // (TODO: shouldn't flag functions with 'this' param)
+        "prefer-const": "error", // doesn't handle 'export let' well
         "rulesdir/prefer-for-of": "error",
         "prefer-object-spread": "error",
         "quotes": ["error", "double", { "avoidEscape": true, "allowTemplateLiterals": true }],
@@ -85,8 +82,21 @@ module.exports = {
         // "unified-signature" (need to finish),
         "use-isnan": "error",
         // "id-blacklist": ["error", "any", "Number", "number", "String", "string", "Boolean", "boolean", "Undefined"]
-        "camelcase": ["error", { "allow": ["^DiagnosticsPresent_"]}] // doesn't seem to fully work?
+
+        // TODO: camelcase doesn't handle PropertySignatures well
+        "camelcase": ["error", {
+            "allow": [
+                "^DiagnosticsPresent_",
+                "Tsc_WatchDirectory",
+                "request_seq",
+                "_TestOnly$"
+            ]
+        }], // doesn't seem to fully work?
+
         // id-match (need to figure out regex)
         // whitespace (use Prettier)
+
+        /* Rules that were previously enabled in TSLint */
+        "rulesdir/no-in-operator": "off", // TSLint implementation of rule never actually worked
     }
 };

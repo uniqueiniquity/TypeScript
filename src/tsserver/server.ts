@@ -1,4 +1,5 @@
 // tslint:disable no-unnecessary-type-assertion (TODO: tslint can't find node types)
+// eslint-disable no-unnecessary-type-assertion
 
 namespace ts.server {
     const childProcess: {
@@ -200,8 +201,10 @@ namespace ts.server {
         private write(s: string) {
             if (this.fd >= 0) {
                 const buf = sys.bufferFrom!(s);
+                /* eslint-disable no-null/no-null */
                 // tslint:disable-next-line no-null-keyword
                 fs.writeSync(this.fd, buf, 0, buf.length, /*position*/ null!); // TODO: GH#18217
+                /* eslint-enable no-null/no-null */
             }
             if (this.traceToConsole) {
                 console.warn(s);
@@ -706,7 +709,7 @@ namespace ts.server {
         // and efficiency of stat on modern filesystems
         function startWatchTimer() {
             // tslint:disable-next-line:ban
-            setInterval(() => {
+            setInterval(() => { // eslint-disable-line no-restricted-globals
                 let count = 0;
                 let nextToCheck = nextFileToCheck;
                 let firstCheck = -1;
@@ -888,7 +891,7 @@ namespace ts.server {
         };
     };
 
-    sys.setTimeout = setTimeout;
+    sys.setTimeout = setTimeout; // eslint-disable-line no-restricted-globals
     sys.clearTimeout = clearTimeout;
     sys.setImmediate = setImmediate;
     sys.clearImmediate = clearImmediate;
@@ -915,7 +918,7 @@ namespace ts.server {
     }
 
     let eventPort: number | undefined;
-    {
+    { // eslint-disable-line brace-style
         const str = findArgument("--eventPort");
         const v = str === undefined ? undefined : parseInt(str);
         if (v !== undefined && !isNaN(v)) {

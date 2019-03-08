@@ -373,6 +373,7 @@ namespace ts.SignatureHelp {
         return argumentCount;
     }
 
+    /* eslint-disable rulesdir/no-double-space */
     // spanIndex is either the index for a given template span.
     // This does not give appropriate results for a NoSubstitutionTemplateLiteral
     function getArgumentIndexForTemplatePiece(spanIndex: number, node: Node, position: number, sourceFile: SourceFile): number {
@@ -398,6 +399,7 @@ namespace ts.SignatureHelp {
         }
         return spanIndex + 1;
     }
+    /* eslint-enable rulesdir/no-double-space */
 
     function getArgumentListInfoForTemplate(tagExpression: TaggedTemplateExpression, argumentIndex: number, sourceFile: SourceFile): ArgumentListInfo {
         // argumentCount is either 1 or (numSpans + 1) to account for the template strings array argument.

@@ -738,6 +738,7 @@ namespace ts {
 
             {
                 const program5Diagnostics = program5.getSemanticDiagnostics(program5.getSourceFile("f2.ts"));
+                // eslint-disable-next-line rulesdir/no-increment-decrement
                 assert.lengthOf(program5Diagnostics, ++expectedErrors, `import of BB in f1 fails. BB is of type any. Add one error`);
 
                 assert.deepEqual(program5.host.getTrace(), [

@@ -1,5 +1,6 @@
 // In harness baselines, null is different than undefined. See `generateActual` in `harness.ts`.
 /* tslint:disable:no-null-keyword */
+/* eslint-disable no-null/no-null */
 
 namespace RWC {
     function runWithIOLog(ioLog: IoLog, fn: (oldIO: Harness.IO) => void) {
@@ -11,7 +12,8 @@ namespace RWC {
 
         try {
             fn(oldIO);
-        } finally {
+        }
+        finally {
             wrappedIO.endReplay();
             Harness.IO = oldIO;
         }
@@ -48,7 +50,7 @@ namespace RWC {
                 caseSensitive = false;
             });
 
-            it("can compile", function(this: Mocha.ITestCallbackContext) {
+            it("can compile", function(this: Mocha.ITestCallbackContext) { // eslint-disable-line func-names
                 this.timeout(800_000); // Allow long timeouts for RWC compilations
                 let opts!: ts.ParsedCommandLine;
 
@@ -146,7 +148,7 @@ namespace RWC {
             });
 
 
-            it("has the expected emitted code", function(this: Mocha.ITestCallbackContext) {
+            it("has the expected emitted code", function(this: Mocha.ITestCallbackContext) { // eslint-disable-line func-names
                 this.timeout(100_000); // Allow longer timeouts for RWC js verification
                 Harness.Baseline.runMultifileBaseline(baseName, "", () => {
                     return Harness.Compiler.iterateOutputs(compilerResult.js.values());

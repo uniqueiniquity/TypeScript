@@ -1,4 +1,5 @@
 // tslint:disable no-unnecessary-type-assertion (TODO: tslint can't find node types)
+// eslint-disable no-unnecessary-type-assertion
 
 namespace Harness.Parallel.Worker {
     export function start() {
@@ -125,7 +126,7 @@ namespace Harness.Parallel.Worker {
             }
 
             function addTest(title: string | Mocha.Func | Mocha.AsyncFunc, fn: Mocha.Func | Mocha.AsyncFunc | undefined): Mocha.Test {
-                if (typeof title === "function") fn = title, title = fn.name;
+                if (typeof title === "function") fn = title, title = fn.name; // eslint-disable-line no-unused-expressions
                 const test = new Test(title, suites[0].pending ? undefined : fn);
                 suites[0].addTest(test);
                 return test;
