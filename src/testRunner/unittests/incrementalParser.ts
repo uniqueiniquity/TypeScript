@@ -1,4 +1,5 @@
 namespace ts {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-qualifier
     ts.disableIncrementalParsing = false; // tslint:disable-line no-unnecessary-qualifier (make clear this is a global mutation!)
 
     function withChange(text: IScriptSnapshot, start: number, length: number, newText: string): { text: IScriptSnapshot; textChangeRange: TextChangeRange; } {

@@ -1,4 +1,5 @@
 // tslint:disable no-unnecessary-qualifier
+/* eslint-disable @typescript-eslint/no-unnecessary-qualifier */
 
 /**
  * Declaration module describing the TypeScript Server protocol

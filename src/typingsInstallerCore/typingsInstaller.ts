@@ -328,6 +328,7 @@ namespace ts.server.typingsInstaller {
             this.sendResponse(<BeginInstallTypes>{
                 kind: EventBeginInstallTypes,
                 eventId: requestId,
+                // eslint-disable-next-line @typescript-eslint/no-unnecessary-qualifier
                 typingsInstallerVersion: ts.version, // tslint:disable-line no-unnecessary-qualifier (qualified explicitly to prevent occasional shadowing)
                 projectName: req.projectName
             });
@@ -377,6 +378,7 @@ namespace ts.server.typingsInstaller {
                         projectName: req.projectName,
                         packagesToInstall: scopedTypings,
                         installSuccess: ok,
+                        // eslint-disable-next-line @typescript-eslint/no-unnecessary-qualifier
                         typingsInstallerVersion: ts.version // tslint:disable-line no-unnecessary-qualifier (qualified explicitly to prevent occasional shadowing)
                     };
                     this.sendResponse(response);

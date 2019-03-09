@@ -118,6 +118,7 @@ namespace ts.server {
         terminal: false,
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-qualifier
     class Logger implements server.Logger { // tslint:disable-line no-unnecessary-qualifier
         private fd = -1;
         private seq = 0;
