@@ -1,3 +1,4 @@
+const path = require('path');
 const rulesDirPlugin = require('eslint-plugin-rulesdir');
 rulesDirPlugin.RULES_DIR = "../scripts/eslint/rules";
 
@@ -5,6 +6,7 @@ module.exports = {
     "root": true,
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
+        "project": path.join(__dirname, "./tsconfig-base.json"),
         "warnOnUnsupportedTypeScriptVersion": false
     },
     "plugins": [
