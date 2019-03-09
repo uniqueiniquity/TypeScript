@@ -4959,7 +4959,7 @@ namespace ts {
             }
             try {
                 // tslint:disable-next-line no-unnecessary-qualifier (making clear this is a global mutation!)
-                ts.localizedDiagnosticMessages = JSON.parse(fileContents!);
+                ts.localizedDiagnosticMessages = JSON.parse(fileContents!); // eslint-disable-line @typescript-eslint/no-unnecessary-qualifier
             }
             catch {
                 if (errors) {

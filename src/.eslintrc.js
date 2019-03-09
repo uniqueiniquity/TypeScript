@@ -2,6 +2,7 @@ const rulesDirPlugin = require('eslint-plugin-rulesdir');
 rulesDirPlugin.RULES_DIR = "../scripts/eslint/rules";
 
 module.exports = {
+    "root": true,
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "warnOnUnsupportedTypeScriptVersion": false
@@ -15,20 +16,23 @@ module.exports = {
         "rulesdir"
     ],
     "rules": {
+        /* Semantic rules */
+        "@typescript-eslint/no-unnecessary-qualifier": "error",
+        "@typescript-eslint/no-unnecessary-type-assertion": "error",
+
+        /* Syntactic rules */
         "@typescript-eslint/adjacent-overload-signatures": "error",
         "@typescript-eslint/array-type": ["error", "array"],
         "no-restricted-globals": ["error", "setInterval", "setTimeout"],
         "rulesdir/boolean-trivia": "error",
         "@typescript-eslint/prefer-function-type": "error",
         "@typescript-eslint/class-name-casing": "error",
-        // "spaced-comment": ["error", "always"] (can't ignore block comments),
         "curly": ["error", "multi-line"],
         "rulesdir/debug-assert": "error",
         "no-new-func": "error",
         "no-tabs": "error",
         "@typescript-eslint/interface-name-prefix": "error",
         "@typescript-eslint/prefer-interface": "error",
-        // jsdoc-format (not sure...)
         "no-labels": ["error", { "allowLoop": true, "allowSwitch": true }],
         "linebreak-style": ["error", "windows"],
         "new-parens": "error",
@@ -40,7 +44,6 @@ module.exports = {
         "import/no-duplicates": "error",
         "constructor-super": "error",
         "no-duplicate-case": "error",
-        // "no-redeclare": "error" (doesn't handle namespace merging),
         "no-empty": "error",
         "no-empty-function": ["error", { "allow": ["constructors"] }],
         "no-eval": "error",
@@ -56,13 +59,10 @@ module.exports = {
         "no-sparse-arrays": "error",
         "dot-notation": "error",
         "no-throw-literal": "error",
-        // "no-fallthrough": "error" (causes problems with our usage),
         "@typescript-eslint/no-this-alias": "error",
         "no-trailing-spaces": "error",
         "rulesdir/no-type-assertion-whitespace": "error",
         "no-undef-init": "error",
-        // no-unnecessary-qualifier (needs type info)
-        // no-unnecessary-type-assertion (needs type info)
         "no-unsafe-finally": "error",
         "no-unused-expressions": ["error", { "allowTernary": true }],
         "no-var": "error",
@@ -81,7 +81,6 @@ module.exports = {
         "@typescript-eslint/type-annotation-spacing": "error",
         // "unified-signature" (need to finish),
         "use-isnan": "error",
-        // "id-blacklist": ["error", "any", "Number", "number", "String", "string", "Boolean", "boolean", "Undefined"]
 
         // TODO: camelcase doesn't handle PropertySignatures well
         "camelcase": ["error", {
@@ -91,12 +90,19 @@ module.exports = {
                 "request_seq",
                 "_TestOnly$"
             ]
-        }], // doesn't seem to fully work?
-
-        // id-match (need to figure out regex)
-        // whitespace (use Prettier)
+        }],
 
         /* Rules that were previously enabled in TSLint */
         "rulesdir/no-in-operator": "off", // TSLint implementation of rule never actually worked
+        "spaced-comment": "off", // can't enforce space on single line comments but not block comments
+        "valid-jsdoc": "off", // no clear equivalent to TSLint's jsdoc-format, which just checked formatting. Could use prettier.
+        "no-redeclare": "off", // doesn't handle namespace merging
+        "no-fallthrough": "off", // doesn't handle cases separated only by a comment
+        "whitespace": "off", // use Prettier
+
+        // these two flag all identifiers that are not the children of a hardcoded set of nodes,
+        // so they're flagged in TS-specific locations
+        "id-blacklist": "off",
+        "id-match": "off",
     }
 };
