@@ -3839,6 +3839,10 @@
         "category": "Message",
         "code": 6217
     },
+    "Disable compile on save for .d.ts files": {
+        "category": "Message",
+        "code": 6218
+    },
 
     "Projects to reference": {
         "category": "Message",

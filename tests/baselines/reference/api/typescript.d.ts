@@ -2497,6 +2497,7 @@ declare namespace ts {
         removeComments?: boolean;
         rootDir?: string;
         rootDirs?: string[];
+        skipDTSCompileOnSave?: boolean;
         skipLibCheck?: boolean;
         skipDefaultLibCheck?: boolean;
         sourceMap?: boolean;

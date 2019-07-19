@@ -203,6 +203,7 @@ namespace Harness.Parallel.Worker {
                     passes.push({ name: test.titlePath() });
                 })
                 .on("fail", (test: Mocha.Test | Mocha.Hook, err: any) => {
+                    console.log(test.titlePath());
                     errors.push({ name: test.titlePath(), error: err.message, stack: err.stack });
                 })
                 .on("end", () => {

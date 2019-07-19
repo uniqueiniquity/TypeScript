@@ -798,6 +798,12 @@ namespace ts {
                 type: "object"
             },
             description: Diagnostics.List_of_language_service_plugins
+        },
+        {
+            name: "skipDTSCompileOnSave",
+            type: "boolean",
+            category: Diagnostics.Advanced_Options,
+            description: Diagnostics.Disable_compile_on_save_for_d_ts_files
         }
     ];
 
